@@ -2,11 +2,13 @@ body{
     background: rgb(244, 250, 248);
     /* width:100%; */
 }
+button{
+    border-radius: 7px;
+}
 nav{
     display: flex;
-    justify-content: left;
+    justify-content: space-between;
     align-self: flex-end;
-    /* justify-self: left; */
 }
 header{
     display: flex;
@@ -16,7 +18,7 @@ header{
     height: 5em;  
 }
 .head2{
-    
+    display: flex;
 }
 .cont1{
     /* display: flex;
@@ -53,6 +55,7 @@ input{
 .attackBtn{
     display: flex;
     justify-content: space-between;
+    
 }
 .swichBtn{
     display: flex;
