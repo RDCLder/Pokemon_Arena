@@ -40,9 +40,11 @@ input{
 }
 .headturn{
     margin:0;
+    
 }
 .sidebar{
     width: 100%;
+    
 }
 .ask{
     display: flex;
