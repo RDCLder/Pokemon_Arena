@@ -1,9 +1,9 @@
 body{
     background: rgb(244, 250, 248);
-    /* width:100%; */
 }
 button{
     border-radius: 7px;
+    /* width:100%; */
 }
 nav{
     display: flex;
@@ -52,12 +52,25 @@ input{
     display: flex;
     justify-content: space-between;
 }
+.AbtnT{
+    display: flex;
+    font-size: 10px;
+}
+#btnText1{
+    padding-right: 60px;
+}
 .attackBtn{
     display: flex;
     justify-content: space-between;
-    
 }
 .swichBtn{
     display: flex;
     justify-content: space-between;
+}
+#btnText{
+    font-size: 1px
+}
+.far{
+    padding-left: 25px;
+    
 }
