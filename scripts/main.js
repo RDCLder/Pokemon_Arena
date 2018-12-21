@@ -6,14 +6,30 @@ $(function() {
     var moves = [[], []];
   
     // Retrieve data from API
-    $.get("https://pokeapi.co/api/v2/move/")
+    
+    // $.get("https://pokeapi.co/api/v2/move/")
+    // .done((result) => {
+    //     for (let i = 0; i < 165; i ++) {
+    //         let moveName = result.results[i].name;
+    //         moves[0].push(moveName);
+
+    //         // Retrieve object from nested URL
+    //         $.get(result.results[i].url).done((result) => {
+    //             moves[1].push(result);
+    //         });
+    //     }
+    // })
+
+    console.log("test 1");
+
+    $.get("https://pokeapi.co/api/v2/move-damage-class/2/")
     .done((result) => {
-        for (let i = 0; i < 165; i ++) {
-            let moveName = result.results[i].name;
+        for (let i = 0; i < 74; i ++) {
+            let moveName = result.moves[i].name;
             moves[0].push(moveName);
 
             // Retrieve object from nested URL
-            $.get(result.results[i].url).done((result) => {
+            $.get(result.moves[i].url).done((result) => {
                 moves[1].push(result);
             });
         }
@@ -144,10 +160,6 @@ $(function() {
             allMoves[name] = move;
         }
 
-        // console.log("test");
-        // console.log(moves);
-        // console.log(allPokemon);
-
         // ------------------------------------------------------------------------------------
 
         // Function Definitions
@@ -176,14 +188,6 @@ $(function() {
         let pokemon1 = allPokemon[i];
         let pokemon2 = allPokemon[j];
 
-        let battleMoves = [];
-
-        // for (let i = 0; i < 4; i ++) {
-
-        //     if 
-
-        // }
-
         let move1 = allMoves[pokemon1.moves[0]];
         let move2 = allMoves[pokemon1.moves[1]];
         let move3 = allMoves[pokemon1.moves[2]];
@@ -193,16 +197,17 @@ $(function() {
         $("#move3 .class:first-of-type").text(move3.name);
         $("#move4 .class:first-of-type").text(move4.name);
 
-        // console.log(pokemon1);
-        // console.log(pokemon2);
-        // console.log(move1);
-        // console.log(move2);
-        // console.log(move3);
-        // console.log(move4);
+        console.log(moves);
+        console.log(pokemon1);
+        console.log(pokemon2);
+        console.log(move1);
+        console.log(move2);
+        console.log(move3);
+        console.log(move4);
 
         // Main Gameplay
 
-        $("#move1").click(() => {
+        $("#moveButton1").click(() => {
             
             disableButtons();
             let i = Math.floor(Math.random() * 4);
@@ -225,7 +230,7 @@ $(function() {
         });
 
     
-        $("#move2").click(() => {
+        $("#moveButton2").click(() => {
             
             disableButtons();
             let i = Math.floor(Math.random() * 4);
@@ -247,7 +252,7 @@ $(function() {
             enableButtons();
         });
 
-        $("#move3").click(() => {
+        $("#moveButton3").click(() => {
             
             disableButtons();
             let i = Math.floor(Math.random() * 4);
@@ -269,7 +274,7 @@ $(function() {
             enableButtons();
         });
 
-        $("#move4").click(() => {
+        $("#moveButton4").click(() => {
             
             disableButtons();
             let i = Math.floor(Math.random() * 4);
