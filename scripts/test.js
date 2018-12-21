@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // {
 //     name: "pound",
 //     url: "https://pokeapi.co/api/v2/move/1/"
@@ -294,3 +295,16 @@
 //     name: "slash",
 //     url: "https://pokeapi.co/api/v2/move/163/"
 //     },
+=======
+let target = 100;
+let baseDamage = 25;
+function damageCalc (baseDamage) {
+    min = Math.ceil(85);
+    max = Math.floor(100);
+    return Math.floor(baseDamage * (Math.floor(Math.random() * (max - min + 1)) + min) / 100);
+}
+let damage = damageCalc(baseDamage);
+target -= damage;
+console.log(target);
+
+>>>>>>> 1ec8deceac5ae5c609f759222f578742d6953075
