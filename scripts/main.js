@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // Main file to run
 
 $(function() {
