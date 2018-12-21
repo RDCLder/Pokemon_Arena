@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Pokemon Arena</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body>
+
+<!-- ////////////////////////////////////////////////////////////////////////////// -->
+
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-1">
+      <h5>samson</h5>
+    </div>
+    <div class="col-2 justify-content-md-end">
+      <button id="speaker"><i class="fas fa-volume-down"></i></button>
+      <button id="setting"><i class="fas fa-cogs"></i></button>
+    </div>
+  </div>
+
+<!-- ////////////////////////////////////////////////////////////////////////////// -->
+
+  <!-- Start of Container -->
+  <div class="container ">
+    <div class="row">
+
+      <!-- Start of Left Column -->
+      <div class="col-lg-7 col-sm-12">
+
+        <div class="row border border-dark" id="leftTop"></div>
+
+<!-- ////////////////////////////////////////////////////////////////////////////// -->
+
+        <!-- Start of Left Bottom -->
+        <div class="row justify-content-md-center border border-dark" id="leftBottom">
+
+          <div class="row">
+            <div class="col-3">
+              <h5>What Do?</h5>
+            </div>
+            <div class="col-7"></div>
+            <div class="col-2">
+              <p class="border border-dark mt-1" id="num/num">num/num</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <h4 style="color:red; margin-left: 2%;">Moves</h4>
+          </div>
+
+          <!-- Start of Moves -->
+          <div class="row justify-content-md-around" style="margin-left: 2%;">
+            
+            <!-- Move 1 -->
+            <!-- <div class="col"> -->
+              <button id="move1" style="width: 20%;">
+                <div class="row justify-content-md-center">Move 1</div>
+                <div class="row">
+                  <div class="col">Normal</div>
+                  <div class="col"></div>
+                  <div class="col">num/num</div>
+                </div>
+              </button>
+            <!-- </div> -->
+
+            <!-- Move 2 -->
+            <!-- <div class="col"> -->
+              <button id="move1" style="width: 20%;">
+                <div class="row justify-content-md-center">Move 1</div>
+                <div class="row">
+                  <div class="col">Normal</div>
+                  <div class="col">num/num</div>
+                </div>
+              </button>
+            <!-- </div> -->
+
+            <!-- Move 3 -->
+            <!-- <div class="col"> -->
+              <button id="move1" style="width: 20%;">
+                <div class="row justify-content-md-center">Move 1</div>
+                <div class="row">
+                  <div class="col">Normal</div>
+                  <div class="col"></div>
+                  <div class="col">num/num</div>
+                </div>
+              </button>
+            <!-- </div> -->
+
+            <!-- Move 4 -->
+            <!-- <div class="col"> -->
+              <button id="move1" style="width: 20%;">
+                <div class="row justify-content-md-center">Move 1</div>
+                <div class="row">
+                  <div class="col">Normal</div>
+                  <div class="col"></div>
+                  <div class="col">num/num</div>
+                </div>
+              </button>
+            <!-- </div> -->
+            
+          </div>
+          <!-- End of Moves -->
+
+          <div class="row">
+            <h4 style="color:blue; margin-left: 2%;">Switch</h4>
+          </div>
+
+          <div class="row justify-content-md-around" id="switchContainer">
+            <button id="chara1 ">Char 1</button>
+            <button id="chara2">Char 2</button>
+            <button id="chara3">Char 3</button>
+            <button id="chara4">Char 4 </button>
+            <button id="chara5">Char 5</button>
+            <button id="chara6">Char 6</button>
+          </div>
+
+        </div>
+        <!-- End of Left Bottom -->
+
+<!-- ////////////////////////////////////////////////////////////////////////////// -->
+
+      </div>
+      <!-- End of Left Column -->
+
+<!-- ////////////////////////////////////////////////////////////////////////////// -->
+
+      <!-- Start of Sidebar -->
+      <div class="sideBar col-lg-5 col-sm-12 border border-dark" style="height: 50em; padding: 0px;">
+        <h3 class="headturn" style="background: #bdc3c7;"> Turn Counter</h3>
+        <p class="turnContent" style="background: #E9E4F0; ">Text goes here</p>
+      </div>
+      <!-- End of Sidebar -->
+
+<!-- ////////////////////////////////////////////////////////////////////////////// -->
+
+    </div>
+  </div>
+  <!-- End of Container -->
+
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous">
+    </script>
+  <!-- Start of JavaScript -->
+  <script src="scripts/main.js"></script>
+  <!-- End of JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+</body>
+
+</html>
