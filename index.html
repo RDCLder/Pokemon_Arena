@@ -8,17 +8,103 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/main.css">  
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+
+
   </head>
   <body>
-    
+    <header id='header' class="container pl-5 ">
+      <!-- <h1>xxx</h1> -->
+      <nav class="mr-5">
+        <button class="homebtn"><i class="fas fa-home"></i>Home</button>
+        <ul class="nav nav-tabs px-2">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">
+                <div>nu <i class="far fa-times-circle"></i></div>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">
+                <div>nu <i class="far fa-times-circle"></i></div>
+              </a>
+            </li>
+          </ul>
+
+          <ul class="nav nav-tabs">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">
+                  <div>Next <i class="far fa-times-circle"></i></div>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="#">
+                  <div>Anime & manga <i class="far fa-times-circle"></i></div>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="#"><i class="fas fa-plus"></i></a>
+              </li>      
+            </ul>
+        </nav>
+        <div class="head2">
+          <h5 class="player mr-3">samson</h5>
+          <button id="speaker"><i class="fas fa-volume-down"></i></button>
+          <button id="setting"><i class="fas fa-cogs"></i></button>
+        </div>
+      </header>
+  
+    <div class="container cont1 ">
+      <div class="row">
+        <div class="col-lg-7 col-sm-12 border border-dark" > image come here?
+            <div class="text col-12 border border-dark" style="height: 200px; ">
+              <div class="ask">
+                <h5>what will sam do?</h5>
+                <h5 class="border border-dark mt-1" id="num/num">num/num</h5>
+              </div>
+              <div class="attack font-italic">
+                <h4 style="color:red;">Attack</h4>
+                <div class="attackBtn" id="attackBtn">
+                    <button id="skill1">Wish <div class="AbtnT"><div id="btnText1">Normal</div><div id="btnText2">num/num</div></div></button>
+                    <button id="skill2">Protect <div class="AbtnT"><div id="btnText1">Normal</div><div id="btnText2">num/num</div></div></button>
+                    <button id="skill3">Toxic<div class="AbtnT"><div id="btnText1">Normal</div><div id="btnText2">num/num</div></div></button>
+                    <button id="skill4">Rain Dance<div class="AbtnT"><div id="btnText1">Normal</div><div id="btnText2">num/num</div></div></button>
+                </div>
+              </div>
+              <div class="swich font-italic">
+                <h4 style="color:blue;">Swich</h4>
+                <div class="swichBtn" id="swichBtn">
+                    <button id="chara1 ">Chara1</button>
+                    <button id="chara2">Chara2</button>
+                    <button id="chara3">Chara3</button>
+                    <button id="chara4">Chara4 </button>
+                    <button id="chara5">Chara5</button>
+                    <button id="chara6">Chara6</button>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="sideBar col-lg-5 col-sm-12 border border-dark" style=" height: 50em; padding: 0px;">
+          <h3 class="headturn" style="background: #bdc3c7;"> turn x</h3><p class="turnContent" style="background: #E9E4F0; ">sdjvndsovosdnvsnvdnsvsdvsvdddddddd</p>
+          <h3 class="headturn" style="background: #bdc3c7;"> turn xx</h3><p class="turnContent" style="background: #E9E4F0; ">sdjvndsovosdnvsnvdnspvsddvdddddddd</p>
+          <h3 class="headturn" style="background: #bdc3c7;"> turn xxx</h3><p class="turnContent" style="background: #E9E4F0; ">sdjvndsovosdnvsnvdnspvsddvdddddddd</p>
+          <div class="text col-12 border border-dark" >
+            <label for="text">samson: </label>
+              <input type="text" placeholder="text">
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous">
     </script>
+    <script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
     <!-- Start of JavaScript -->
     <script src="scripts/main.js"></script>
     <!-- End of JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
   </body>
 </html>

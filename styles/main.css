@@ -1,0 +1,76 @@
+body{
+    background: rgb(244, 250, 248);
+}
+button{
+    border-radius: 7px;
+    /* width:100%; */
+}
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-self: flex-end;
+}
+header{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    height: 5em;  
+}
+.head2{
+    display: flex;
+}
+.cont1{
+    /* display: flex;
+    flex-wrap: wrap; */
+    height: 50em;
+    overflow-y: scroll;
+    
+}
+.text{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+input{
+    width:75%;
+}
+.turnContent{
+    display: flex;
+    flex-wrap: wrap;
+    overflow-x: hidden;
+}
+.headturn{
+    margin:0;
+    
+}
+.sidebar{
+    width: 100%;
+    
+}
+.ask{
+    display: flex;
+    justify-content: space-between;
+}
+.AbtnT{
+    display: flex;
+    font-size: 10px;
+}
+#btnText1{
+    padding-right: 60px;
+}
+.attackBtn{
+    display: flex;
+    justify-content: space-between;
+}
+.swichBtn{
+    display: flex;
+    justify-content: space-between;
+}
+#btnText{
+    font-size: 1px
+}
+.far{
+    padding-left: 25px;
+    
+}
