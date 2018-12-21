@@ -53,8 +53,6 @@ $(function() {
 
         }
 
-        let pokemon = new Pokemon("Bulbasaur", Object)
-
         class Pokemon {
 
             constructor(pokeName, pokeObject) {
@@ -144,6 +142,10 @@ $(function() {
             let name = moves[0][i];
             allMoves[name] = move;
         }
+
+        // console.log(allPokemon);
+        // console.log(allMoves);
+
         // ------------------------------------------------------------------------------------
 
         // Function Definitions
@@ -267,6 +269,6 @@ $(function() {
 
         // ------------------------------------------------------------------------------------
 
-    }, 3000)
+    }, 5000)
 
 });
