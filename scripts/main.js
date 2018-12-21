@@ -3,7 +3,7 @@
 $(function() {
 
     let pokedex = [];
-    var moves = [[], []];
+    let moves = [[], []];
   
     // Retrieve data from API
     
@@ -78,20 +78,42 @@ $(function() {
                 this.speed = pokeObject.stats[0].base_stat;
                 this.front = pokeObject.sprites.front_default;
                 this.back = pokeObject.sprites.back_default;
-
                 this.moves = [];
-                while (this.moves.length < 4) {
+                this.type = [];
+
+                const exceptions1 = [
+                    "caterpie",
+                    "metapod",
+                    "weedle",
+                    "kakuna",
+                    "magikarp"
+                ];
+
+                const exceptions2 = [
+                    "ditto"
+                ];
+
+                if (exceptions1.includes(this.name)) {
+                    var maxLength = 2;
+                }
+                else if (exceptions2.includes(this.name)) {
+                    var maxLength = 1;
+                }
+                else {
+                    var maxLength = 4;
+                }
+                console.log(`${this.name}: ${maxLength}`);
+                while (this.moves.length < maxLength) {
                     let index = Math.floor(Math.random() * pokeObject.moves.length);
                     let move = pokeObject.moves[index].move.name;
                     if (moves[0].includes(move)) {
-                        // if (this.moves.includes(move) == false) {
-                        //     this.moves.push(move); 
-                        // }
-                        this.moves.push(move);
+                        if (!this.moves.includes(move)) {
+                            this.moves.push(move);
+                            console.log(this.moves.length);
+                        }
                     }
                 }
 
-                this.type = [];
                 for (let i = 0; i < pokeObject.types.length; i ++) {
                     let typeName = pokeObject.types[i].type.name;
                     this.type.push(typeName);
