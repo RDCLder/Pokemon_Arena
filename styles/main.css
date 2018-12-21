@@ -7,6 +7,7 @@ body {
 
 #leftTop {
     height: 70%;
+    
 }
 
 #leftBottm {
@@ -22,6 +23,26 @@ body {
     /* border: solid orange; */
 }
 
+#enemyZone {
+    height: 35%;
+    width: 100%;
+    
+}
+#neutralZone {
+    height: 30%;
+    width: 100%;
+    
+}
+#playerZone {
+    height: 35%;
+    width: 100%;
+}
+#zones{
+    
+
+}
+left
+
 /* /////////////////////////////////////////////////////////////////////////// */
 /* Buttons */
 
@@ -34,8 +55,9 @@ button {
 }
 
 #turnCounter {
-    margin:0;    
+    margin:0px;    
 }
+
 
 /* /////////////////////////////////////////////////////////////////////////// */
 /* Navbar/Archived */
@@ -57,27 +79,10 @@ nav {
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-<<<<<<< HEAD
-}
-#btnText{
-    font-size: 1px
-}
-.far{
-    padding-left: 25px;
-    
-/* }
-@media screen and (max-width: 600px) {
-    .sidebar {
-    visibility: hidden;
-    display: none;
-    
-    }
-=======
     height: 5em;  
 } */
 
 /* .container {
     height: 50em;
     overflow-y: scroll; 
->>>>>>> 4da70f73cec721d10b2801f3ade05c913f810db4
 } */

@@ -33,13 +33,28 @@
 <!-- ////////////////////////////////////////////////////////////////////////////// -->
 
   <!-- Start of Container -->
-  <div class="container ">
-    <div class="row">
+  <div class="container p-0 ">
+    <div class="row ">
 
       <!-- Start of Left Column -->
-      <div class="col-lg-7 col-sm-12">
+      <div class="col-lg-7 col-sm-12 p-0 " id="leftbar">
+      
+        <div class="row border border-dark " id="leftTop">
+          <div class="col-12 m-0 p-0" id = "zones">
+              <div class="row bg-danger m-0 p-0" id="enemyZone">
+                <div class="col-6">Turn 1</div>
+                <div class="col-6" id="enemyPokemon"></div>
+              </div>
+              <div class="row bg-warning m-0 p-0" id="neutralZone">
+              </div>
+              <div class="row bg-info m-0 p-0" id="playerZone">
+                <div class="col-6" id="playerPokemon"></div>
+                <div class="col-6"></div>
+              </div>
+          </div>
+      </div>
 
-        <div class="row border border-dark" id="leftTop"></div>
+
 
 <!-- ////////////////////////////////////////////////////////////////////////////// -->
 
@@ -141,7 +156,7 @@
         <h3 class="headturn" style="background: #bdc3c7;"> Turn Counter</h3>
         <p class="turnContent" style="background: #E9E4F0; ">Text goes here</p>
         <div id="player"></div>
-
+        
       </div>
       <!-- End of Sidebar -->
 
