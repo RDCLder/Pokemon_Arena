@@ -1,0 +1,78 @@
+/* /////////////////////////////////////////////////////////////////////////// */
+/* Main Elements */
+
+body {
+    background: rgb(244, 250, 248);
+}
+
+#leftTop {
+    height: 70%;
+    padding: 0;
+}
+
+#leftBottm {
+    height: 30%;
+}
+
+.row {
+    /* border: solid red; */
+    width: 100%;
+}
+
+.col {
+    /* border: solid orange; */
+}
+#enemyZone {
+    height: 35%;
+    width: 100%;
+}
+#neutralZone {
+    height: 30%;
+    width: 100%;
+}
+#playerZone {
+    height: 35%;
+    width: 100%;
+}
+/* /////////////////////////////////////////////////////////////////////////// */
+/* Buttons */
+
+button {
+    border-radius: 7px;
+}
+
+#turnContent {
+    overflow-x: hidden;
+}
+
+#turnCounter {
+    margin:0;    
+}
+
+/* /////////////////////////////////////////////////////////////////////////// */
+/* Navbar/Archived */
+
+/* .ask {
+    border: solid black;
+}
+
+.far {
+    padding-left: 25px; 
+}
+
+nav {
+    justify-content: space-between;
+    align-self: flex-end;
+} */
+
+/* header {
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    height: 5em;  
+} */
+
+/* .container {
+    height: 50em;
+    overflow-y: scroll; 
+} */
