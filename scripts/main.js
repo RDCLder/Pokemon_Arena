@@ -7,33 +7,31 @@ $(function() {
   
     // Retrieve data from API
     
-    // $.get("https://pokeapi.co/api/v2/move/")
-    // .done((result) => {
-    //     for (let i = 0; i < 165; i ++) {
-    //         let moveName = result.results[i].name;
-    //         moves[0].push(moveName);
-
-    //         // Retrieve object from nested URL
-    //         $.get(result.results[i].url).done((result) => {
-    //             moves[1].push(result);
-    //         });
-    //     }
-    // })
-
-    console.log("test 1");
-
-    $.get("https://pokeapi.co/api/v2/move-damage-class/2/")
+    $.get("https://pokeapi.co/api/v2/move/")
     .done((result) => {
-        for (let i = 0; i < 74; i ++) {
-            let moveName = result.moves[i].name;
+        for (let i = 0; i < 164; i ++) {
+            let moveName = result.results[i].name;
             moves[0].push(moveName);
 
             // Retrieve object from nested URL
-            $.get(result.moves[i].url).done((result) => {
+            $.get(result.results[i].url).done((result) => {
                 moves[1].push(result);
             });
         }
     })
+
+    // $.get("https://pokeapi.co/api/v2/move-damage-class/2/")
+    // .done((result) => {
+    //     for (let i = 0; i < 74; i ++) {
+    //         let moveName = result.moves[i].name;
+    //         moves[0].push(moveName);
+
+    //         // Retrieve object from nested URL
+    //         $.get(result.moves[i].url).done((result) => {
+    //             moves[1].push(result);
+    //         });
+    //     }
+    // })
 
     // Retrieve data from API
     $.get("https://pokeapi.co/api/v2/pokemon/")
@@ -86,6 +84,9 @@ $(function() {
                     let index = Math.floor(Math.random() * pokeObject.moves.length);
                     let move = pokeObject.moves[index].move.name;
                     if (moves[0].includes(move)) {
+                        // if (this.moves.includes(move) == false) {
+                        //     this.moves.push(move); 
+                        // }
                         this.moves.push(move);
                     }
                 }
@@ -192,12 +193,16 @@ $(function() {
         let move2 = allMoves[pokemon1.moves[1]];
         let move3 = allMoves[pokemon1.moves[2]];
         let move4 = allMoves[pokemon1.moves[3]];
-        $("#move1 .class:first-of-type").text(move1.name);
-        $("#move2 .class:first-of-type").text(move2.name);
-        $("#move3 .class:first-of-type").text(move3.name);
-        $("#move4 .class:first-of-type").text(move4.name);
+        moveName1 = move1.name[0].toUpperCase() + move1.name.slice(1, move1.name.length);
+        moveName2 = move2.name[0].toUpperCase() + move2.name.slice(1, move2.name.length);
+        moveName3 = move3.name[0].toUpperCase() + move3.name.slice(1, move3.name.length);
+        moveName4 = move4.name[0].toUpperCase() + move4.name.slice(1, move4.name.length);
 
-        console.log(moves);
+        $("#move1").text(moveName1);
+        $("#move2").text(moveName2);
+        $("#move3").text(moveName3);
+        $("#move4").text(moveName4);
+
         console.log(pokemon1);
         console.log(pokemon2);
         console.log(move1);
