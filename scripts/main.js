@@ -3,8 +3,8 @@
 $(function() {
 
     let pokedex = [];
-    let moves = [[], []];
-
+    var moves = [[], []];
+  
     // Retrieve data from API
     $.get("https://pokeapi.co/api/v2/move/")
     .done((result) => {
@@ -38,7 +38,6 @@ $(function() {
         
         // ------------------------------------------------------------------------------------
 
-        
         // Class Definitions
         
         class Move {
@@ -67,10 +66,12 @@ $(function() {
                 this.back = pokeObject.sprites.back_default;
 
                 this.moves = [];
-                for (let i = 0; i < 4; i ++) {
+                while (this.moves.length < 4) {
                     let index = Math.floor(Math.random() * pokeObject.moves.length);
                     let move = pokeObject.moves[index].move.name;
-                    this.moves.push(move);
+                    if (moves[0].includes(move)) {
+                        this.moves.push(move);
+                    }
                 }
 
                 this.type = [];
@@ -143,8 +144,9 @@ $(function() {
             allMoves[name] = move;
         }
 
+        // console.log("test");
+        // console.log(moves);
         // console.log(allPokemon);
-        // console.log(allMoves);
 
         // ------------------------------------------------------------------------------------
 
@@ -166,17 +168,39 @@ $(function() {
 
         // ------------------------------------------------------------------------------------
 
-        // Main Gameplay
+        // Initialize Gameplay
 
         let turn = 1;
         let i = Math.floor(Math.random() * allPokemon.length);
         let j = Math.floor(Math.random() * allPokemon.length);
         let pokemon1 = allPokemon[i];
         let pokemon2 = allPokemon[j];
+
+        let battleMoves = [];
+
+        // for (let i = 0; i < 4; i ++) {
+
+        //     if 
+
+        // }
+
         let move1 = allMoves[pokemon1.moves[0]];
         let move2 = allMoves[pokemon1.moves[1]];
         let move3 = allMoves[pokemon1.moves[2]];
         let move4 = allMoves[pokemon1.moves[3]];
+        $("#move1 .class:first-of-type").text(move1.name);
+        $("#move2 .class:first-of-type").text(move2.name);
+        $("#move3 .class:first-of-type").text(move3.name);
+        $("#move4 .class:first-of-type").text(move4.name);
+
+        // console.log(pokemon1);
+        // console.log(pokemon2);
+        // console.log(move1);
+        // console.log(move2);
+        // console.log(move3);
+        // console.log(move4);
+
+        // Main Gameplay
 
         $("#move1").click(() => {
             
