@@ -1,6 +1,10 @@
 body{
     background: rgb(244, 250, 248);
 }
+.containerMain{
+    box-sizing: content-box
+
+}
 button{
     border-radius: 7px;
     /* width:100%; */
@@ -73,4 +77,11 @@ input{
 .far{
     padding-left: 25px;
     
-}
+/* }
+@media screen and (max-width: 600px) {
+    .sidebar {
+    visibility: hidden;
+    display: none;
+    
+    }
+} */
