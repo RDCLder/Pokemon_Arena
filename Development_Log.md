@@ -4,14 +4,32 @@ For internal development use only.
 
 ## Bugs
 
-None
+---
 
 ## To Do
 
 ### MVP
 
-None
+Pure turn-by-turn fighting
+    - Randomly generate one pokemon for both sides
+        - Potentially scale to 6 when switch feature has been implemented
+
+- Implement button-events
+    - Tie the current js event listeners to their respective buttons
+    - During encounters, make sure that the user can't spam buttons
+        - Make sure buttons are disabled after a move has been selected
+        - Make sure buttons are enabled once the move's code has finished executing
+
+- Implement switch feature
+    - Allows user to switch between pokemon
+    - Figure out how switching works in terms of turn mechanics
+        - Does the enemy get to attack?
+        - Do you still get a move even after switching?
 
 ### UI
 
-None
+- Responsive design
+    - See if we can enclose everything in a big container that can be set at three sizes
+        - See project guidelines for exactly which three sizes (i.e. phone, tablet, computer)
+        - Make everything enclosed scale by percentage
+            - Rows and columns would need to be scaled by height
