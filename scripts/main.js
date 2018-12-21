@@ -3,25 +3,9 @@
 $(function() {
 
     let pokedex = [];
-    var moves = [[], []];
-  
+    let moves = [[], []];
+
     // Retrieve data from API
-    
-    // $.get("https://pokeapi.co/api/v2/move/")
-    // .done((result) => {
-    //     for (let i = 0; i < 165; i ++) {
-    //         let moveName = result.results[i].name;
-    //         moves[0].push(moveName);
-
-    //         // Retrieve object from nested URL
-    //         $.get(result.results[i].url).done((result) => {
-    //             moves[1].push(result);
-    //         });
-    //     }
-    // })
-
-    console.log("test 1");
-
     $.get("https://pokeapi.co/api/v2/move-damage-class/2/")
     .done((result) => {
         for (let i = 0; i < 74; i ++) {
@@ -55,6 +39,7 @@ $(function() {
         
         // ------------------------------------------------------------------------------------
 
+        
         // Class Definitions
         
         class Move {
@@ -83,12 +68,10 @@ $(function() {
                 this.back = pokeObject.sprites.back_default;
 
                 this.moves = [];
-                while (this.moves.length < 4) {
+                for (let i = 0; i < 4; i ++) {
                     let index = Math.floor(Math.random() * pokeObject.moves.length);
                     let move = pokeObject.moves[index].move.name;
-                    if (moves[0].includes(move)) {
-                        this.moves.push(move);
-                    }
+                    this.moves.push(move);
                 }
 
                 this.type = [];
@@ -183,46 +166,46 @@ $(function() {
 
         // ------------------------------------------------------------------------------------
 
-        // Initialize Gameplay
+        // Main Gameplay
 
         let turn = 1;
         let i = Math.floor(Math.random() * allPokemon.length);
         let j = Math.floor(Math.random() * allPokemon.length);
         let pokemon1 = allPokemon[i];
         let pokemon2 = allPokemon[j];
-
         let move1 = allMoves[pokemon1.moves[0]];
         let move2 = allMoves[pokemon1.moves[1]];
         let move3 = allMoves[pokemon1.moves[2]];
         let move4 = allMoves[pokemon1.moves[3]];
         
         //  Adding Pokemon Sprite
+
         // console.log([pokemon1.back])
-        // for (let i = 0; i < allPokemon.length; i++)
-        //     if(pokemon1 == allPokemon[i]) {
-        //         let playerPokemon = document.getElementById("playerPokemon")
-        //         let playerBack = pokemon1.back
-        //         playerPokemon.appendChild(playerBack)
-        //     };
+
+        // Adding Sprite for Player Pokemon
+        for (let i = 0; i < allPokemon.length; i++)
+            if(pokemon1 == allPokemon[i]) {
+                let playerPokemon = document.getElementById("playerPokemon")
+                let pokemon1Box = document.createElement("img")
+                pokemon1Box.setAttribute("id", "playerPokemonBack")
+                pokemon1Box.src = pokemon1.back
+                playerPokemon.appendChild(pokemon1Box)
+            };
+
+        // Adding Sprite for Enemy Pokemon
+        for (let i = 0; i < allPokemon.length; i++)
+            if(pokemon1 == allPokemon[i]) {
+                let enemyPokemon = document.getElementById("enemyPokemon")
+                let pokemon2Box = document.createElement("img")
+                pokemon2Box.setAttribute("id", "playerPokemonBack")
+                pokemon2Box.src = pokemon2.front
+                enemyPokemon.appendChild(pokemon2Box)
+        };
 
 
 
-        $("#move1 .class:first-of-type").text(move1.name);
-        $("#move2 .class:first-of-type").text(move2.name);
-        $("#move3 .class:first-of-type").text(move3.name);
-        $("#move4 .class:first-of-type").text(move4.name);
 
-        console.log(moves);
-        console.log(pokemon1);
-        console.log(pokemon2);
-        console.log(move1);
-        console.log(move2);
-        console.log(move3);
-        console.log(move4);
-
-        // Main Gameplay
-
-        $("#moveButton1").click(() => {
+        $("#move1").click(() => {
             
             disableButtons();
             let i = Math.floor(Math.random() * 4);
@@ -245,7 +228,7 @@ $(function() {
         });
 
     
-        $("#moveButton2").click(() => {
+        $("#move2").click(() => {
             
             disableButtons();
             let i = Math.floor(Math.random() * 4);
@@ -267,7 +250,7 @@ $(function() {
             enableButtons();
         });
 
-        $("#moveButton3").click(() => {
+        $("#move3").click(() => {
             
             disableButtons();
             let i = Math.floor(Math.random() * 4);
@@ -289,7 +272,7 @@ $(function() {
             enableButtons();
         });
 
-        $("#moveButton4").click(() => {
+        $("#move4").click(() => {
             
             disableButtons();
             let i = Math.floor(Math.random() * 4);

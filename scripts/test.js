@@ -191,12 +191,13 @@ $(function() {
         
         //  Adding Pokemon Sprite
         // console.log([pokemon1.back])
-        for (let i = 0; i < allPokemon.length; i++)
-            if(pokemon1 == allPokemon[i]) {
-                let playerPokemon = document.getElementById("playerPokemon")
-                let playerBack = pokemon1.back
-                playerPokemon.appendChild(playerBack)
-            };
+        // for (let i = 0; i < allPokemon.length; i++)
+        //     if(pokemon1 == allPokemon[i]) {
+        //         let playerPokemon = document.getElementById("playerPokemon")
+        //         let playerBack = document.createElement("div")
+        //         playerback = pokemon1.back
+        //         playerPokemon.appendChild(playerBack)
+        //     };
 
 
 
