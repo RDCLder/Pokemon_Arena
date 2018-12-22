@@ -7,7 +7,7 @@ body {
 
 #leftTop {
     height: 70%;
-    
+    padding: 0;
 }
 
 #leftBottm {
@@ -19,8 +19,24 @@ body {
     width: 100%;
 }
 
-.col {
-    /* border: solid orange; */
+/* //////////////////////////////////////////////////////////////////////// */
+/* Battlefield */
+
+#enemyZone {
+    height: 35%;
+    width: 100%;
+}
+#neutralZone {
+    height: 30%;
+    width: 100%;
+}
+#playerZone {
+    height: 35%;
+    width: 100%;
+}
+#playerPokemonBack {
+    height: 100%;
+    width: 100%;
 }
 
 #enemyZone {

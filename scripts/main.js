@@ -6,18 +6,19 @@ $(function() {
     let moves = [[], []];
 
     // Retrieve data from API
-    $.get("https://pokeapi.co/api/v2/move/")
+    $.get("https://pokeapi.co/api/v2/move-damage-class/2/")
     .done((result) => {
-        for (let i = 0; i < 165; i ++) {
-            let moveName = result.results[i].name;
+        for (let i = 0; i < 74; i ++) {
+            let moveName = result.moves[i].name;
             moves[0].push(moveName);
 
             // Retrieve object from nested URL
-            $.get(result.results[i].url).done((result) => {
+            $.get(result.moves[i].url).done((result) => {
                 moves[1].push(result);
             });
         }
     })
+    
 
     // Retrieve data from API
     $.get("https://pokeapi.co/api/v2/pokemon/")
@@ -136,7 +137,6 @@ $(function() {
             let pokemon = new Pokemon(pokedex[i][0], pokedex[i][1]);
             allPokemon.push(pokemon);
         }
-
         for (let i = 0; i < moves[0].length; i ++) {
             let move = new Move(moves[0][i], moves[1][i]);
             let name = moves[0][i];
@@ -144,7 +144,7 @@ $(function() {
         }
 
         // console.log(allPokemon);
-        // console.log(allMoves);
+        // console.log(allMoves["barrage"]);
 
         // ------------------------------------------------------------------------------------
 
@@ -177,6 +177,33 @@ $(function() {
         let move2 = allMoves[pokemon1.moves[1]];
         let move3 = allMoves[pokemon1.moves[2]];
         let move4 = allMoves[pokemon1.moves[3]];
+        
+        //  Adding Pokemon Sprite
+
+        // console.log([pokemon1.back])
+
+        // Adding Sprite for Player Pokemon
+        for (let i = 0; i < allPokemon.length; i++)
+            if(pokemon1 == allPokemon[i]) {
+                let playerPokemon = document.getElementById("playerPokemon")
+                let pokemon1Box = document.createElement("img")
+                pokemon1Box.setAttribute("id", "playerPokemonBack")
+                pokemon1Box.src = pokemon1.back
+                playerPokemon.appendChild(pokemon1Box)
+            };
+
+        // Adding Sprite for Enemy Pokemon
+        for (let i = 0; i < allPokemon.length; i++)
+            if(pokemon1 == allPokemon[i]) {
+                let enemyPokemon = document.getElementById("enemyPokemon")
+                let pokemon2Box = document.createElement("img")
+                pokemon2Box.setAttribute("id", "playerPokemonBack")
+                pokemon2Box.src = pokemon2.front
+                enemyPokemon.appendChild(pokemon2Box)
+        };
+
+
+
 
         $("#move1").click(() => {
             
@@ -268,6 +295,7 @@ $(function() {
         });
 
         // ------------------------------------------------------------------------------------
+
 
     }, 5000)
 
