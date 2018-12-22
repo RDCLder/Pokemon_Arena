@@ -1,6 +1,7 @@
 // Main file to run
 
 $(function() {
+    
 
     let pokedex = [];
     let moves = [[], []];
@@ -167,6 +168,7 @@ $(function() {
         // ------------------------------------------------------------------------------------
 
         // Main Gameplay
+        
 
         let turn = 1;
         let i = Math.floor(Math.random() * allPokemon.length);
@@ -181,7 +183,7 @@ $(function() {
         //  Adding Pokemon Sprite
 
         // console.log([pokemon1.back])
-
+    
         // Adding Sprite for Player Pokemon
         for (let i = 0; i < allPokemon.length; i++)
             if(pokemon1 == allPokemon[i]) {
@@ -189,8 +191,10 @@ $(function() {
                 let pokemon1Box = document.createElement("img")
                 pokemon1Box.setAttribute("id", "playerPokemonBack")
                 pokemon1Box.src = pokemon1.back
-                playerPokemon.appendChild(pokemon1Box)
+                playerPokemon.appendChild(pokemon1Box)  
             };
+
+            
 
         // Adding Sprite for Enemy Pokemon
         for (let i = 0; i < allPokemon.length; i++)
@@ -300,3 +304,11 @@ $(function() {
     }, 5000)
 
 });
+// document.getElementById("playerPokemon")
+// var loopAlternate = anime({
+//     targets: '#playerPokemon',
+//     translateX: 50,
+//     loop: 5,
+//     direction: 'alternate'
+//   });
+    
