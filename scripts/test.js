@@ -121,6 +121,7 @@ $(function() {
             }
 
         }
+        
 
         // class Battle necessary?
 
