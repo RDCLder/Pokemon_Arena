@@ -304,11 +304,23 @@ $(function() {
     }, 5000)
 
 });
-// document.getElementById("playerPokemon")
-// var loopAlternate = anime({
-//     targets: '#playerPokemon',
-//     translateX: 50,
-//     loop: 5,
-//     direction: 'alternate'
-//   });
-    
+function wiggleclick(){
+document.getElementById("playerPokemon")
+var loop = anime({
+    targets: '#playerPokemon',
+    translateX: 50,
+    translateY: -90,
+    loop: 6,
+    direction: 'alternate'
+});
+}
+function wiggleclick2(){
+    document.getElementById("enemyPokemon")
+    var loop = anime({
+        targets: '#enemyPokemon',
+        translateX: -50,
+        translateY: 90,
+        loop: 6,
+        direction: 'alternate'
+    });
+    }

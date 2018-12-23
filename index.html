@@ -37,19 +37,19 @@
     <div class="row ">
 
       <!-- Start of Left Column -->
-      <div class="col-lg-7 col-sm-12 p-0">
+      <div class="col-lg-7 col-sm-12 m-0 p-0">
 
-        <div class="row border border-dark" id="leftTop">
-          <div class="col-12">
-              <div class="row bg-danger" id="enemyZone">
+        <div class="row border border-dark p-0" id="leftTop">
+          <div class="col-12 m-0 p-0">
+              <div class="row bg-danger m-0" id="enemyZone">
                 <div class="col-7">Turn 1</div>
-                <div class="col-5" id="enemyPokemon"></div>
+                <div class="col-5" id="enemyPokemon" onclick="wiggleclick2()" ></div>
               </div>
-              <div class="row bg-warning" id="neutralZone">
+              <div class="row bg-warning m-0" id="neutralZone">
               </div>
-              <div class="row bg-info" id="playerZone">
-                <div class="col-5" id="playerPokemon "></div>
-                <div class="col-1" id="wiggle"></div>
+              <div class="row bg-info m-0" id="playerZone">
+                <div class="col-5" id="playerPokemon" onclick="wiggleclick()" ></div>
+                
                 <div class="col-6"></div>
               </div>
           </div>
@@ -173,7 +173,6 @@
   <!-- Start of JavaScript -->
   <script src="https://unpkg.com/animejs@2.2.0/anime.min.js"></script>
   <script src="scripts/main.js"></script>
-  <script src="scripts/test.js"></script>
   <!-- End of JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
     crossorigin="anonymous"></script>
