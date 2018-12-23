@@ -304,11 +304,46 @@ $(function() {
     }, 5000)
 
 });
-document.getElementById("playerPokemon")
-var loopAlternate = anime({
-    targets: '#loopAlternate .el',
-    translateX: 50,
-    loop: 5,
-    direction: 'alternate'
-  });
+
+// Pokemon Physical Attack Animation
+
+// document.getElementById("playerPokemon")
+// let pokemon1Attack = anime({
+//     targets: '#playerPokemon',
+//     translateX: 50,
+//     translateY: -60,
+//     loop: true,
+//     direction: 'alternate',
+//   });
     
+// document.getElementById("enemyPokemon")
+// let pokemon2Attack = anime({
+//     targets: '#enemyPokemon',
+//     translateX: 50,
+//     translateY: -20,
+//     loop: true,
+//     direction: 'alternate',
+//   });
+
+// Pokemon Special Attack Animation
+
+let moveCircle = document.getElementById("circleStart")
+let specialAttackImg = document.createElement("div")
+specialAttackImg.setAttribute("id", "specialAttack")
+moveCircle.appendChild(specialAttackImg)  
+
+let pokemon1SpecialAttack = anime.timeline({
+    targets: moveCircle,
+    delay: 1000,
+    duration: 2500,
+    easing: 'easeOutExpo',   
+    loop: true,
+  });
+  pokemon1SpecialAttack
+  .add({
+    translateX: 200,
+    translateY: -200,
+    opacity: .5,
+    scale: 2,
+  })
+ 
