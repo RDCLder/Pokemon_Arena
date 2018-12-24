@@ -337,29 +337,34 @@ $(function() {
 
 
 // Pokemon Special Attack Animation
-function pokemon1SpecialAttackPokemon2 (){
-    let player1SpecialAttack = document.getElementById("playerPokemon")
-    let specialAttackImg = document.createElement("div")
-    specialAttackImg.setAttribute("id", "specialAttack")
-    player1SpecialAttack.appendChild(specialAttackImg)  
+// function pokemon1SpecialAttackPokemon2 (){
+//     let playerPokemon1 = document.getElementById("playerPokemon")
+//     let specialAttackImg = document.createElement("div")
+//     specialAttackImg.setAttribute("id", "specialAttack")
+//     playerPokemon1.appendChild(specialAttackImg)  
 
-    let pokemon1SpecialAttack = anime.timeline({
-        targets: specialAttackImg,
-        delay: 3000,
-        duration: 2500,
-        easing: 'easeOutExpo',   
-        loop: 1,
-    });
-    pokemon1SpecialAttack
-    .add({
-        translateX: 300,
-        translateY: -250,
-        rotate: 270,
-        elasticity: 500,
-        opacity: .5,
-        scale: 2,
-    })
-}
+//     let pokemon1SpecialAttack = anime.timeline({
+//         targets: specialAttackImg,
+//         delay: 3000,
+//         duration: 2500,
+//         easing: 'easeOutExpo',   
+//         loop: 1,
+//     });
+//     pokemon1SpecialAttack
+//     .add({
+//         translateX: 300,
+//         translateY: -250,
+//         rotate: 270,
+//         elasticity: 500,
+//         opacity: .5,
+//         scale: 2,
+//         offset:0,
+//         complete: function(anim) {
+//             specialAttackImg.remove();
+//         }
+//     })
+ 
+// }
 
 // Background Image for battlefield
 
