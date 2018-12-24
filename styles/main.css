@@ -8,10 +8,11 @@ body {
 #leftTop {
     height: 70%;
     padding: 0;
+    width: 100%;
 }
 
 #leftBottm {
-    height: 30%;
+    height: 10%;
 }
 
 .row {
@@ -37,13 +38,15 @@ body {
 #playerPokemonBack {
     height: 100%;
     width: 100%;
+    z-index: 2;
 }
 #specialAttack{
-    transform: scale(.25) translate(-50px, 200px);
     background-color:black;
     width: 100px;
     height:100px;
     border-radius:50%;
+    position: absolute;
+    z-index: 10;
   }
 #specialAttack:before{
     content: '';
@@ -56,21 +59,54 @@ body {
     border-bottom-right-radius: 88px;
     left: 53px;
     top: 25px;
+    z-index: 10;
 }
-/* #specialAttack:after{
-    content: '';
-    width: 68px;
-    height: 52px;
-    background-color: white;
+
+#enemyPokemonFront {
+    height: 100%;
+    width: 100%;
+
+}
+/* //////////////////////////////////////////////////////////////////////////////////// */
+/* Testing */
+
+/* #enemyPokemonHit {
+    margin: 2em;
+    border: 3px solid red;
+    background: blue;
+    width: 50px;
+    height: 50px;
     position: absolute;
-    left: 4px;
-    top: -11px;
-    transform: rotateZ(200deg);
-} */
-#circleStart {
-    /* justify-content: left; */
+    transform: rotate(20deg);
+    z-index: 10;
+  }
+  
+#enemyPokemonHit:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 50px;
+    width: 50px;
+    background: blue;
+    transform: rotate(135deg);
+    z-index: 10;
+    }
+
+#enemyPokemonHit:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 50px;
+    width: 50px;
+    transform: rotate(135deg);
+    box-shadow: 0 0 0 3px red;
+    mix-blend-mode:overlay;
+    z-index: 10;
 }
-    
+   */
+
 /* /////////////////////////////////////////////////////////////////////////// */
 /* Buttons */
 
