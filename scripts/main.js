@@ -180,30 +180,6 @@ $(function() {
         let move3 = allMoves[pokemon1.moves[2]];
         let move4 = allMoves[pokemon1.moves[3]];
         
-        //  Adding Pokemon Sprite
-
-        // console.log([pokemon1.back])
-    
-        // Adding Sprite for Player Pokemon
-        for (let i = 0; i < allPokemon.length; i++)
-            if(pokemon1 == allPokemon[i]) {
-                let playerPokemon = document.getElementById("playerPokemon");
-                let pokemon1Box = document.createElement("img");
-                pokemon1Box.setAttribute("id", "playerPokemonBack");
-                pokemon1Box.src = pokemon1.back;
-                playerPokemon.appendChild(pokemon1Box);
-            };
-            
-
-        // Adding Sprite for Enemy Pokemon
-        for (let i = 0; i < allPokemon.length; i++)
-            if(pokemon1 == allPokemon[i]) {
-                let enemyPokemon = document.getElementById("enemyPokemon");
-                let pokemon2Box = document.createElement("img");
-                pokemon2Box.setAttribute("id", "enemyPokemonFront");
-                pokemon2Box.src = pokemon2.front;
-                enemyPokemon.appendChild(pokemon2Box);
-        };
 
 
         $("#move1").click(() => {
@@ -301,6 +277,33 @@ $(function() {
     }, 5000)
 
 });
+
+    //  Adding Pokemon Sprite
+
+
+    // Adding Sprite for Player Pokemon
+    for (let i = 0; i < allPokemon.length; i++)
+        if(pokemon1 == allPokemon[i]) {
+            let playerPokemon = document.getElementById("playerPokemon");
+            let pokemon1Box = document.createElement("img");
+            pokemon1Box.setAttribute("id", "playerPokemonBack");
+            pokemon1Box.src = pokemon1.back;
+            playerPokemon.appendChild(pokemon1Box);
+        };
+        
+
+    // Adding Sprite for Enemy Pokemon
+    for (let i = 0; i < allPokemon.length; i++)
+        if(pokemon1 == allPokemon[i]) {
+            let enemyPokemon = document.getElementById("enemyPokemon");
+            let pokemon2Box = document.createElement("img");
+            pokemon2Box.setAttribute("id", "enemyPokemonFront");
+            pokemon2Box.src = pokemon2.front;
+            enemyPokemon.appendChild(pokemon2Box);
+    };
+
+
+
 
 // Pokemon Physical Attack Animation
 // function pokemon1AttackPokemon2 (){
