@@ -187,26 +187,23 @@ $(function() {
         // Adding Sprite for Player Pokemon
         for (let i = 0; i < allPokemon.length; i++)
             if(pokemon1 == allPokemon[i]) {
-                let playerPokemon = document.getElementById("playerPokemon")
-                let pokemon1Box = document.createElement("img")
-                pokemon1Box.setAttribute("id", "playerPokemonBack")
-                pokemon1Box.src = pokemon1.back
-                playerPokemon.appendChild(pokemon1Box)  
+                let playerPokemon = document.getElementById("playerPokemon");
+                let pokemon1Box = document.createElement("img");
+                pokemon1Box.setAttribute("id", "playerPokemonBack");
+                pokemon1Box.src = pokemon1.back;
+                playerPokemon.appendChild(pokemon1Box);
             };
-
             
 
         // Adding Sprite for Enemy Pokemon
         for (let i = 0; i < allPokemon.length; i++)
             if(pokemon1 == allPokemon[i]) {
-                let enemyPokemon = document.getElementById("enemyPokemon")
-                let pokemon2Box = document.createElement("img")
-                pokemon2Box.setAttribute("id", "playerPokemonBack")
-                pokemon2Box.src = pokemon2.front
-                enemyPokemon.appendChild(pokemon2Box)
+                let enemyPokemon = document.getElementById("enemyPokemon");
+                let pokemon2Box = document.createElement("img");
+                pokemon2Box.setAttribute("id", "enemyPokemonFront");
+                pokemon2Box.src = pokemon2.front;
+                enemyPokemon.appendChild(pokemon2Box);
         };
-
-
 
 
         $("#move1").click(() => {
@@ -306,44 +303,79 @@ $(function() {
 });
 
 // Pokemon Physical Attack Animation
-
-// document.getElementById("playerPokemon")
-// let pokemon1Attack = anime({
+// function pokemon1AttackPokemon2 (){
+//     document.getElementById("playerPokemon")
+//     let enemyPokemon = document.getElementById("enemyPokemon")
+//     anime.speed = 2;
+//     anime({
 //     targets: '#playerPokemon',
-//     translateX: 50,
+//     translateX: 40,
 //     translateY: -60,
-//     loop: true,
+//     loop: 2,
 //     direction: 'alternate',
-//   });
+//     });
+//     anime({
+//     targets: '#enemyPokemon',
+//     translateX: 20,
+//     loop: 2,
+//     direction: 'alternate',
+//     });
     
+
+// }
+
+
+
 // document.getElementById("enemyPokemon")
 // let pokemon2Attack = anime({
 //     targets: '#enemyPokemon',
-//     translateX: 50,
-//     translateY: -20,
+//     translateX: [0,50],
+//     translateY: [0,-40],
 //     loop: true,
 //     direction: 'alternate',
 //   });
 
+
 // Pokemon Special Attack Animation
+function pokemon1SpecialAttackPokemon2 (){
+    let player1SpecialAttack = document.getElementById("playerPokemon")
+    let specialAttackImg = document.createElement("div")
+    specialAttackImg.setAttribute("id", "specialAttack")
+    player1SpecialAttack.appendChild(specialAttackImg)  
 
-let moveCircle = document.getElementById("circleStart")
-let specialAttackImg = document.createElement("div")
-specialAttackImg.setAttribute("id", "specialAttack")
-moveCircle.appendChild(specialAttackImg)  
+    let pokemon1SpecialAttack = anime.timeline({
+        targets: specialAttackImg,
+        delay: 3000,
+        duration: 2500,
+        easing: 'easeOutExpo',   
+        loop: 1,
+    });
+    pokemon1SpecialAttack
+    .add({
+        translateX: 300,
+        translateY: -250,
+        rotate: 270,
+        elasticity: 500,
+        opacity: .5,
+        scale: 2,
+    })
+}
 
-let pokemon1SpecialAttack = anime.timeline({
-    targets: moveCircle,
-    delay: 1000,
-    duration: 2500,
-    easing: 'easeOutExpo',   
-    loop: true,
-  });
-  pokemon1SpecialAttack
-  .add({
-    translateX: 200,
-    translateY: -200,
-    opacity: .5,
-    scale: 2,
-  })
- 
+// Background Image for battlefield
+
+// let bg1 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d88ppxc-af4394dd-f0d5-4370-801e-13a781f9ae96.png"
+// let bg2 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d86i02s-5d7bc1ed-0c4f-4171-b48f-1dd1072ea7eb.png"
+// let bg3 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85ijvr-c2c4a900-5386-4a6a-bee8-5b73e5235ebf.png"
+// let bg4 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85jk85-38ec6987-8e11-49f8-a6af-8cf85bf53e17.png"
+// let bg5 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85jegc-5191a123-808e-48af-a9a1-d2049e23da43.png"
+// let battlefieldBackground = [bg1,bg2,bg3,bg4,bg5];
+// function setRandomBackground(){
+//     let randomBackground = battlefieldBackground[Math.floor(Math.random() * battlefieldBackground.length)]
+//     document.getElementById("leftTop");
+//     leftTop.style.backgroundImage = "url(" + randomBackground + ")";
+//     leftTop.style.backgroundRepeat = "no-repeat";
+//     leftTop.style.backgroundPosition = "center center";
+//     leftTop.style.backgroundAttachment = "fixed";
+//     leftTop.style.backgroundSize = "cover";
+// }
+// setRandomBackground()
