@@ -324,3 +324,4 @@ function wiggleclick2(){
         direction: 'alternate'
     });
     }
+    //
