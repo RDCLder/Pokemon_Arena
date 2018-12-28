@@ -7,11 +7,12 @@ body {
 
 #leftTop {
     height: 70%;
-    padding: 0;
+    padding: 0px;
 }
 
 #leftBottm {
     height: 30%;
+
 }
 
 .row {
@@ -54,7 +55,9 @@ button {
 #turnCounter {
     margin:0px;    
 }
-
+#sideBar{
+    height:646px;
+}
 
 /* /////////////////////////////////////////////////////////////////////////// */
 /* Navbar/Archived */
