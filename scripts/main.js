@@ -4,7 +4,7 @@ $(function() {
 
     let pokedex = [];
     let moves = [[], []];
-  
+
     // Retrieve move data from API
     $.get("https://pokeapi.co/api/v2/move/")
     .done((result) => {

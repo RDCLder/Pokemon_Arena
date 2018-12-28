@@ -55,8 +55,8 @@ button {
 #turnCounter {
     margin:0px;    
 }
-#sideBar{
-    height:646px;
+.sideBar{
+    height:590px;
 }
 
 /* /////////////////////////////////////////////////////////////////////////// */
