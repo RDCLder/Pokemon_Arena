@@ -2,15 +2,26 @@
 
 // Test Code Here
 
-console.log(
-    Math.floor(Math.random() * 2)
-);
+console.log(100 * 2 / 3);
 
 // ------------------------------------------------------------------------------
 
 // Archived Code
 
 // ------------------------------------------------------------------------------
+
+// $.get("https://pokeapi.co/api/v2/move-damage-class/2/")
+    // .done((result) => {
+    //     for (let i = 0; i < 74; i ++) {
+    //         let moveName = result.moves[i].name;
+    //         moves[0].push(moveName);
+
+    //         // Retrieve object from nested URL
+    //         $.get(result.moves[i].url).done((result) => {
+    //             moves[1].push(result);
+    //         });
+    //     }
+// })
 
 // const statusMoves = [
 //     {
