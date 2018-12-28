@@ -368,7 +368,98 @@ $(function() {
 //     })
  
 // }
+//////////////// Pokemon Status Effect Animation ////////////////
 
+// Sleep Aniimation
+// function pokemon2Sleeping(){
+//     let enemyPokemon = document.getElementById("enemyPokemon");
+//     let sleepingAnime = document.createElement("div");
+//     sleepingAnime.setAttribute("id","sleepingAnime");
+//     sleepingAnime.textContent = "ZzZ"
+//     enemyPokemon.appendChild(sleepingAnime)
+//     let sleepingAnime2 = document.createElement("div");
+//     sleepingAnime2.setAttribute("id","sleepingAnime2");
+//     sleepingAnime2.textContent = "ZzZ"
+//     enemyPokemon.appendChild(sleepingAnime2)
+
+//     anime.speed = .8; 
+//     anime({
+//         targets: sleepingAnime,
+//         translateX: -40,
+//         translateY: -40,
+//         scale: 2,
+//         loop: 2,
+//         complete: function(anim) {
+//             sleepingAnime.remove();
+//         } 
+//     });
+//     anime({
+//         targets: sleepingAnime2,
+//         delay: 200,
+//         translateX: -40,
+//         translateY: -40,
+//         scale: 2,
+//         loop: 2,
+//         complete: function(anim) {
+//             sleepingAnime2.remove();
+//         } 
+//     });
+// }
+// function pokemon1Sleeping(){
+//     let playerPokemon = document.getElementById("playerPokemon");
+//     let sleepingAnime = document.createElement("div");
+//     sleepingAnime.setAttribute("id","sleepingAnime");
+//     sleepingAnime.textContent = "ZzZ"
+//     playerPokemon.appendChild(sleepingAnime)
+//     let sleepingAnime2 = document.createElement("div");
+//     sleepingAnime2.setAttribute("id","sleepingAnime2");
+//     sleepingAnime2.textContent = "ZzZ"
+//     playerPokemon.appendChild(sleepingAnime2)
+
+//     anime.speed = .6; 
+//     anime({
+//         targets: sleepingAnime,
+//         translateX: 40,
+//         translateY: -50,
+//         scale: 2,
+//         loop: 2,
+//         complete: function(anim) {
+//             sleepingAnime.remove();
+//         } 
+//     });
+//     anime({
+//         targets: sleepingAnime2,
+//         delay: 300,
+//         translateX: 40,
+//         translateY: -50,
+//         scale: 2,
+//         loop: 2,
+//         complete: function(anim) {
+//             sleepingAnime2.remove();
+//         } 
+//     });
+// }
+// Pokemon 1 Poison
+
+// function pokemon1Poison (){
+//     let playerPokemon = document.getElementById("playerPokemon");
+//     let poisonOverlay = document.createElement("div");
+//     poisonOverlay.setAttribute("id","poisonOverlay");
+//     playerPokemon.appendChild(poisonOverlay);
+//     anime.speed = .7;
+//     anime({
+//         targets: poisonOverlay,
+//         opacity: .8,
+//         easing: 'easeInOutSine',
+//         backgroundColor: '#9D2CA5',
+//         direction: 'alternate',
+//         complete: function (){
+//             poisonOverlay.remove();
+//         }
+//     })
+// }
+
+// Pokemon 1 
 // Background Image for battlefield
 
 // let bg1 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d88ppxc-af4394dd-f0d5-4370-801e-13a781f9ae96.png"
