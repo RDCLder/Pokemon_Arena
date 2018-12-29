@@ -2,13 +2,71 @@
 
 // Test Code Here
 
-console.log(100 * 2 / 3);
+console.log(Math.floor(70 * 100 / 512));
 
 // ------------------------------------------------------------------------------
 
 // Archived Code
 
 // ------------------------------------------------------------------------------
+
+// Initialize Gameplay
+
+// // Assign moves, types, and pp values
+// let moveArr = [];
+// let moveNameArr = [];
+// let moveClassArr = [];
+// let moveTypeArr = [];
+// let movePPLeftArr = [];
+
+// for (let i = 0; i < pokemon1.moves.length; i ++) {
+//     let move = pokemon1.moves[i];
+//     let moveName = move.upperName();
+//     // let moveName = move.name[0].toUpperCase() + move.name.slice(1, move.name.length);
+//     let moveClass = move.damage_class[0].toUpperCase() + move.damage_class.slice(1, move.damage_class.length);
+//     let moveType = move.type[0].toUpperCase() + move.type.slice(1, move.type.length);
+//     let movePPLeft = move.pp;
+//     moveArr.push(move);
+//     moveNameArr.push(moveName);
+//     moveClassArr.push(moveClass);
+//     moveTypeArr.push(moveType);
+//     movePPLeftArr.push(movePPLeft);
+// }
+
+// // Assign previous values to button text
+// $("#moveName1").text(moveNameArr[0]);
+// $("#moveClass1").text(moveClassArr[0]);
+// $("#moveType1").text(moveTypeArr[0]);
+// $("#movePP1").text(`${movePPLeftArr[0]}/${moveArr[0].pp}`);
+
+// if (moveArr.length > 1) {
+//     $("#moveName2").text(moveNameArr[1]);
+//     $("#moveClass2").text(moveClassArr[1]);
+//     $("#moveType2").text(moveTypeArr[1]);
+//     $("#movePP2").text(`${movePPLeftArr[1]}/${moveArr[1].pp}`);
+// }
+// else {
+//     $("#moveName2").text("None");
+//     $("#moveButton2").prop("disabled", true);
+// }
+
+// if (moveArr.length > 2) {
+//     $("#moveName3").text(moveNameArr[2]);
+//     $("#moveClass3").text(moveClassArr[2]);
+//     $("#moveType3").text(moveTypeArr[2]);
+//     $("#movePP3").text(`${movePPLeftArr[2]}/${moveArr[2].pp}`);
+
+//     $("#moveName4").text(moveNameArr[3]);
+//     $("#moveClass4").text(moveClassArr[3]);
+//     $("#moveType4").text(moveTypeArr[3]);
+//     $("#movePP4").text(`${movePPLeftArr[3]}/${moveArr[3].pp}`);
+// }
+// else {
+//     $("#moveName3").text("None");
+//     $("#moveName4").text("None");
+//     $("#moveButton3").prop("disabled", true);
+//     $("#moveButton4").prop("disabled", true);
+// }
 
 // $.get("https://pokeapi.co/api/v2/move-damage-class/2/")
     // .done((result) => {
