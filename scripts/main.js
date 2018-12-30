@@ -942,41 +942,178 @@ $(function() {
 //     });
 // }
 
-// Poison Animation
 
-function pokemon1Poison (){
+////////////////////Freeze Animation ////////////////
+
+function pokemon1Freeze(){
     let playerPokemon = document.getElementById("playerPokemon");
-    playerPokemon.style.webkitFilter = "grayscale(60%) sepia(0) hue-rotate(260deg)";
-    playerPokemon.style.filter = "grayscale(60%) sepia(0) hue-rotate(260deg)";
-    ///// Testing /////
-    // let poisonOverlay = document.createElement("img");
-    // poisonOverlay.setAttribute("id","poisonOverlay");
-    // let poisonOverlayImage = document.getElementById("playerPokemonBack").src;
-    // poisonOverlay.src = poisonOverlayImage;
-    // console.log(poisonOverlay)
-    // playerPokemon.appendChild(poisonOverlay);
-    // poisonOverlay.style.webkitMaskImage = "url("+poisonOverlay.src+")";
-    // poisonOverlay.style.webkitMaskMode = "alpha";
-    // poisonOverlay.style.webkitMaskSize = "100% 100%"
-    // poisonOverlay.style.maskImage = "url("+poisonOverlay.src+")";
-    // poisonOverlay.style.maskMode = "alpha";
-    // poisonOverlay.style.maskSize = "100% 100%";
-    // poisonOverlay.setAttribute("background-blend-mode","multiply")
-    // poisonOverlay.setAttribute("background-color","purple")
-    ///////////////////
-    
-        anime({
-        targets: playerPokemon,
-        translateX: 20,
-        loop: 2,
+    let freezeOverlay = document.createElement("div");
+    freezeOverlay.setAttribute("id","freezeOverlay");
+    playerPokemon.appendChild(freezeOverlay);
+    let pokemon1Frozen = document.getElementById("playerPokemonBack");
+        anime ({
+        targets: pokemon1Frozen,
         opacity: .8,
+        translateX: 1,
         easing: 'easeInOutSine',
         direction: 'alternate',
+        loop: 8,
+        duration: 300,
+        complete: function(){
+            freezeOverlay.remove()
+        }
+    })
+        anime ({
+        targets: freezeOverlay,
+        opacity: .6,
+        translateX: 2,
+        easing: 'easeInOutSine',
+        direction: 'alternate',
+        loop: 8,
+        duration: 300,
     })
 }
 
+
+//////////////////// Burn Animation////////////////////////
+
+// function pokemon1Burn(){
+//     let playerPokemon = document.getElementById("playerPokemon");
+//     let burnOverlay = document.createElement("div");
+//     burnOverlay.setAttribute("class","burnOverlay");
+//     playerPokemon.appendChild(burnOverlay);
+//     let i =1;
+//     while(i < 4){
+//         let burnOverlay = document.createElement("div")
+//         burnOverlay.className = "burnOverlay burnOverlay"+ i;
+//         playerPokemon.appendChild(burnOverlay);
+//         i++;
+//     }
+//     let playerPokemonImg = document.getElementById('playerPokemonBack')
+//     anime({
+//         targets: playerPokemonImg,
+//         translateX: 20, 
+//         loop:4,
+//         duration: 1300,
+//         easing: 'easeInOutSine',
+//         direction: 'alternate',
+//         filter: 'sepia(100%) saturate(1000%)',
+//         webkitFilter: 'sepia(100%) saturate(1000%)',
+//     })
+//     anime.speed = .9
+//     anime({
+//         targets: burnOverlay,
+//         translateX: 100,
+//         translateY:5,
+//         rotate: -45,
+//         scaleY: [{value: 1.2}, {value:0.9}],
+//         easing: 'easeInOutSine',
+//         duration: 1500,
+//         loop: 3,
+//         complete: function(){
+//             burnOverlay.remove();
+//         }
+//     });
+//     anime({
+//         targets: '.burnOverlay1',
+//         opacity: .8,
+//         translateX: 100,
+//         translateY:5,
+//         rotate: -45,
+//         scaleY: [{value: 1.2}, {value:0.9}],
+//         easing: 'easeInOutSine',
+//         delay: 75,
+//         duration: 1500,
+//         loop: 3, 
+//         complete: function(){
+//             document.querySelector('.burnOverlay1').remove();
+//         }  
+//     });
+//     anime({
+//         targets: '.burnOverlay2',
+//         opacity:.6,
+//         translateX: 100,
+//         translateY:5,
+//         rotate: -45,
+//         scaleY: [{value: 1.2}, {value:0.9}],
+//         easing: 'easeInOutSine',
+//         delay:150,
+//         duration: 1500,
+//         loop: 3,
+//         complete: function(){
+//             document.querySelector('.burnOverlay2').remove();
+//         }   
+//     });
+//     anime({
+//         targets: '.burnOverlay3',
+//         opacity:.4,
+//         translateX: 100,
+//         translateY:5,
+//         rotate: -45,
+//         scaleY: [{value: 1.2}, {value:0.9}],
+//         easing: 'easeInOutSine',
+//         delay:225,
+//         duration: 1500,
+//         loop: 3,
+//         complete: function(){
+//             document.querySelector('.burnOverlay3').remove();
+//         }   
+//     })
+// }
+
+// Poison Animation
+
+// function pokemon1Poison(){
+//     let playerPokemon = document.getElementById("playerPokemon");
+//     playerPokemon.style.webkitFilter = "grayscale(5%) sepia(0) hue-rotate(100deg)";
+//     playerPokemon.style.filter = "grayscale(5%) sepia(0) hue-rotate(100deg)";
+//     let poisonOverlay = document.createElement("div")
+//     poisonOverlay.setAttribute("id","poisonOverlay");
+//     playerPokemon.appendChild(poisonOverlay);
+//     let poisonOverlay2 = document.createElement("div")
+//     poisonOverlay2.setAttribute("id","poisonOverlay2");
+//     playerPokemon.appendChild(poisonOverlay2);
+//     // for(let i = 0; i < 2; i++){
+//     //     let poisonOverlay = document.createElement("div")
+//     //     poisonOverlay.className = "poisonOverlay"
+//     //     poisonOverlay.display="inline-block"
+//     //     playerPokemon.appendChild(poisonOverlay)
+//     // }
+
+//     anime.timeline({
+//         targets: playerPokemon,
+//         translateX: 10,
+//         loop: 2,
+//         opacity: .7,
+//         easing: 'easeInOutSine',
+//         direction: 'alternate',
+//     }).add({
+//         webkitFilter: "invert(100%)",
+//         filter: "invert(100%)",
+//     })
+//     anime({
+//         targets: poisonOverlay, poisonOverlay2,
+//         translateY: 30,
+//         loop: 2,
+//         easing: 'easeInOutSine',
+//         complete: function(){
+//             poisonOverlay.remove();
+//         }
+//     })
+//     anime({
+//         targets: poisonOverlay2,
+//         translateY: 30,
+//         loop: 2,
+//         easing: 'easeInOutSine',
+//         complete: function(){
+//             poisonOverlay2.remove();
+//         }
+//     })
+// }
+
 // Paralyze Animation
 
+////// Incomplete //////////
 // function pokemon1Paralyze(){
 //     let playerPokemon = document.getElementById("playerPokemon");
 //     playerPokemon.style.background = " linear-gradient(45deg, transparent 25%, transparent 25%) 0 -50px, linear-gradient(135deg, transparent 25%, transparent 25%) 0  -50px, linear-gradient(225deg, #ECEDDC 25%, transparent 25%), linear-gradient(315deg, #ECEDDC 25%, transparent 25%)"
@@ -988,6 +1125,7 @@ function pokemon1Poison (){
 
 //     });
 // }
+////////////////////////////
 
 // Player Lose Animation 
 // function player1Lost(){ 
@@ -1055,14 +1193,15 @@ let bg2 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/
 let bg3 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85ijvr-c2c4a900-5386-4a6a-bee8-5b73e5235ebf.png"
 let bg4 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85jk85-38ec6987-8e11-49f8-a6af-8cf85bf53e17.png"
 let bg5 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85jegc-5191a123-808e-48af-a9a1-d2049e23da43.png"
-let battlefieldBackground = [bg1,bg2,bg3,bg4,bg5];
+let bg6 = "https://i.imgur.com/wN17Epp.png"
+let battlefieldBackground = [bg1,bg2,bg3,bg4,bg5,bg6];
 function setRandomBackground(){
     let randomBackground = battlefieldBackground[Math.floor(Math.random() * battlefieldBackground.length)]
     document.getElementById("leftTop");
     leftTop.style.backgroundImage = "url(" + randomBackground + ")";
     leftTop.style.backgroundRepeat = "no-repeat";
     leftTop.style.backgroundPosition = "center center";
-    leftTop.style.backgroundAttachment = "fixed";
-    leftTop.style.backgroundSize = "cover";
+    leftTop.style.backgroundAttachment = "local";
+    leftTop.style.backgroundSize = "100% 100%";
 }
 setRandomBackground()
