@@ -941,27 +941,112 @@ $(function() {
 //         } 
 //     });
 // }
-// Pokemon 1 Poison
 
-// function pokemon1Poison (){
+// Poison Animation
+
+function pokemon1Poison (){
+    let playerPokemon = document.getElementById("playerPokemon");
+    playerPokemon.style.webkitFilter = "grayscale(60%) sepia(0) hue-rotate(260deg)";
+    playerPokemon.style.filter = "grayscale(60%) sepia(0) hue-rotate(260deg)";
+    ///// Testing /////
+    // let poisonOverlay = document.createElement("img");
+    // poisonOverlay.setAttribute("id","poisonOverlay");
+    // let poisonOverlayImage = document.getElementById("playerPokemonBack").src;
+    // poisonOverlay.src = poisonOverlayImage;
+    // console.log(poisonOverlay)
+    // playerPokemon.appendChild(poisonOverlay);
+    // poisonOverlay.style.webkitMaskImage = "url("+poisonOverlay.src+")";
+    // poisonOverlay.style.webkitMaskMode = "alpha";
+    // poisonOverlay.style.webkitMaskSize = "100% 100%"
+    // poisonOverlay.style.maskImage = "url("+poisonOverlay.src+")";
+    // poisonOverlay.style.maskMode = "alpha";
+    // poisonOverlay.style.maskSize = "100% 100%";
+    // poisonOverlay.setAttribute("background-blend-mode","multiply")
+    // poisonOverlay.setAttribute("background-color","purple")
+    ///////////////////
+    
+        anime({
+        targets: playerPokemon,
+        translateX: 20,
+        loop: 2,
+        opacity: .8,
+        easing: 'easeInOutSine',
+        direction: 'alternate',
+    })
+}
+
+// Paralyze Animation
+
+// function pokemon1Paralyze(){
 //     let playerPokemon = document.getElementById("playerPokemon");
-//     let poisonOverlay = document.createElement("div");
-//     poisonOverlay.setAttribute("id","poisonOverlay");
-//     playerPokemon.appendChild(poisonOverlay);
-//     anime.speed = .7;
+//     playerPokemon.style.background = " linear-gradient(45deg, transparent 25%, transparent 25%) 0 -50px, linear-gradient(135deg, transparent 25%, transparent 25%) 0  -50px, linear-gradient(225deg, #ECEDDC 25%, transparent 25%), linear-gradient(315deg, #ECEDDC 25%, transparent 25%)"
+//     playerPokemon.style.backgroundColor = "yellow"
+//     // let paralyzeOverlay = document.createElement("div");
+//     // paralyzeOverlay.setAttribute("id","paralyzeOverlay");
+//     // playerPokemon.appendChild(paralyzeOverlay);
 //     anime({
-//         targets: poisonOverlay,
-//         opacity: .8,
-//         easing: 'easeInOutSine',
-//         backgroundColor: '#9D2CA5',
-//         direction: 'alternate',
-//         complete: function (){
-//             poisonOverlay.remove();
-//         }
-//     })
+
+//     });
 // }
 
-// Pokemon 1 
+// Player Lose Animation 
+// function player1Lost(){ 
+//     // let playerLose = document.createElement("canvas")
+//     // playerLose.setAttribute("id","player1Lost")
+//     // let leftTop = document.getElementById("leftTop")
+//     // leftTop.appendChild(playerLose)
+//     let theCanvas = document.getElementById("player1Lost");
+//     let ctx = theCanvas.getContext("2d");
+
+//     //making the canvas full screen
+//     theCanvas.height =  window.innerHeight;
+//     theCanvas.width = window.innerWidth;
+
+//     //binaryNo characters - taken from the unicode charset
+//     let binaryNo = "YOULOSE!YOULOSE!YOULOSE!YOULOSE!YOULOSE!YOULOSE!YOULOSE!YOULOSE!YOULOSE!";
+//     //converting the string into an array of single characters
+//     binaryNo = binaryNo.split("");
+
+//     let font_size = 15;
+//     let columns = theCanvas.width/font_size; //number of columns for the rain
+//     //an array of drops - one per column
+//     let drops = [];
+//     //x below is the x coordinate
+//     //1 = y co-ordinate of the drop(same for every drop initially)
+//     for(let x = 0; x < columns; x++)
+//         drops[x] = 1; 
+
+//     //drawing the characters
+//     function draw()
+//     {
+//         //Black BG for the canvas
+//         //translucent BG to show trail
+//         ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+//         ctx.fillRect(0, 0, theCanvas.width, theCanvas.height);
+        
+//         ctx.fillStyle = "#FF0000"; //green text
+//         ctx.font = font_size + "px arial";
+//         //looping over drops
+//         for(let i = 0; i < drops.length; i++)
+//         {
+//             //a random binaryNo character to print
+//             let text = binaryNo[Math.floor(Math.random()*binaryNo.length)];
+//             //x = i*font_size, y = value of drops[i]*font_size
+//             ctx.fillText(text, i*font_size, drops[i]*font_size);
+            
+//             //sending the drop back to the top randomly after it has crossed the screen
+//             //adding a randomness to the reset to make the drops scattered on the Y axis
+//             if(drops[i]*font_size > theCanvas.height && Math.random() > 0.975)
+//                 drops[i] = 0;
+            
+//             //incrementing Y coordinate
+//             drops[i]++;
+//         }
+//     }
+
+//     setInterval(draw, 33);
+// }
+
 
 // Background Image for battlefield
 

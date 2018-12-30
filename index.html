@@ -18,7 +18,6 @@
 <body>
 
 <!-- ////////////////////////////////////////////////////////////////////////////// -->
-
   <div class="row">
     <div class="col"></div>
     <div class="col-1">
@@ -38,7 +37,7 @@
 
       <!-- Start of Left Column -->
       <div class="col-lg-7 col-sm-12 m-0 p-0">
-
+  
         <div class="row border border-dark" id="leftTop">
           <div class="col-12 m-0 p-0">
               <div class="row m-0" id="enemyZone">
@@ -52,7 +51,7 @@
                 <div class="col-3"></div>
               </div>
               <div class="row m-0" id="playerZone">
-                <div class="col-5" id="playerPokemon" onclick="pokemon1SpecialAttackPokemon2()"><div id="wiggle"></div></div>
+                <div class="col-5" id="playerPokemon"></div>
                 <div class="col-7" id="wiggles"></div>
               </div>
           </div>
@@ -82,7 +81,7 @@
             
             <!-- Move 1 -->
             <!-- <div class="col"> -->
-              <button id="moveButton1" style="width: 20%;">
+              <button id="moveButton1" style="width: 20%;" onclick="player1Lost()">
                 <div class="row justify-content-md-center" id="move1">Move 1</div>
                 <div class="row">
                   <div class="col">Normal</div>
@@ -165,7 +164,7 @@
     </div>
   </div>
   <!-- End of Container -->
-
+  <canvas id="player1Lost"></canvas>
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous">
