@@ -2,7 +2,9 @@
 
 // Test Code Here
 
-console.log(Math.floor(70 * 100 / 512));
+let test = 5;
+test += 5 + 5;
+console.log(test);
 
 // ------------------------------------------------------------------------------
 
