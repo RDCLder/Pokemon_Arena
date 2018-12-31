@@ -83,6 +83,126 @@ console.log(test);
     //     }
 // })
 
+// --------------------------------------------------------------------------------------------------------
+
+// Main Gameplay
+
+// $("#moveButton2").click(() => {
+            
+//     encounter.movePPLeftArr[1] --;
+//     $("#movePP2").text(`${encounter.movePPLeftArr[1]}/${encounter.moveArr[1].pp}`);
+//     encounter.disableButtons();
+//     let i = Math.floor(Math.random() * pokemon2.moves.length);
+//     let enemyMove = pokemon2.moves[i];
+//     let checkMessage1 = encounter.checkStatus(pokemon1);
+//     let checkMessage2 = encounter.checkStatus(pokemon2);
+//     console.log(checkMessage1);
+//     console.log(checkMessage2);
+//     if (pokemon2.speed[0] > pokemon1.speed[0]) {
+//         let message1 = pokemon2.useMove(encounter, enemyMove, pokemon1);
+//         pokemon2.lastMove = enemyMove;
+//         console.log(message1);
+//         if (pokemon1.alive() && pokemon2.alive()) {
+//             let message2 = pokemon1.useMove(encounter, encounter.moveArr[1], pokemon2);
+//             pokemon1.lastMove = encounter.moveArr[1];
+//             console.log(message2);
+//         }
+//     }
+//     else {
+//         let message1 = pokemon1.useMove(encounter, encounter.moveArr[1], pokemon2);
+//         pokemon1.lastMove = encounter.moveArr[1];
+//         console.log(message1);
+//         if (pokemon1.alive() && pokemon2.alive()) {
+//             let message2 = pokemon2.useMove(encounter, enemyMove, pokemon1);
+//             pokemon2.lastMove = enemyMove;
+//             console.log(message2);
+//         }
+//     }
+//     console.log(pokemon1.hpLeft());
+//     console.log(pokemon2.hpLeft());
+//     encounter.turn ++;
+//     // encounter.enableButtons();
+//     setTimeout(() => {encounter.enableButtons();}, 1000);
+// });
+
+// $("#moveButton3").click(() => {
+    
+//     encounter.movePPLeftArr[2] --;
+//     $("#movePP3").text(`${encounter.movePPLeftArr[2]}/${encounter.moveArr[2].pp}`);
+//     encounter.disableButtons();
+//     let i = Math.floor(Math.random() * pokemon2.moves.length);
+//     let enemyMove = pokemon2.moves[i];
+//     let checkMessage1 = encounter.checkStatus(pokemon1);
+//     let checkMessage2 = encounter.checkStatus(pokemon2);
+//     console.log(checkMessage1);
+//     console.log(checkMessage2);
+//     if (pokemon2.speed[0] > pokemon1.speed[0]) {
+//         let message1 = pokemon2.useMove(encounter, enemyMove, pokemon1);
+//         pokemon2.lastMove = enemyMove;
+//         console.log(message1);
+//         if (pokemon1.alive() && pokemon2.alive()) {
+//             let message2 = pokemon1.useMove(encounter, encounter.moveArr[2], pokemon2);
+//             pokemon1.lastMove = encounter.moveArr[2];
+//             console.log(message2);
+//         }
+//     }
+//     else {
+//         let message1 = pokemon1.useMove(encounter, encounter.moveArr[2], pokemon2);
+//         pokemon1.lastMove = encounter.moveArr[2];
+//         console.log(message1);
+//         if (pokemon1.alive() && pokemon2.alive()) {
+//             let message2 = pokemon2.useMove(encounter, enemyMove, pokemon1);
+//             pokemon2.lastMove = enemyMove;
+//             console.log(message2);
+//         }
+//     }
+//     console.log(pokemon1.hpLeft());
+//     console.log(pokemon2.hpLeft());
+//     encounter.turn ++;
+//     // encounter.enableButtons();
+//     setTimeout(() => {encounter.enableButtons();}, 1000);
+// });
+
+// $("#moveButton4").click(() => {
+    
+//     encounter.movePPLeftArr[3] --;
+//     $("#movePP4").text(`${encounter.movePPLeftArr[3]}/${encounter.moveArr[3].pp}`);
+//     encounter.disableButtons();
+//     let i = Math.floor(Math.random() * pokemon2.moves.length);
+//     let enemyMove = pokemon2.moves[i];
+//     let checkMessage1 = encounter.checkStatus(pokemon1);
+//     let checkMessage2 = encounter.checkStatus(pokemon2);
+//     console.log(checkMessage1);
+//     console.log(checkMessage2);
+//     if (pokemon2.speed[0] > pokemon1.speed[0]) {
+//         let message1 = pokemon2.useMove(encounter, enemyMove, pokemon1);
+//         pokemon2.lastMove = enemyMove;
+//         console.log(message1);
+//         if (pokemon1.alive() && pokemon2.alive()) {
+//             let message2 = pokemon1.useMove(encounter, encounter.moveArr[3], pokemon2);
+//             pokemon1.lastMove = encounter.moveArr[3];
+//             console.log(message2);
+//         }
+//     }
+//     else {
+//         let message1 = pokemon1.useMove(encounter, encounter.moveArr[3], pokemon2);
+//         pokemon1.lastMove = encounter.moveArr[3];
+//         console.log(message1);
+//         if (pokemon1.alive() && pokemon2.alive()) {
+//             let message2 = pokemon2.useMove(encounter, enemyMove, pokemon1);
+//             pokemon2.lastMove = enemyMove;
+//             console.log(message2);
+//         }
+//     }
+//     console.log(pokemon1.hpLeft());
+//     console.log(pokemon2.hpLeft());
+//     encounter.turn ++;
+//     // encounter.enableButtons();
+//     setTimeout(() => {encounter.enableButtons();}, 1000);
+// });
+
+// --------------------------------------------------------------------------------------------------------
+
 // const statusMoves = [
 //     {
 //         name: "recover",
