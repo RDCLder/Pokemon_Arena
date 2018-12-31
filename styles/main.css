@@ -58,6 +58,15 @@ button {
 .sideBar{
     height:590px;
 }
+#moveContent{
+    overflow-wrap: break-word;
+    text-align: inherit;
+    overflow: scroll;
+    margin-left: 5px;
+    margin-top: 0%;
+    height:547px;
+
+}
 
 /* /////////////////////////////////////////////////////////////////////////// */
 /* Navbar/Archived */

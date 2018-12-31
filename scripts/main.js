@@ -1356,29 +1356,34 @@ $(function() {
 
 
 
-        $("#move1").click(() => {
+        $("#moveButton1").click(() => {
             
             movePPLeftArr[0] --;
             $("#movePP1").text(`${movePPLeftArr[0]}/${moveArr[0].pp}`);
             disableButtons();
             checkStatus(pokemon1);
             checkStatus(pokemon2);
+            let battleText = document.getElementById('moveContent')
             let i = Math.floor(Math.random() * pokemon2.moves.length);
             let enemyMove = pokemon2.moves[i];
             if (pokemon2.speed[0] > pokemon1.speed[0]) {
                 let message1 = pokemon2.useMove(enemyMove, pokemon1);
                 console.log(message1);
+                battleText.textContent = message1;
                 if (pokemon1.alive() && pokemon2.alive()) {
                     let message2 = pokemon1.useMove(moveArr[0], pokemon2);
                     console.log(message2);
+                    battleText.textContent = message2;
                 }
             }
             else {
                 let message1 = pokemon1.useMove(moveArr[0], pokemon2);
                 console.log(message1);
+                battleText.textContent = message1
                 if (pokemon1.alive() && pokemon2.alive()) {
                     let message2 = pokemon2.useMove(enemyMove, pokemon1);
                     console.log(message2);
+                    battleText.textContent = message2
                 }
             }
             console.log(pokemon1.hpLeft());
@@ -1388,7 +1393,7 @@ $(function() {
         });
 
     
-        $("#move2").click(() => {
+        $("#moveButton2").click(() => {
             
             movePPLeftArr[1] --;
             $("#movePP2").text(`${movePPLeftArr[1]}/${moveArr[1].pp}`);
@@ -1419,7 +1424,7 @@ $(function() {
             enableButtons();
         });
 
-        $("#move3").click(() => {
+        $("#moveButton3").click(() => {
             
             movePPLeftArr[2] --;
             $("#movePP3").text(`${movePPLeftArr[2]}/${moveArr[2].pp}`);
@@ -1450,7 +1455,7 @@ $(function() {
             enableButtons();
         });
 
-        $("#move4").click(() => {
+        $("#moveButton4").click(() => {
             
             movePPLeftArr[3] --;
             $("#movePP4").text(`${movePPLeftArr[3]}/${moveArr[3].pp}`);
@@ -1505,5 +1510,7 @@ function wiggleclick2(){
         loop: 6,
         direction: 'alternate'
     });
-    }
+}
+
+
     //
