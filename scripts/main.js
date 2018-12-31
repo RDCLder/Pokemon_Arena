@@ -921,6 +921,7 @@ function pokemon1SpecialAttackPokemon2(){
         }
     })
 }
+
 //// Enemy Pokemon Special Attack
 function pokemon2SpecialAttackPokemon1(){
     let enemyPokemon1 = document.getElementById("enemyPokemon");
@@ -1019,6 +1020,7 @@ function pokemon2SpecialAttackPokemon1(){
         }
     })
 }
+
 //////////////// Pokemon Status Effect Animation ////////////////
 
 // Sleep Aniimation
