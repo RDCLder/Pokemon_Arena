@@ -11,11 +11,23 @@ samson
 
 ### MVP
 
-Pure turn-by-turn fighting
+- Get better backgrounds.
+    - Pay attention to whether they need to be resized.
+    - Make sure the backgrounds are compatible with the current code.
+
+- Improve the Sidebar content
+    - Rename things as needed.
+    - Use CSS as needed.
+
+- Consider turning all if-elseif-else statements in main.js file into switch statements to increase speed.
+
+---
+
+- Pure turn-by-turn fighting (done!)
     - Randomly generate one pokemon for both sides
         - Potentially scale to 6 when switch feature has been implemented
 
-- Implement button-events
+- Implement button-events (done!)
     - Tie the current js event listeners to their respective buttons
     - During encounters, make sure that the user can't spam buttons
         - Make sure buttons are disabled after a move has been selected
