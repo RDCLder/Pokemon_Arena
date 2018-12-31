@@ -58,9 +58,8 @@ button {
 .sideBar{
     height:590px;
 }
-#moveContent{
+#turnContent{
     overflow-wrap: break-word;
-    text-align: inherit;
     overflow: scroll;
     margin-left: 5px;
     margin-top: 0%;
