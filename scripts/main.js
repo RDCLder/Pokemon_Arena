@@ -92,10 +92,6 @@ $(function() {
                     if (critChance <= threshold) {
                         damage = damage * 2;
                     }
-                    if (damage > target.hp) {
-                        damage = target.hp;
-                    }
-
                     // Check for status effects that affect damage
                     if ("burned" in user.status) {
                         damage = Math.floor(damage / 2);
@@ -103,11 +99,23 @@ $(function() {
                     if ("dig" in target.status && this.name == "earthquake") {
                         damage = damage * 2;
                     }
-                    if (this.name == "jump-kick" && user == target) {
+                    // Check for specific moves that affect damage
+                    if (
+                        this.name == "jump-kick" ||
+                        this.name == "high-jump-kick" && 
+                        user == target
+                        ) {
                         damage = Math.floor(damage / 2);
                         if (damage > Math.floor(target.hp / 2)) {
                             damage = Math.floor(targe.hp / 2);
                         }
+                    }
+                    else if (this.name == "counter") {
+                        damage = damage * 2;
+                    }
+                    // Check that damage doesn't exceed target HP
+                    if (damage > target.hp) {
+                        damage = target.hp;
                     }
                     target.hp -= damage;
                     return damage;
@@ -436,7 +444,44 @@ $(function() {
                         }
                     }
 
+                    // Turn-based effects (e.g. skip turn, charge for x turns)
+                    else if (effect == "chargeTurn") {
+                        if (
+                            "chargeTurn" in target.status == false
+                        ) {
+                            target.status["chargeTurn"] = [duration += battle.turn];
+                            return ``;
+                        }
+                        else {
+                            return ``;
+                        }
+                    }
+                    
+                    else if (effect == "skipTurn") {
+                        if (
+                            "skipTurn" in target.status == false
+                        ) {
+                            target.status["skipTurn"] = [duration += battle.turn];
+                            return ``;
+                        }
+                        else {
+                            return ``;
+                        }
+                    }
+
                     // Other status conditions
+                    else if (effect == "bide") {
+                        if (
+                            "bide" in target.status == false
+                        ) {
+                            target.status["bide"] = [duration += battle.turn];
+                            return `\n${target.upperName()} is bidding its time!`;
+                        }
+                        else {
+                            return ``;
+                        }
+                    }
+                    
                     else if (effect == "bound") {
                         if (
                             "bound" in target.status == false
@@ -528,6 +573,18 @@ $(function() {
                         ) {
                             target.status["mist"] = [duration += battle.turn];
                             return `\n${target.upperName()} is shrouded in mist!`;
+                        }
+                        else {
+                            return ``;
+                        }
+                    }
+
+                    else if (effect == "rage") {
+                        if (
+                            "rage" in target.status == false
+                        ) {
+                            target.status["rage"] = [duration += battle.turn];
+                            return ``;
                         }
                         else {
                             return ``;
@@ -769,7 +826,7 @@ $(function() {
                 // "Copies the target's last used move."
                 else if (this.name == "mimic") {
                     if (
-                        typeof(target.lastMove) == "undefined" ||
+                        target.lastMove == "" ||
                         target.lastMove.name == "metronome" ||
                         target.lastMove.name == "mimic" ||
                         target.lastMove.name == "mirror-move"
@@ -777,7 +834,7 @@ $(function() {
                         return `It does nothing!`;
                     }
                     let mimicMessage = user.useMove(battle, target.lastMove, target);
-                    return mimicMessage;
+                    return `Mimic copied ${target.lastMove.upperName()}!\n` + mimicMessage;
                 }
 
                 // "Raises the user's evasion by one stage."
@@ -840,23 +897,26 @@ $(function() {
 
                 // "Randomly selects and uses any move in the game."
                 else if (this.name == "metronome") {
-                    let index = Math.floor(Math.random() * moves[0].length);
-                    let randomMove = allMoves[moves[0][index]];
-                    if (
-                        randomMove.name == "metronome" ||
-                        randomMove.name == "mimic" ||
-                        randomMove.name == "mirror-move"
-                    ) {
-                        return `It does nothing!`;
+                    var randomMove = "";
+                    while (randomMove == "") {
+                        let index = Math.floor(Math.random() * moves[0].length);
+                        randomMove = allMoves[moves[0][index]];
+                        if (
+                            randomMove.name == "metronome" ||
+                            randomMove.name == "mimic" ||
+                            randomMove.name == "mirror-move"
+                        ) {
+                            randomMove = "";
+                        }
                     }
                     let metronomeMessage = user.useMove(battle, randomMove, target);
-                    return metronomeMessage;
+                    return `Metronome selected ${randomMove.upperName()}!\n` + metronomeMessage;
                 }
 
                 // "Uses the target's last used move."
                 else if (this.name == "mirror-move") {
                     if (
-                        typeof(target.lastMove) == "undefined" ||
+                        target.lastMove == "" ||
                         target.lastMove.name == "metronome" ||
                         target.lastMove.name == "mimic" ||
                         target.lastMove.name == "mirror-move"
@@ -864,7 +924,7 @@ $(function() {
                         return `It does nothing!`;
                     }
                     let mirrorMessage = user.useMove(battle, target.lastMove, target);
-                    return mirrorMessage;
+                    return `Mirror-move copied ${target.lastMove.upperName()}!\n` + mirrorMessage;
                 }
 
                 // "User becomes a copy of the target until it leaves battle."
@@ -1036,7 +1096,10 @@ $(function() {
                 }
 
                 // "If the user misses, it takes half the damage it would have inflicted in recoil."
-                else if (this.name == "jump-kick") {
+                else if (
+                    this.name == "jump-kick" ||
+                    this.name == "high-jump-kick"
+                    ) {
                     let damage = this.damageCalc(user, target);
                     return `${target.upperName()} lost ${damage} HP!`;
                 }
@@ -1095,18 +1158,28 @@ $(function() {
                 }
 
                 // "Inflicts more damage to heavier targets, with a maximum of 120 power."
+                // For Gen 1, damage is not weight-based
                 else if (this.name == "low-kick") {
-                    return `Low-kick effect goes here`;
+                    let damage = this.damageCalc(user, target);
+                    let specialMessage = this.specialEffect(battle, target, "flinched", 30);
+                    return `${target.upperName()} lost ${damage} HP!` + specialMessage;
                 }
 
                 // "Inflicts twice the damage the user received from the last physical hit it took."
                 else if (this.name == "counter") {
-                    return `Counter effect goes here!`;
+                    if (target.lastMove.damage_class == "physical") {
+                        let damage = this.damageCalc(user, target);
+                        return `${target.upperName()} lost ${damage} HP!`;
+                    }
+                    else {
+                        return `It does nothing!`;
+                    }
                 }
 
                 // "Inflicts damage equal to the user's level."
                 else if (this.name == "seismic-toss") {
-                    return `Seismic-toss effect goes here!`;
+                    target.hp -= 50;
+                    return `${target.upperName()} lost ${50} HP!`;
                 }
 
                 // "Has an increased chance for a critical hit."
@@ -1133,12 +1206,14 @@ $(function() {
 
                 // "If the user is hit after using this move, its Attack rises by one stage."
                 else if (this.name == "rage") {
-                    return `Rage effect goes here!`;
+                    let damage = this.damageCalc(user, target);
+                    let specialMessage = this.specialEffect(battle, user, "rage");
+                    return `${target.upperName()} lost ${damage} HP!` + specialMessage;
                 }
 
                 // "User waits for two turns, then hits back for twice the damage it took."
                 else if (this.name == "bide") {
-                    return `Bide effect goes here!`;
+                    let specialMessage = this.specialEffect(battle, user, "bide", this.effectChance, 2);
                 }
 
                 // "User faints."
@@ -1146,12 +1221,15 @@ $(function() {
                     this.name == "self-destruct" ||
                     this.name == "explosion"
                     ) {
-                    return `Self-destruct effect goes here!`;
+                    let damage = this.damageCalc(user, target);
+                    return `${target.upperName()} lost ${damage} HP!`;
                 }
 
                 // "Raises the user's Defense by one stage. User charges for one turn before attacking."
                 else if (this.name == "skull-bash") {
-                    return `Skull-bash effect goes here!`;
+                    let statMessage = this.statEffect(user, "Defense", 1);
+                    let specialMessage = this.specialEffect(battle, user, "chargeTurn", 100, 1);
+                    return statMessage + specialMessage;
                 }
 
                 // "Has a $effect_chance% chance to lower the target's Speed by one stage."
@@ -1159,11 +1237,6 @@ $(function() {
                     let damage = this.damageCalc(user, target);
                     let statMessage = this.statEffect(target, "Speed", -1, this.effectChance);
                     return `${target.upperName()} lost ${damage} HP!` + statMessage;
-                }
-
-                // "If the user misses, it takes half the damage it would have inflicted in recoil."
-                else if (this.name == "high-jump-kick") {
-                    return `High-jump-kick effect goes here!`;
                 }
 
                 // "Drains half the damage inflicted to heal the user."
@@ -1177,7 +1250,9 @@ $(function() {
 
                 // "User charges for one turn before attacking. Has a $effect_chance% chance to make the target flinch."
                 else if (this.name == "sky-attack") {
-                    return `Sky-attack effect goes here!`;
+                    let specialMessage1 = this.specialEffect(battle, target, "chargeTurn", 100, 1);
+                    let specialMessage2 = this.specialEffect(battle, target, "flinched", this.effectChance);
+                    return specialMessage1 + specialMessage2;
                 }
 
                 // "Has a $effect_chance% chance to confuse the target."
@@ -1192,9 +1267,6 @@ $(function() {
                     let damage = Math.floor(target.hp / 2);
                     target.hp -= damage;
                     return `${target.upperName()} lost ${damage} HP!`;
-                }
-
-                else if (this.name == "") {
                 }
 
                 else {
@@ -1291,6 +1363,7 @@ $(function() {
                 // "User foregoes its next turn to recharge."
                 else if (this.name == "hyper-beam") {
                     let damage = this.damageCalc(user, target);
+                    let specialMessage = this.specialEffect(battle, user, "skipTurn", 100, 1);
                     return `${target.upperName()} lost ${damage} HP!`;
                 }
 
@@ -1334,7 +1407,9 @@ $(function() {
 
                 // "Prevents the target from fleeing and inflicts damage for 2-5 turns."
                 else if (this.name == "fire-spin") {
-                    return `Fire-spin effect goes here!`
+                    let duration = Math.floor(Math.random() * 4) + 2;
+                    let specialMessage = this.specialEffect(battle, target, "bound", this.effectChance, duration);
+                    return specialMessage;
                 }
 
                 // "Has a $effect_chance% chance to paralyze the target."
@@ -1367,7 +1442,8 @@ $(function() {
 
                 // "Inflicts damage equal to the user's level."
                 else if (this.name == "night-shade") {
-                    return `Night-shade effect goes here!`
+                    target.hp -= 50;
+                    return `${target.upperName()} lost ${50} HP!`;
                 }
 
                 // "Has a $effect_chance% chance to poison the target."
@@ -1514,16 +1590,13 @@ $(function() {
             // useMove method
             useMove(battle, move, target) {
                 // console.log(`${this.upperName()} Status: `, this.status);
-                // console.log(`${target.upperName()} Status: `, target.status);
-                let hitOrMiss = Math.floor(Math.random() * 100);
-                
+                // console.log(`${target.upperName()} Status: `, target.status);     
                 if ("paralyzed" in this.status) {
                     let skipMove = Math.floor(Math.random() * 4);
                     if (skipMove = 0) {
                         return ""
                     }
                 }
-
                 if ("confused" in this.status) {
                     let attackSelf = Math.floor(Math.random() * 3);
                     if (attackSelf == 0) {
@@ -1538,11 +1611,17 @@ $(function() {
                         return `${this.upperName()} attacks itself in confusion! \n${this.upperName()} lost ${damage} HP!`;
                     }
                 }
-
+                let hitOrMiss = Math.floor(Math.random() * 100); 
                 if (hitOrMiss > move.accuracy[0] && move.name != "swift") {
-                    if (move.name == "jump-kick") {
+                    if (
+                        move.name == "jump-kick" ||
+                        move.name == "high-jump-kick"
+                        ) {
                         let damage = move.damageCalc(this, this);
                         return `${this.upperName()} missed and kicked itself! ${this.upperName()} lost ${damage} HP!`;
+                    }
+                    else if (move.name == "explosion" || move.name == "self-destruct") {
+                        this.hp = 0;
                     }
                     return `${this.upperName()} missed!`;
                 }
@@ -1626,8 +1705,8 @@ $(function() {
                 this.enemy = pokemon2;
                 
                 // Assign moves and their properties to the move buttons
-                this.moveArr = [allMoves["mimic"], allMoves["metronome"], pokemon1.moves[2], pokemon1.moves[3]];
-                // this.moveArr = pokemon1.moves; // Array 
+                // this.moveArr = [allMoves["mimic"], allMoves["metronome"], pokemon1.moves[2], pokemon1.moves[3]];
+                this.moveArr = pokemon1.moves; // Array 
                 this.moveNameArr = [];
                 this.moveClassArr = [];
                 this.moveTypeArr = [];
@@ -1953,7 +2032,6 @@ $(function() {
             let checkMessage2 = encounter.checkStatus(pokemon2, pokemon1);
             console.log(checkMessage1);
             console.log(checkMessage2);
-
             if (pokemon2.speed[0] > pokemon1.speed[0]) {
                 let combatMessages1 = encounter.moveSequence(pokemon2, pokemon1, 0);
                 for (let message of combatMessages1) {
