@@ -822,54 +822,203 @@ $(function() {
 
 // Pokemon Special Attack Animation
 
-// function pokemon1SpecialAttackPokemon2(){
-//     let playerPokemon1 = document.getElementById("playerPokemon");
-//     let pokemon1SpecialAttack = document.createElement("div");
-//     pokemon1SpecialAttack.setAttribute("id","pokemon1SpecialAttack")
+/// Player Pokemon Special Attack Animation ///
+function pokemon1SpecialAttackPokemon2(){
+    let playerPokemon1 = document.getElementById("playerPokemon");
+    let specialAttack = document.createElement("div");
+    specialAttack.setAttribute("class","specialAttack");
 
-//     let specialAttack = document.createElementNS("http://www.w3.org/2000/svg","svg");
-//     specialAttack.setAttribute("id", "specialAttack");
-//     specialAttack.setAttribute("viewBox", "0 0 500 300")
-
-//     let specialAttackG = document.createElementNS("http://www.w3.org/2000/svg","g");
-//     specialAttackG.setAttribute("class","specialAttackG");
-//     specialAttackG.setAttribute("fill", "yellow");
-//     specialAttackG.setAttribute("stroke","orange");
-//     specialAttackG.setAttribute("stroke-width","10")
-//     specialAttack.appendChild(specialAttackG);
-
-//     let specialAttackLine1 = document.createElementNS("http://www.w3.org/2000/svg","line");
-//     specialAttackLine1.setAttribute("x1","0");
-//     specialAttackLine1.setAttribute("x2","100%");
-//     specialAttackLine1.setAttribute("y1","100%");
-//     specialAttackLine1.setAttribute("y2","0");
-
-//     let specialAttackLine2 = document.createElementNS("http://www.w3.org/2000/svg","line");
-//     specialAttackLine2.setAttribute("x1","10");
-//     specialAttackLine2.setAttribute("x2","100%");
-//     specialAttackLine2.setAttribute("y1","100%");
-//     specialAttackLine2.setAttribute("y2","0");
-    
-//     specialAttackG.appendChild(specialAttackLine1);
-//     specialAttackG.appendChild(specialAttackLine2);
-//     pokemon1SpecialAttack.appendChild(specialAttack);  
-//     playerPokemon1.appendChild(pokemon1SpecialAttack);
-
-//     let animation = anime({
-//         targets: '#pokemon1SpecialAttack .specialAttackG line',
-//         duration: 2500,
-//         strokeDashoffset: [anime.setDashoffset, 0],
-//         delay: function(el, i) { return i * 250 },
-//         easing: 'easeInOutSine', 
-//     });
-//     animation.add({
-//         complete: function() {
-//             pokemon1SpecialAttack.remove();
-//         }
-        
-//     });
-// }
-
+    playerPokemon1.appendChild(specialAttack);
+    let i = 1;
+    while(i < 6){
+        let specialAttack = document.createElement("div")
+        specialAttack.className = "specialAttack specialAttack"+ i;
+        playerPokemon1.appendChild(specialAttack);
+        i++;
+    }
+    let enemyPokemon = document.getElementById("enemyPokemonFront");
+    let pokemon2Hit = anime({
+        delay: 750,
+        targets: enemyPokemon,
+        translateX: 20,
+        scaleX: 1,
+        easing: 'easeInOutSine',
+        loop: 2,
+        direction: 'alternate',
+    })
+    pokemon2Hit.speed = .8
+    anime.speed = .9;
+    anime({
+        delay: 100,
+        targets: specialAttack,
+        translateX: 290,
+        translateY: -290,
+        scale: 1.2,
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            specialAttack.remove();
+        }
+    })
+    anime({
+        delay: 200,
+        targets: '.specialAttack1',
+        opacity: .85,
+        translateX: 290,
+        translateY: -290,
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            document.querySelector('.specialAttack1').remove();
+        }
+    })
+    anime({
+        delay: 300,
+        targets: '.specialAttack2',
+        opacity:.75,
+        translateX: 290,
+        translateY: -290,
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            document.querySelector('.specialAttack2').remove();
+        }
+    })
+    anime({
+        delay: 400,
+        targets: '.specialAttack3',
+        opacity:.65,
+        translateX: 290,
+        translateY: -290,
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            document.querySelector('.specialAttack3').remove();
+        }
+    })
+    anime({
+        delay: 500,
+        targets: '.specialAttack4',
+        opacity:.55,
+        translateX: 290,
+        translateY: -290,
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            document.querySelector('.specialAttack4').remove();
+        }
+    })
+    anime({
+        delay: 600,
+        targets: '.specialAttack5',
+        opacity:.45,
+        translateX: 290,
+        translateY: -290,
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            document.querySelector('.specialAttack5').remove();
+        }
+    })
+}
+//// Enemy Pokemon Special Attack
+function pokemon2SpecialAttackPokemon1(){
+    let enemyPokemon1 = document.getElementById("enemyPokemon");
+    let specialAttack = document.createElement("div");
+    specialAttack.setAttribute("class","specialAttack")
+    enemyPokemon1.appendChild(specialAttack);
+    let i = 1;
+    while(i < 6){
+        let specialAttack = document.createElement("div")
+        specialAttack.className = "specialAttack specialAttack"+ i;
+        enemyPokemon1.appendChild(specialAttack);
+        i++;
+    }
+    let playerPokemon = document.getElementById("playerPokemonBack");
+    let pokemon2Hit = anime({
+        delay: 750,
+        targets: playerPokemon,
+        translateX: -20,
+        scaleX: 1,
+        easing: 'easeInOutSine',
+        loop: 2,
+        direction: 'alternate',
+    })
+    pokemon2Hit.speed = .8
+    anime.speed = .9;
+    anime({
+        delay: 100,
+        targets: specialAttack,
+        translateX: -310,
+        translateY: 300,
+        scale: 1.,
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            specialAttack.remove();
+        }
+    })
+    anime({
+        delay: 200,
+        targets: '.specialAttack1',
+        opacity: .85,
+        translateX: -310,
+        translateY: 300,
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            document.querySelector('.specialAttack1').remove();
+        }
+    })
+    anime({
+        delay: 300,
+        targets: '.specialAttack2',
+        opacity:.75,
+        translateX: -310,
+        translateY: 300,
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            document.querySelector('.specialAttack2').remove();
+        }
+    })
+    anime({
+        delay: 400,
+        targets: '.specialAttack3',
+        opacity:.65,
+        translateX: -310,
+        translateY: 300,
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            document.querySelector('.specialAttack3').remove();
+        }
+    })
+    anime({
+        delay: 500,
+        targets: '.specialAttack4',
+        opacity:.55,
+        translateX: -310,
+        translateY: 300,
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            document.querySelector('.specialAttack4').remove();
+        }
+    })
+    anime({
+        delay: 600,
+        targets: '.specialAttack5',
+        opacity:.45,
+        translateX: -310,
+        translateY: 300,
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            document.querySelector('.specialAttack5').remove();
+        }
+    })
+}
 //////////////// Pokemon Status Effect Animation ////////////////
 
 // Sleep Aniimation
@@ -945,34 +1094,34 @@ $(function() {
 
 ////////////////////Freeze Animation ////////////////
 
-function pokemon1Freeze(){
-    let playerPokemon = document.getElementById("playerPokemon");
-    let freezeOverlay = document.createElement("div");
-    freezeOverlay.setAttribute("id","freezeOverlay");
-    playerPokemon.appendChild(freezeOverlay);
-    let pokemon1Frozen = document.getElementById("playerPokemonBack");
-        anime ({
-        targets: pokemon1Frozen,
-        opacity: .8,
-        translateX: 1,
-        easing: 'easeInOutSine',
-        direction: 'alternate',
-        loop: 8,
-        duration: 300,
-        complete: function(){
-            freezeOverlay.remove()
-        }
-    })
-        anime ({
-        targets: freezeOverlay,
-        opacity: .6,
-        translateX: 2,
-        easing: 'easeInOutSine',
-        direction: 'alternate',
-        loop: 8,
-        duration: 300,
-    })
-}
+// function pokemon1Freeze(){
+//     let playerPokemon = document.getElementById("playerPokemon");
+//     let freezeOverlay = document.createElement("div");
+//     freezeOverlay.setAttribute("id","freezeOverlay");
+//     playerPokemon.appendChild(freezeOverlay);
+//     let pokemon1Frozen = document.getElementById("playerPokemonBack");
+//         anime ({
+//         targets: pokemon1Frozen,
+//         opacity: .8,
+//         translateX: 1,
+//         easing: 'easeInOutSine',
+//         direction: 'alternate',
+//         loop: 8,
+//         duration: 300,
+//         complete: function(){
+//             freezeOverlay.remove()
+//         }
+//     })
+//         anime ({
+//         targets: freezeOverlay,
+//         opacity: .6,
+//         translateX: 2,
+//         easing: 'easeInOutSine',
+//         direction: 'alternate',
+//         loop: 8,
+//         duration: 300,
+//     })
+// }
 
 
 //////////////////// Burn Animation////////////////////////
