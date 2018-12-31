@@ -8,12 +8,12 @@ body {
 
 #leftTop {
     height: 70%;
-    padding: 0;
-    width: 100%;
+    padding: 0px;
 }
 
 #leftBottm {
-    height: 10%;
+    height: 30%;
+
 }
 
 .row {
@@ -251,7 +251,10 @@ button {
 }
 
 #turnCounter {
-    margin:0;    
+    margin:0px;    
+}
+.sideBar{
+    height:590px;
 }
 
 /* /////////////////////////////////////////////////////////////////////////// */
