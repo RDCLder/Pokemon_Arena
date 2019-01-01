@@ -48,27 +48,6 @@ button {
     border-radius: 7px;
 }
 
-.sideBar{
-    height: 590px;
-    /* background-color: #f9fdff; */
-    background-color: rgb(244, 250, 248);
-}
-
-.turnCount {
-    background-color: mintcream;
-    margin: 0;
-    /* margin-left: 1%;
-    margin-right: 1%; */
-}
-
-.turnContent {
-    /* background-color: #E9E4F0; */
-    margin: 0;
-    overflow-x: hidden;
-    /* margin-left: 1%;
-    margin-right: 1%; */
-}
-
 h3 {
     margin: 0;
     font-size: 2ch;
@@ -79,7 +58,7 @@ p {
     font-size: 1.5ch;
 }
 
-.tooltip {
+/* .tooltip {
     position: relative;
     display: inline-block;
     border-bottom: 1px dotted black;
@@ -94,7 +73,7 @@ text-align: center;
 border-radius: 6px;
 padding: 5px 0;
 
-/* Position the tooltip */
+/* Position the tooltip
 position: absolute;
 z-index: 1;
 bottom: 100%;
@@ -103,7 +82,26 @@ margin-left: -60px;
 }
 
 .tooltip:hover .tooltiptext {
-visibility: visible;
+visibility: visible; */
+
+.sideBar {
+    background-color: rgb(244, 250, 248);
+    height:590px;
+    overflow-wrap: break-word;
+    overflow: scroll;
+}
+
+.turnContent {
+    overflow-wrap: break-word;
+    /* overflow-x: hidden; */
+    overflow: scroll;
+    margin-left: 1%;
+    margin-top: 0%;
+    height:547px;
+}
+
+:disabled {
+    background-color: #696969
 }
 
 /* /////////////////////////////////////////////////////////////////////////// */

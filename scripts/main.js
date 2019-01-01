@@ -2092,6 +2092,21 @@ $(function() {
 
         // Main Gameplay
 
+            
+
+        // Adding Sprite for Enemy Pokemon
+        for (let i = 0; i < allPokemon.length; i++)
+            if(pokemon1 == allPokemon[i]) {
+                let enemyPokemon = document.getElementById("enemyPokemon")
+                let pokemon2Box = document.createElement("img")
+                pokemon2Box.setAttribute("id", "playerPokemonBack")
+                pokemon2Box.src = pokemon2.front
+                enemyPokemon.appendChild(pokemon2Box)
+        };
+
+
+
+
         $("#moveButton1").click(() => {
 
             encounter.disableButtons();
@@ -2144,7 +2159,7 @@ $(function() {
             setTimeout(() => {encounter.enableButtons();}, 1000);
         });
 
-        $("#move3").click(() => {
+        $("#moveButton3").click(() => {
             
             encounter.disableButtons();
             encounter.turnHistory(encounter.turn, "turnCount");
@@ -2170,7 +2185,7 @@ $(function() {
             setTimeout(() => {encounter.enableButtons();}, 1000);
         });
 
-        $("#move4").click(() => {
+        $("#moveButton4").click(() => {
             
             encounter.disableButtons();
             encounter.turnHistory(encounter.turn, "turnCount");
@@ -2220,5 +2235,9 @@ function wiggleclick2(){
         loop: 6,
         direction: 'alternate'
     });
-    }
+}
+
+var objDiv = document.getElementById(".sideBar");
+objDiv.scrollTop = objDiv.scrollHeight;
+
     //
