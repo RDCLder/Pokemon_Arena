@@ -1942,7 +1942,7 @@ $(function() {
                     delete target.status["substitute"];
                     allMessages.push(`\n${target.upperName()} is no longer substituted!`);
                 }
-                return allMessages.join(``);
+                return allMessages;
             }
 
             // Start of moveSequence method
@@ -1973,7 +1973,7 @@ $(function() {
                     allMessages.push(`${actingPokemon.upperName()} used Dig last turn!`);
                 }
                 else {
-                    let useMessage1 = `${actingPokemon.upperName()} used ${move1.upperName()}`;
+                    let useMessage1 = `${actingPokemon.upperName()} used ${move1.upperName()}!`;
                     let outcomeMessage1 = actingPokemon.useMove(this, move1, otherPokemon);
                     actingPokemon.lastMove = move1;
                     allMessages.push(useMessage1, outcomeMessage1);
@@ -1994,7 +1994,7 @@ $(function() {
                         allMessages.push(`${otherPokemon.upperName()} used Dig last turn!`);
                     }
                     else {
-                        let useMessage2 = `${otherPokemon.upperName()} used ${move2.upperName()}`;
+                        let useMessage2 = `${otherPokemon.upperName()} used ${move2.upperName()}!`;
                         let outcomeMessage2 = otherPokemon.useMove(this,  move2, actingPokemon);
                         otherPokemon.lastMove = move2;
                         allMessages.push(useMessage2, outcomeMessage2);
@@ -2075,9 +2075,8 @@ $(function() {
 
         // ------------------------------------------------------------------------------------
 
-        // Main Gameplay
+        // Initialize Gameplay
         
-
         let pokemonIndex1 = Math.floor(Math.random() * pokedex.length);
         let pokemonIndex2 = Math.floor(Math.random() * pokedex.length);
         // let pokemon1 = allPokemon[pokedex[pokemonIndex1][0]];
@@ -2092,8 +2091,6 @@ $(function() {
 
         // Main Gameplay
 
-            
-
         // Adding Sprite for Enemy Pokemon
         for (let i = 0; i < allPokemon.length; i++)
             if(pokemon1 == allPokemon[i]) {
@@ -2103,9 +2100,6 @@ $(function() {
                 pokemon2Box.src = pokemon2.front
                 enemyPokemon.appendChild(pokemon2Box)
         };
-
-
-
 
         $("#moveButton1").click(() => {
 

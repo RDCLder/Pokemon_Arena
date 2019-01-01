@@ -58,47 +58,20 @@ p {
     font-size: 1.5ch;
 }
 
-/* .tooltip {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black;
-  }
-  
-.tooltip .tooltiptext {
-visibility: hidden;
-width: 120px;
-background-color: black;
-color: #fff;
-text-align: center;
-border-radius: 6px;
-padding: 5px 0;
-
-/* Position the tooltip
-position: absolute;
-z-index: 1;
-bottom: 100%;
-left: 50%;
-margin-left: -60px;
-}
-
-.tooltip:hover .tooltiptext {
-visibility: visible; */
-
 .sideBar {
     background-color: rgb(244, 250, 248);
-    height:590px;
+    height: 590px;
     overflow-wrap: break-word;
     overflow: scroll;
 }
 
-.turnContent {
+/* .turnContent {
     overflow-wrap: break-word;
-    /* overflow-x: hidden; */
     overflow: scroll;
     margin-left: 1%;
     margin-top: 0%;
-    height:547px;
-}
+    height: 547px;
+} */
 
 :disabled {
     background-color: #696969
