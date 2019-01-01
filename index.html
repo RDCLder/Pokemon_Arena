@@ -41,16 +41,19 @@
 
         <div class="row border border-dark p-0 m-0" id="leftTop">
           <div class="col-12 m-0 p-0">
-              <div class="row bg-danger m-0" id="enemyZone">
+              <div class="row m-0" id="enemyZone">
                 <div class="col-7">Turn 1</div>
-                <div class="col-5" id="enemyPokemon" onclick="wiggleclick2()" ></div>
+                <div class="col-5" id="enemyPokemon"></div>
               </div>
-              <div class="row bg-warning m-0 " id="neutralZone">
+              <div class="row m-0" id="neutralZone">
+                <div class="col-3"></div>
+                <div class="col-3" id="circleStart"></div>
+                <div class="col-3" ></div>
+                <div class="col-3"></div>
               </div>
-              <div class="row bg-info m-0" id="playerZone">
-                <div class="col-5" id="playerPokemon" onclick="wiggleclick()" ></div>
-                
-                <div class="col-6"></div>
+              <div class="row m-0" id="playerZone">
+                <div class="col-5" id="playerPokemon" onclick="pokemon1Paralyze()"></div>
+                <div class="col-7" id="wiggles"></div>
               </div>
           </div>
         </div>
@@ -156,9 +159,10 @@
 <!-- ////////////////////////////////////////////////////////////////////////////// -->
 
       <!-- Start of Sidebar -->
-      <div class="sideBar col-lg-5 col-sm-12 border border-dark m-0 p-0">
-        <h3 class="turnCount m-0" style="background: #bdc3c7;">Turn Counter</h3>
-        <div class="turnContent" style="background: #E9E4F0;">Turn Content</div>
+      <div class="sideBar col-lg-5 col-sm-12 border border-dark m-0 p-0" id="sideBar" >
+        <div id="player"></div>
+      <h3 class="headturn m-0" style="background: #bdc3c7;"> Turn Counter</h3>
+      <div class="turnContent" style="background: #E9E4F0; ">
       </div>
       
       <!-- End of Sidebar -->

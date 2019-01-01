@@ -19,7 +19,6 @@ $(function() {
         }
     })
     
-
     // Retrieve pokemon data from API
     $.get("https://pokeapi.co/api/v2/pokemon/")
     .done((result) => {
@@ -38,8 +37,6 @@ $(function() {
     setTimeout(() => {
         
         // ------------------------------------------------------------------------------------
-
-        $('[data-toggle="tooltip"]').tooltip();
         
         // Class Definitions
 
@@ -1773,6 +1770,7 @@ $(function() {
                     $("#moveName4").text("None");
                     $("#moveButton4").prop("disabled", true);
                 }
+                $('[data-toggle="tooltip"]').tooltip();
             }
 
             // checkStatus method
@@ -2075,7 +2073,8 @@ $(function() {
 
         // ------------------------------------------------------------------------------------
 
-        // Initialize Gameplay
+        // Initialize Gameplay 
+        
         
         let pokemonIndex1 = Math.floor(Math.random() * pokedex.length);
         let pokemonIndex2 = Math.floor(Math.random() * pokedex.length);
@@ -2087,19 +2086,31 @@ $(function() {
         console.log(pokemon1);
         console.log(pokemon2);
 
+        // Assign sprites for both player and enemy pokemon
+        for (let i = 0; i < pokedex.length; i++){
+            if(pokemon1 == allPokemon[pokedex[i][0]]) {
+                let playerPokemon = document.getElementById("playerPokemon");
+                let pokemon1Box = document.createElement("img");
+                pokemon1Box.setAttribute("id", "playerPokemonBack");
+                pokemon1Box.src = pokemon1.back;
+                playerPokemon.appendChild(pokemon1Box);
+            };
+        }
+          
+        
+        for (let i = 0; i < pokedex.length; i++){
+            if(pokemon2 == allPokemon[pokedex[i][0]]) {
+                let enemyPokemon = document.getElementById("enemyPokemon");
+                let pokemon2Box = document.createElement("img");
+                pokemon2Box.setAttribute("id", "enemyPokemonFront");
+                pokemon2Box.src = pokemon2.front;
+                enemyPokemon.appendChild(pokemon2Box);
+            };
+
+        }
         // ------------------------------------------------------------------------------------
 
         // Main Gameplay
-
-        // Adding Sprite for Enemy Pokemon
-        for (let i = 0; i < allPokemon.length; i++)
-            if(pokemon1 == allPokemon[i]) {
-                let enemyPokemon = document.getElementById("enemyPokemon")
-                let pokemon2Box = document.createElement("img")
-                pokemon2Box.setAttribute("id", "playerPokemonBack")
-                pokemon2Box.src = pokemon2.front
-                enemyPokemon.appendChild(pokemon2Box)
-        };
 
         $("#moveButton1").click(() => {
 
@@ -2210,28 +2221,822 @@ $(function() {
     }, 3000)
 
 });
-function wiggleclick(){
-document.getElementById("playerPokemon")
-var loop = anime({
-    targets: '#playerPokemon',
-    translateX: 50,
-    translateY: -90,
-    loop: 6,
-    direction: 'alternate'
-});
-}
-function wiggleclick2(){
-    document.getElementById("enemyPokemon")
-    var loop = anime({
-        targets: '#enemyPokemon',
-        translateX: -50,
-        translateY: 90,
-        loop: 6,
-        direction: 'alternate'
+
+// Assign sprites for both player and enemy pokemon
+
+
+///// Pokemon Physical Attack Animation //////
+
+// Player Pokemon Physical Attack
+
+function pokemon1AttackPokemon2(){
+    let playerPokemon = document.getElementById("playerPokemon");
+    let enemyPokemon = document.getElementById("enemyPokemon");
+    let starHit = document.createElement("div");
+    starHit.setAttribute("id","enemyGetHit");
+    enemyPokemon.appendChild(starHit);
+    anime.speed = 2;
+    anime({
+        targets: playerPokemon,
+        translateX: '40%',
+        translateY: '-60%',
+        loop: 2,
+        direction: 'alternate',
+    });
+    anime({
+        targets: enemyPokemon,
+        translateX: '10%',
+        loop: 2,
+        direction: 'alternate',
+    });
+    let starAnimation = anime.timeline({
+        targets:"starHit",
+        duration: 2500,
+    });
+    starAnimation
+    .add({
+        complete: function(anim) {
+            starHit.remove();
+        }
+        
     });
 }
 
-var objDiv = document.getElementById(".sideBar");
-objDiv.scrollTop = objDiv.scrollHeight;
+// Enemy Pokemon Physical Attack
 
-    //
+function pokemon2AttackPokemon1(){
+    let enemyPokemon = document.getElementById("enemyPokemon");
+    let playerPokemon = document.getElementById("playerPokemon");
+    let starHit = document.createElement("div");
+    starHit.setAttribute("id","playerGetHit")
+    playerPokemon.appendChild(starHit)
+    anime.speed = 2;
+    anime({
+        targets: playerPokemon,
+        translateX: '-10%',
+        loop: 2,
+        direction: 'alternate',
+    });
+    anime({
+        targets: enemyPokemon,
+        translateX: '-40%',
+        translateY: '50%',
+        loop: 2,
+        direction: 'alternate',
+    });
+    let starAnimation = anime.timeline({
+        targets:"starHit",
+        duration: 2500,
+    });
+    starAnimation
+    .add({
+        complete: function() {
+            starHit.remove();
+        }
+        
+    });
+}
+
+
+
+
+// Pokemon Special Attack Animation
+
+/// Player Pokemon Special Attack Animation ///
+function pokemon1SpecialAttackPokemon2(){
+    let playerPokemon1 = document.getElementById("playerPokemon");
+    let specialAttack = document.createElement("div");
+    specialAttack.setAttribute("class","specialAttack");
+    specialAttack.style.left = "50%"
+    playerPokemon1.appendChild(specialAttack);
+    let i = 1;
+    while(i < 6){
+        let specialAttack = document.createElement("div")
+        specialAttack.className = "specialAttack specialAttack"+ i;
+        specialAttack.style.left = "50%"
+        playerPokemon1.appendChild(specialAttack);
+        i++;
+    }
+    let enemyPokemon = document.getElementById("enemyPokemonFront");
+    let pokemon2Hit = anime({
+        delay: 750,
+        targets: enemyPokemon,
+        translateX: '10%',
+        scaleX: 1,
+        easing: 'easeInOutSine',
+        loop: 2,
+        direction: 'alternate',
+    })
+    pokemon2Hit.speed = .8
+    anime.speed = .9;
+    anime({
+        delay: 100,
+        targets: specialAttack,
+        translateX: '300%',
+        translateY: '-300%',
+        scale: 1.2,
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            specialAttack.remove();
+        }
+    })
+    anime({
+        delay: 200,
+        targets: '.specialAttack1',
+        opacity: .85,
+        translateX: '300%',
+        translateY: '-300%',
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            document.querySelector('.specialAttack1').remove();
+        }
+    })
+    anime({
+        delay: 300,
+        targets: '.specialAttack2',
+        opacity:.75,
+        translateX: '300%',
+        translateY: '-300%',
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            document.querySelector('.specialAttack2').remove();
+        }
+    })
+    anime({
+        delay: 400,
+        targets: '.specialAttack3',
+        opacity:.65,
+        translateX: '300%',
+        translateY: '-300%',
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            document.querySelector('.specialAttack3').remove();
+        }
+    })
+    anime({
+        delay: 500,
+        targets: '.specialAttack4',
+        opacity:.55,
+        translateX: '300%',
+        translateY: '-300%',
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            document.querySelector('.specialAttack4').remove();
+        }
+    })
+    anime({
+        delay: 600,
+        targets: '.specialAttack5',
+        opacity:.45,
+        translateX: '300%',
+        translateY: '-300%',
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            document.querySelector('.specialAttack5').remove();
+        }
+    })
+}
+
+//// Enemy Pokemon Special Attack
+function pokemon2SpecialAttackPokemon1(){
+    let enemyPokemon1 = document.getElementById("enemyPokemon");
+    let specialAttack = document.createElement("div");
+    specialAttack.setAttribute("class","specialAttack")
+    specialAttack.style.top = "40%"
+    specialAttack.style.left = "20%"
+    enemyPokemon1.appendChild(specialAttack);
+    let i = 1;
+    while(i < 6){
+        let specialAttack = document.createElement("div")
+        specialAttack.className = "specialAttack specialAttack"+ i;
+        specialAttack.style.top = "40%"
+        specialAttack.style.left = "20%"
+        enemyPokemon1.appendChild(specialAttack);
+        i++;
+    }
+    let playerPokemon = document.getElementById("playerPokemonBack");
+    let pokemon2Hit = anime({
+        delay: 750,
+        targets: playerPokemon,
+        translateX: '-10%',
+        scaleX: 1,
+        easing: 'easeInOutSine',
+        loop: 2,
+        direction: 'alternate',
+    })
+    pokemon2Hit.speed = .8
+    anime.speed = .9;
+    anime({
+        delay: 100,
+        targets: specialAttack,
+        translateX: '-310%',
+        translateY: '300%',
+        scale: 1.,
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            specialAttack.remove();
+        }
+    })
+    anime({
+        delay: 200,
+        targets: '.specialAttack1',
+        opacity: .85,
+        translateX: '-310%',
+        translateY: '300%',
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            document.querySelector('.specialAttack1').remove();
+        }
+    })
+    anime({
+        delay: 300,
+        targets: '.specialAttack2',
+        opacity:.75,
+        translateX: '-310%',
+        translateY: '300%',
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            document.querySelector('.specialAttack2').remove();
+        }
+    })
+    anime({
+        delay: 400,
+        targets: '.specialAttack3',
+        opacity:.65,
+        translateX: '-310%',
+        translateY: '300%',
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            document.querySelector('.specialAttack3').remove();
+        }
+    })
+    anime({
+        delay: 500,
+        targets: '.specialAttack4',
+        opacity:.55,
+        translateX: '-310%',
+        translateY: '300%',
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            document.querySelector('.specialAttack4').remove();
+        }
+    })
+    anime({
+        delay: 600,
+        targets: '.specialAttack5',
+        opacity:.45,
+        translateX: '-310%',
+        translateY: '300%',
+        rotate: '5turn',
+        easing: 'linear',
+        complete: function(){
+            document.querySelector('.specialAttack5').remove();
+        }
+    })
+}
+
+//////////////// Pokemon Status Effect Animation ////////////////
+
+////// Sleep Aniimation
+
+/////// Enemy Pokemon Sleeping /////////////
+function pokemon2Sleeping(){
+    let enemyPokemon = document.getElementById("enemyPokemon");
+    let sleepingAnime = document.createElement("div");
+    sleepingAnime.setAttribute("id","sleepingAnime");
+    sleepingAnime.textContent = "ZzZ";
+    sleepingAnime.style.right = "50%"
+    enemyPokemon.appendChild(sleepingAnime)
+    let sleepingAnime2 = document.createElement("div");
+    sleepingAnime2.setAttribute("id","sleepingAnime2");
+    sleepingAnime2.textContent = "ZzZ"
+    sleepingAnime2.style.right = "50%"
+    enemyPokemon.appendChild(sleepingAnime2)
+    let sleepyPokemon = document.getElementById("enemyPokemonFront")
+    anime.speed = .9; 
+    let pokemon1Sleep = anime({
+        targets: sleepyPokemon,
+        loop: 2,
+        easing: 'easeInOutSine',
+        direction: 'alternate',
+        filter: 'grayscale(100%)',
+        webkitFilter: 'grayscale(100%)',
+    })
+    pokemon1Sleep.speed = .2;
+    anime({
+        targets: sleepingAnime,
+        translateX: '-200%',
+        translateY: '-100%',
+        scale: 2,
+        loop: 2,
+        complete: function() {
+            sleepingAnime.remove();
+        } 
+    });
+    anime({
+        targets: sleepingAnime2,
+        delay: 200,
+        translateX: '-200%',
+        translateY: '-100%',
+        scale: 2,
+        loop: 2,
+        complete: function() {
+            sleepingAnime2.remove();
+        } 
+    });
+}
+
+/////// Player Pokemon Sleeping ////////////////
+function pokemon1Sleeping(){
+    let playerPokemon = document.getElementById("playerPokemon");
+    let sleepingAnime = document.createElement("div");
+    sleepingAnime.setAttribute("id","sleepingAnime");
+    sleepingAnime.textContent = "ZzZ"
+    sleepingAnime.style.right = "20%"
+    playerPokemon.appendChild(sleepingAnime)
+    let sleepingAnime2 = document.createElement("div");
+    sleepingAnime2.setAttribute("id","sleepingAnime2");
+    sleepingAnime2.textContent = "ZzZ"
+    sleepingAnime2.style.right = "20%"
+    playerPokemon.appendChild(sleepingAnime2)
+    let sleepyPokemon = document.getElementById("playerPokemonBack")
+    anime.speed = .9; 
+    let pokemon1Sleep = anime({
+        targets: sleepyPokemon,
+        loop: 2,
+        easing: 'easeInOutSine',
+        direction: 'alternate',
+        filter: 'grayscale(100%)',
+        webkitFilter: 'grayscale(100%)',
+    })
+    pokemon1Sleep.speed = .2;
+    anime({
+        targets: sleepingAnime,
+        translateX: '200%',
+        translateY: '-100%',
+        scale: 2,
+        loop: 2,
+        complete: function() {
+            sleepingAnime.remove();
+        } 
+    });
+    anime({
+        targets: sleepingAnime2,
+        delay: 300,
+        translateX: '200%',
+        translateY: '-100%',
+        scale: 2,
+        loop: 2,
+        complete: function() {
+            sleepingAnime2.remove();
+        } 
+    });
+}
+
+
+////////////////////Freeze Animation ////////////////
+
+function pokemon1Freeze(){
+    let playerPokemon = document.getElementById("playerPokemon");
+    let freezeOverlay = document.createElement("div");
+    freezeOverlay.setAttribute("id","freezeOverlay");
+    freezeOverlay.style.bottom = "7%";
+    playerPokemon.appendChild(freezeOverlay);
+    let pokemon1Frozen = document.getElementById("playerPokemonBack");
+        anime ({
+        targets: pokemon1Frozen,
+        opacity: .8,
+        translateX: '1%',
+        easing: 'easeInOutSine',
+        direction: 'alternate',
+        loop: 8,
+        duration: 300,
+        complete: function(){
+            freezeOverlay.remove()
+        }
+    })
+        anime ({
+        targets: freezeOverlay,
+        opacity: .6,
+        translateX: '.5%',
+        easing: 'easeInOutSine',
+        direction: 'alternate',
+        loop: 8,
+        duration: 300,
+    })
+}
+function pokemon2Freeze(){
+    let enemyPokemon = document.getElementById("enemyPokemon");
+    let freezeOverlay = document.createElement("div");
+    freezeOverlay.setAttribute("id","freezeOverlay");
+    freezeOverlay.style.right = "0"
+    enemyPokemon.appendChild(freezeOverlay);
+    let pokemon2Frozen = document.getElementById("enemyPokemonFront");
+        anime ({
+        targets: pokemon2Frozen,
+        opacity: .8,
+        translateX: '1%',
+        easing: 'easeInOutSine',
+        direction: 'alternate',
+        loop: 8,
+        duration: 300,
+        complete: function(){
+            freezeOverlay.remove()
+        }
+    })
+        anime ({
+        targets: freezeOverlay,
+        opacity: .6,
+        translateX: '.5%',
+        easing: 'easeInOutSine',
+        direction: 'alternate',
+        loop: 8,
+        duration: 300,
+    })
+}
+
+
+//////////////////// Burn Animation////////////////////////
+
+///////// Player Pokemon Burn /////////////
+function pokemon1Burn(){
+    let playerPokemon = document.getElementById("playerPokemon");
+    let burnOverlay = document.createElement("div");
+    burnOverlay.setAttribute("class","burnOverlay");
+    burnOverlay.style.bottom = '15%';
+    burnOverlay.style.left = '30%';
+    playerPokemon.appendChild(burnOverlay);
+    let i =1;
+    while(i < 4){
+        let burnOverlay = document.createElement("div")
+        burnOverlay.className = "burnOverlay burnOverlay"+ i;
+        burnOverlay.style.bottom = '15%';
+        burnOverlay.style.left = '30%';
+        playerPokemon.appendChild(burnOverlay);
+        i++;
+    }
+    let playerPokemonImg = document.getElementById('playerPokemonBack')
+    anime({
+        targets: playerPokemonImg,
+        translateX: '10%', 
+        loop:4,
+        duration: 1300,
+        easing: 'easeInOutSine',
+        direction: 'alternate',
+        filter: 'sepia(100%) saturate(1000%)',
+        webkitFilter: 'sepia(100%) saturate(1000%)',
+    })
+    anime.speed = 1.2
+    anime({
+        targets: burnOverlay,
+        translateX: '400%',
+        translateY:'5%',
+        rotate: -45,
+        scaleY: [{value: 1.3}, {value:0.8}],
+        easing: 'easeInOutSine',
+        duration: 1500,
+        loop: 3,
+        complete: function(){
+            burnOverlay.remove();
+        }
+    });
+    anime({
+        targets: '.burnOverlay1',
+        opacity: .8,
+        translateX: '400%',
+        translateY:'5%',
+        rotate: -45,
+        scaleY: [{value: 1.3}, {value:0.8}],
+        easing: 'easeInOutSine',
+        delay: 75,
+        duration: 1500,
+        loop: 3, 
+        complete: function(){
+            document.querySelector('.burnOverlay1').remove();
+        }  
+    });
+    anime({
+        targets: '.burnOverlay2',
+        opacity:.6,
+        translateX: '400%',
+        translateY:'5%',
+        rotate: -45,
+        scaleY: [{value: 1.3}, {value:0.8}],
+        easing: 'easeInOutSine',
+        delay:150,
+        duration: 1500,
+        loop: 3,
+        complete: function(){
+            document.querySelector('.burnOverlay2').remove();
+        }   
+    });
+    anime({
+        targets: '.burnOverlay3',
+        opacity:.4,
+        translateX: '400%',
+        translateY:'5%',
+        rotate: -45,
+        scaleY: [{value: 1.3}, {value:0.8}],
+        easing: 'easeInOutSine',
+        delay:225,
+        duration: 1500,
+        loop: 3,
+        complete: function(){
+            document.querySelector('.burnOverlay3').remove();
+        }   
+    })
+}
+//////// Enemy Pokemon Burn ///////////////
+function pokemon2Burn(){
+    let enemyPokemon = document.getElementById("enemyPokemon");
+    let burnOverlay = document.createElement("div");
+    burnOverlay.setAttribute("class","burnOverlay");
+    burnOverlay.style.bottom = "10%";
+    burnOverlay.style.right = "30%"
+    enemyPokemon.appendChild(burnOverlay);
+    let i =1;
+    while(i < 4){
+        let burnOverlay = document.createElement("div")
+        burnOverlay.className = "burnOverlay burnOverlay"+ i;
+        burnOverlay.style.bottom = "10%";
+        burnOverlay.style.right = "30%"
+        enemyPokemon.appendChild(burnOverlay);
+        i++;
+    }
+    let enemyPokemonImg = document.getElementById('enemyPokemonFront')
+    anime({
+        targets: enemyPokemonImg,
+        translateX: '-10%', 
+        loop:4,
+        duration: 1300,
+        easing: 'easeInOutSine',
+        direction: 'alternate',
+        filter: 'sepia(100%) saturate(1000%)',
+        webkitFilter: 'sepia(100%) saturate(1000%)',
+    })
+    anime.speed = 1.2
+    anime({
+        targets: burnOverlay,
+        translateX: '-400%',
+        translateY:'-5%',
+        rotate: -45,
+        scaleY: [{value: 1.3}, {value:0.8}],
+        easing: 'easeInOutSine',
+        duration: 1500,
+        loop: 3,
+        complete: function(){
+            burnOverlay.remove();
+        }
+    });
+    anime({
+        targets: '.burnOverlay1',
+        opacity: .8,
+        translateX: '-400%',
+        translateY:'-5%',
+        rotate: -45,
+        scaleY: [{value: 1.3}, {value:0.8}],
+        easing: 'easeInOutSine',
+        delay: 75,
+        duration: 1500,
+        loop: 3, 
+        complete: function(){
+            document.querySelector('.burnOverlay1').remove();
+        }  
+    });
+    anime({
+        targets: '.burnOverlay2',
+        opacity:.6,
+        translateX: '-400%',
+        translateY:'-5%',
+        rotate: -45,
+        scaleY: [{value: 1.3}, {value:0.8}],
+        easing: 'easeInOutSine',
+        delay:150,
+        duration: 1500,
+        loop: 3,
+        complete: function(){
+            document.querySelector('.burnOverlay2').remove();
+        }   
+    });
+    anime({
+        targets: '.burnOverlay3',
+        opacity:.4,
+        translateX: '-400%',
+        translateY:'-5%',
+        rotate: -45,
+        scaleY: [{value: 1.3}, {value:0.8}],
+        easing: 'easeInOutSine',
+        delay:225,
+        duration: 1500,
+        loop: 3,
+        complete: function(){
+            document.querySelector('.burnOverlay3').remove();
+        }   
+    })
+}
+
+//////// Poison Animation /////////////////
+
+/////// Enemy Pokemon Poison
+function pokemon2Poison(){
+    let enemyPokemon = document.getElementById("enemyPokemon");
+    enemyPokemon.style.webkitFilter = "grayscale(5%) sepia(0) hue-rotate(100deg)";
+    enemyPokemon.style.filter = "grayscale(5%) sepia(0) hue-rotate(100deg)";
+    let poisonOverlay = document.createElement("div")
+    poisonOverlay.setAttribute("id","poisonOverlay");
+    enemyPokemon.appendChild(poisonOverlay);
+    let poisonOverlay2 = document.createElement("div")
+    poisonOverlay2.setAttribute("id","poisonOverlay2");
+    enemyPokemon.appendChild(poisonOverlay2);
+
+    anime.timeline({
+        targets: enemyPokemon,
+        translateX: '.75%',
+        loop: 2,
+        opacity: .7,
+        easing: 'easeInOutSine',
+        direction: 'alternate',
+    }).add({
+        webkitFilter: "invert(100%)",
+        filter: "invert(100%)",
+    })
+    anime({
+        targets: [poisonOverlay, poisonOverlay2,],
+        translateY: '100%',
+        loop: 2,
+        easing: 'easeInOutSine',
+        complete: function(){
+            poisonOverlay.remove();
+            poisonOverlay2.remove();
+        }
+    })
+}
+//////// Player Pokemon Poison
+function pokemon1Poison(){
+    let playerPokemon = document.getElementById("playerPokemon");
+    playerPokemon.style.webkitFilter = "grayscale(5%) sepia(0) hue-rotate(100deg)";
+    playerPokemon.style.filter = "grayscale(5%) sepia(0) hue-rotate(100deg)";
+    let poisonOverlay = document.createElement("div")
+    poisonOverlay.setAttribute("id","poisonOverlay");
+    playerPokemon.appendChild(poisonOverlay);
+    let poisonOverlay2 = document.createElement("div")
+    poisonOverlay2.setAttribute("id","poisonOverlay2");
+    playerPokemon.appendChild(poisonOverlay2);
+
+    anime.timeline({
+        targets: playerPokemon,
+        translateX: '-.75%',
+        loop: 2,
+        opacity: .7,
+        easing: 'easeInOutSine',
+        direction: 'alternate',
+    }).add({
+        webkitFilter: "invert(100%)",
+        filter: "invert(100%)",
+    })
+    anime({
+        targets: [poisonOverlay, poisonOverlay2,],
+        translateY: '100%',
+        loop: 2,
+        easing: 'easeInOutSine',
+        complete: function(){
+            poisonOverlay.remove();
+            poisonOverlay2.remove();
+        }
+    })
+}
+
+// Paralyze Animation
+
+////// Player Pokemon Paralyze ////////
+function pokemon1Paralyze() {
+    let playerPokemon = document.getElementById("playerPokemon");
+    let paralyzeOverlay = document.createElement("img");
+    paralyzeOverlay.setAttribute("id", "paralyzeOverlay");
+    paralyzeOverlay.src = "./images/lightning-3050.png";
+    paralyzeOverlay.style.top = "-20%";
+    paralyzeOverlay.style.left = "10%";
+    playerPokemon.appendChild(paralyzeOverlay);
+    let playerPokemonImg = document.getElementById('playerPokemonBack')
+    anime({
+        targets: playerPokemonImg,
+        translateX: '-10%', 
+        loop:4,
+        easing: 'easeInOutSine',
+        direction: 'alternate',
+        filter: 'sepia(100%) saturate(1000%)',
+        webkitFilter: 'sepia(100%) saturate(1000%)',
+    })
+    anime.timeline({
+        targets: paralyzeOverlay,
+        translateY: '50%',
+        scaleX: 1.2,
+        scaleY: 1.4,
+        loop: 2,
+        easing: 'linear',
+        direction: 'alternate'
+    }).add({
+        rotate: '1turn',
+        scaleX: 1.2,
+        scaleY: 1.4,
+        loop: 2,
+        duration: 1000,
+        easing: 'linear',
+        direction: 'normal',
+        complete: function (){
+            paralyzeOverlay.remove()
+        }
+    })
+};
+  
+
+////////////////////////////
+
+// Player Lose Animation 
+function player1Lost(){ 
+    let theCanvas = document.createElement("canvas");
+    theCanvas.setAttribute("id","player1Lost");
+    let leftTop = document.getElementById("leftTop");
+    leftTop.appendChild(theCanvas);
+    let ctx = theCanvas.getContext("2d");
+
+    //making the canvas fit
+    theCanvas.style.height = '100%';
+    theCanvas.style.width = '100%';
+
+    //binaryNo characters - taken from the unicode charset
+    let binaryNo = "YOULOSE!YOULOSE!YOULOSE!YOULOSE!YOULOSE!YOULOSE!YOULOSE!YOULOSE!";
+    //converting the string into an array of single characters
+    binaryNo = binaryNo.split("");
+
+    let font_size = 7;
+    let columns = theCanvas.width/font_size; //number of columns for the rain
+    //an array of drops - one per column
+    let drops = [];
+    //x below is the x coordinate
+    //1 = y co-ordinate of the drop(same for every drop initially)
+    for(let x = 0; x < columns; x++)
+        drops[x] = 1; 
+
+    //drawing the characters
+    function draw()
+    {
+        //Black BG for the canvas
+        //translucent BG to show trail
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, theCanvas.width, theCanvas.height);
+        
+        ctx.fillStyle = "#FF0000"; //green text
+        ctx.font = font_size + "px arial";
+        //looping over drops
+        for(let i = 0; i < drops.length; i++)
+        {
+            //a random binaryNo character to print
+            let text = binaryNo[Math.floor(Math.random()*binaryNo.length)];
+            //x = i*font_size, y = value of drops[i]*font_size
+            ctx.fillText(text, i*font_size, drops[i]*font_size);
+            
+            //sending the drop back to the top randomly after it has crossed the screen
+            //adding a randomness to the reset to make the drops scattered on the Y axis
+            if(drops[i]*font_size > theCanvas.height && Math.random() > 0.975)
+                drops[i] = 0;
+            
+            //incrementing Y coordinate
+            drops[i]++;
+        }
+    }
+
+    setInterval(draw, 33);
+}
+
+
+// Background Image for battlefield
+
+let bg1 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d88ppxc-af4394dd-f0d5-4370-801e-13a781f9ae96.png"
+let bg2 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d86i02s-5d7bc1ed-0c4f-4171-b48f-1dd1072ea7eb.png"
+let bg3 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85ijvr-c2c4a900-5386-4a6a-bee8-5b73e5235ebf.png"
+let bg4 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85jk85-38ec6987-8e11-49f8-a6af-8cf85bf53e17.png"
+let bg5 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85jegc-5191a123-808e-48af-a9a1-d2049e23da43.png"
+let bg6 = "https://i.imgur.com/wN17Epp.png"
+let battlefieldBackground = [bg1,bg2,bg3,bg4,bg5,bg6];
+function setRandomBackground(){
+    let randomBackground = battlefieldBackground[Math.floor(Math.random() * battlefieldBackground.length)]
+    let leftTop = document.getElementById("leftTop");
+    leftTop.style.backgroundImage = "url(" + randomBackground + ")";
+    leftTop.style.backgroundRepeat = "no-repeat";
+    leftTop.style.backgroundPosition = "center center";
+    leftTop.style.backgroundAttachment = "local";
+    leftTop.style.backgroundSize = "100% 100%";
+}
+setRandomBackground()
