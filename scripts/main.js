@@ -2242,9 +2242,6 @@ $(function() {
 
 });
 
-// Assign sprites for both player and enemy pokemon
-
-
 ///// Pokemon Physical Attack Animation //////
 
 // Player Pokemon Physical Attack
