@@ -39,6 +39,7 @@ $(function() {
         
         // ------------------------------------------------------------------------------------
 
+        $('[data-toggle="tooltip"]').tooltip();
         
         // Class Definitions
 
@@ -1704,14 +1705,7 @@ $(function() {
             allPokemon[name] = pokemon;
         }
 
-<<<<<<< HEAD
-        // console.log(allPokemon);
-        // console.log(allMoves["barrage"]);
-
-        // ------------------------------------------------------------------------------------
-=======
         class Battle {
->>>>>>> ui_branch
 
             constructor(pokemon1, pokemon2) {
                 this.turn = 1;
@@ -1740,12 +1734,16 @@ $(function() {
                 $("#moveClass1").text(this.moveClassArr[0]);
                 $("#moveType1").text(this.moveTypeArr[0]);
                 $("#movePP1").text(`${this.movePPLeftArr[0]}/${this.moveArr[0].pp}`);
+                $("#moveButton1").prop("title", this.moveArr[0].description);
+                // let testText = $("#moveButton1").prop("title");
+                // console.log(testText);
 
                 if (this.moveArr.length > 1) {
                     $("#moveName2").text(this.moveNameArr[1]);
                     $("#moveClass2").text(this.moveClassArr[1]);
                     $("#moveType2").text(this.moveTypeArr[1]);
                     $("#movePP2").text(`${this.movePPLeftArr[1]}/${this.moveArr[1].pp}`);
+                    $("#moveButton2").prop("title", this.moveArr[1].description);
                 }
                 else {
                     $("#moveName2").text("None");
@@ -1757,6 +1755,7 @@ $(function() {
                     $("#moveClass3").text(this.moveClassArr[2]);
                     $("#moveType3").text(this.moveTypeArr[2]);
                     $("#movePP3").text(`${this.movePPLeftArr[2]}/${this.moveArr[2].pp}`);
+                    $("#moveButton3").prop("title", this.moveArr[2].description);
                 }
                 else {
                     $("#moveName3").text("None");
@@ -1768,6 +1767,7 @@ $(function() {
                     $("#moveClass4").text(this.moveClassArr[3]);
                     $("#moveType4").text(this.moveTypeArr[3]);
                     $("#movePP4").text(`${this.movePPLeftArr[3]}/${this.moveArr[3].pp}`);
+                    $("#moveButton4").prop("title", this.moveArr[3].description);
                 }
                 else {
                     $("#moveName4").text("None");
@@ -2056,7 +2056,7 @@ $(function() {
             turnHistory(message, type) {
                 if (type == "turnCount") {
                     let $turnCount = $("<h3>");
-                    $turnCount.attr("class", "headturn");
+                    $turnCount.attr("class", "turnCount");
                     $turnCount.text("Turn " + message);
                     $(".sideBar").append($turnCount);
                 }
@@ -2092,32 +2092,6 @@ $(function() {
 
         // Main Gameplay
 
-<<<<<<< HEAD
-            
-
-        // Adding Sprite for Enemy Pokemon
-        for (let i = 0; i < allPokemon.length; i++)
-            if(pokemon1 == allPokemon[i]) {
-                let enemyPokemon = document.getElementById("enemyPokemon")
-                let pokemon2Box = document.createElement("img")
-                pokemon2Box.setAttribute("id", "playerPokemonBack")
-                pokemon2Box.src = pokemon2.front
-                enemyPokemon.appendChild(pokemon2Box)
-        };
-
-
-
-
-        $("#move1").click(() => {
-            
-            movePPLeftArr[0] --;
-            $("#movePP1").text(`${movePPLeftArr[0]}/${moveArr[0].pp}`);
-            disableButtons();
-            checkStatus(pokemon1);
-            checkStatus(pokemon2);
-            let i = Math.floor(Math.random() * pokemon2.moves.length);
-            let enemyMove = pokemon2.moves[i];
-=======
         $("#moveButton1").click(() => {
 
             encounter.disableButtons();
@@ -2126,7 +2100,6 @@ $(function() {
             let checkMessage2 = encounter.checkStatus(pokemon2, pokemon1);
             encounter.turnHistory(checkMessage1, "turnContent");
             encounter.turnHistory(checkMessage2, "turnContent");
->>>>>>> ui_branch
             if (pokemon2.speed[0] > pokemon1.speed[0]) {
                 let combatMessages1 = encounter.moveSequence(pokemon2, pokemon1, 0);
                 for (let message of combatMessages1) {
@@ -2145,12 +2118,7 @@ $(function() {
             setTimeout(() => {encounter.enableButtons();}, 1000);
         });
 
-<<<<<<< HEAD
-    
-        $("#move2").click(() => {
-=======
         $("#moveButton2").click(() => {
->>>>>>> ui_branch
             
             encounter.disableButtons();
             encounter.turnHistory(encounter.turn, "turnCount");
