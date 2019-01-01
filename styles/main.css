@@ -13,7 +13,7 @@ body {
     z-index: 0;
 }
 
-#leftBottm {
+#leftBottom {
     height: 30%;
 }
 
@@ -255,7 +255,8 @@ button {
 }
 
 .sideBar {
-    height:590px;
+    height:30rem;
+    width: 100%;
     overflow-wrap: break-word;
     overflow: scroll;
     background-color: rgb(244, 250, 248);
