@@ -18,15 +18,16 @@
 <body>
 
 <!-- ////////////////////////////////////////////////////////////////////////////// -->
-  <div class="row">
-    <div class="col"></div>
+
+  <div class="row" style="margin: 1%;">
+    <!-- <div class="col"></div>
     <div class="col-1">
-      <h5>samson</h5>
+      <h5>Name</h5>
     </div>
     <div class="col-2 justify-content-md-end">
       <button id="speaker"><i class="fas fa-volume-down"></i></button>
       <button id="setting"><i class="fas fa-cogs"></i></button>
-    </div>
+    </div> -->
   </div>
 
 <!-- ////////////////////////////////////////////////////////////////////////////// -->
@@ -81,7 +82,7 @@
             
             <!-- Move 1 -->
             <!-- <div class="col"> -->
-              <button id="moveButton1" style="width: 24%;">
+              <button id="moveButton1" data-toggle="tooltip" data-placement="top" title="Test text" style="width: 24%;">
                 <h6 id="moveName1">Move 1</h6>
                 <div class="row justify-content-md-between m-0" style="font-size: 10px;">
                   <div class="col-4 m-0 p-0" id="moveClass1">Class</div>
@@ -93,7 +94,7 @@
 
             <!-- Move 2 -->
             <!-- <div class="col"> -->
-              <button id="moveButton2" style="width: 24%;">
+              <button id="moveButton2" data-toggle="tooltip" data-placement="top" title= "moveButton2" style="width: 24%;">
                 <h6 id="moveName2">Move 2</h6>
                 <div class="row justify-content-md-between m-0" style="font-size: 10px;">
                   <div class="col-4 m-0 p-0" id="moveClass2">Class</div>
@@ -105,7 +106,7 @@
 
             <!-- Move 3 -->
             <!-- <div class="col"> -->
-              <button id="moveButton3" style="width: 24%;">
+              <button title="moveButton3" data-toggle="tooltip" data-placement="top" title="moveButton3" id="moveButton3" style="width: 24%;">
                 <h6 id="moveName3">Move 3</h6>
                 <div class="row justify-content-md-between m-0" style="font-size: 10px;">
                   <div class="col-4 m-0 p-0" id="moveClass3">Class</div>
@@ -117,7 +118,7 @@
 
             <!-- Move 4 -->
             <!-- <div class="col"> -->
-              <button id="moveButton4" style="width: 24%;">
+              <button title="moveButton4" data-toggle="tooltip" data-placement="top" title="moveButton4" id="moveButton4" style="width: 24%;">
                 <h6 id="moveName4">Move 4</h6>
                 <div class="row justify-content-md-between m-0" style="font-size: 10px;">
                   <div class="col-4 m-0 p-0" id="moveClass4">Class</div>
@@ -132,7 +133,7 @@
 
           <div class="row" style="margin: 1%;"></div>
 
-          <div class="row">
+          <!-- <div class="row">
             <h4 style="color: royalblue; margin-left: 2%;">Switch</h4>
           </div>
 
@@ -145,7 +146,7 @@
             <button id="chara6" style="width: 16%;">Char 6</button>
           </div>
 
-          <div class="row" style="margin: 1%;"></div>
+          <div class="row" style="margin: 1%;"></div> -->
 
         </div>
         <!-- End of Left Bottom -->
@@ -158,10 +159,10 @@
 <!-- ////////////////////////////////////////////////////////////////////////////// -->
 
       <!-- Start of Sidebar -->
-      <div class="sideBar col-lg-5 col-sm-12 border border-dark m-0 p-0" id="sideBar" >
-          <div id="player"></div>
-        <h3 class="headturn" style="background: #bdc3c7;"> Turn Counter</h3>
-        <p class="turnContent" style="background: #E9E4F0; "> goes here</p>
+      <div class="sideBar col-lg-5 col-sm-12 border border-dark m-0 p-0">
+        <div id="player"></div>
+        <h3 class="turnCount">Turn Count</h3>
+        <p class="turnContent">Turn Content</p>
         
         
       </div>
