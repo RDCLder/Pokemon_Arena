@@ -57,6 +57,11 @@ button {
 }
 .sideBar{
     height:590px;
+    overflow-wrap: break-word;
+    overflow: scroll;
+    
+    
+
 }
 #turnContent{
     overflow-wrap: break-word;
@@ -65,6 +70,9 @@ button {
     margin-top: 0%;
     height:547px;
 
+}
+:disabled{
+    background-color: #696969
 }
 
 /* /////////////////////////////////////////////////////////////////////////// */

@@ -2230,5 +2230,7 @@ function wiggleclick2(){
     });
 }
 
+var objDiv = document.getElementById(".sideBar");
+objDiv.scrollTop = objDiv.scrollHeight;
 
     //
