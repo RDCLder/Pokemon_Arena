@@ -2166,7 +2166,7 @@ $(function() {
             setTimeout(() => {encounter.enableButtons();}, 1000);
         });
 
-        $("#move3").click(() => {
+        $("#moveButton3").click(() => {
             
             encounter.disableButtons();
             encounter.turnHistory(encounter.turn, "turnCount");
@@ -2192,7 +2192,7 @@ $(function() {
             setTimeout(() => {encounter.enableButtons();}, 1000);
         });
 
-        $("#move4").click(() => {
+        $("#moveButton4").click(() => {
             
             encounter.disableButtons();
             encounter.turnHistory(encounter.turn, "turnCount");
