@@ -25,18 +25,23 @@ body {
 /* //////////////////////////////////////////////////////////////////////// */
 /* Battlefield */
 
-#enemyZone {
-    height: 35%;
-    width: 100%;
-}
-
-#neutralZone {
+#topPadding {
     height: 30%;
     width: 100%;
 }
 
+#enemyZone {
+    height: 30%;
+    width: 100%;
+}
+
+#neutralZone {
+    height: 10%;
+    width: 100%;
+}
+
 #playerZone {
-    height: 35%;
+    height: 30%;
     width: 100%;
 }
 

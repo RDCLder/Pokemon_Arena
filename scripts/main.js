@@ -2073,8 +2073,7 @@ $(function() {
 
         // ------------------------------------------------------------------------------------
 
-        // Initialize Gameplay 
-        
+        // Initialize Gameplay
         
         let pokemonIndex1 = Math.floor(Math.random() * pokedex.length);
         let pokemonIndex2 = Math.floor(Math.random() * pokedex.length);
@@ -2096,7 +2095,6 @@ $(function() {
                 playerPokemon.appendChild(pokemon1Box);
             };
         }
-          
         
         for (let i = 0; i < pokedex.length; i++){
             if(pokemon2 == allPokemon[pokedex[i][0]]) {
@@ -2106,8 +2104,8 @@ $(function() {
                 pokemon2Box.src = pokemon2.front;
                 enemyPokemon.appendChild(pokemon2Box);
             };
-
         }
+
         // ------------------------------------------------------------------------------------
 
         // Main Gameplay
@@ -3071,17 +3069,18 @@ function player1Lost(){
 
 // }, 3000); // End of setRandomBackground
 
-let bg1 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d88ppxc-af4394dd-f0d5-4370-801e-13a781f9ae96.png"
-let bg2 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d86i02s-5d7bc1ed-0c4f-4171-b48f-1dd1072ea7eb.png"
-let bg3 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85ijvr-c2c4a900-5386-4a6a-bee8-5b73e5235ebf.png"
-let bg4 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85jk85-38ec6987-8e11-49f8-a6af-8cf85bf53e17.png"
-let bg5 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85jegc-5191a123-808e-48af-a9a1-d2049e23da43.png"
-let bg6 = "https://i.imgur.com/wN17Epp.png"
+let bg1 = "images/backgrounds/background1.png";
+let bg2 = "images/backgrounds/background2.png";
+let bg3 = "images/backgrounds/background3.png";
+let bg4 = "images/backgrounds/background4.png";
+let bg5 = "images/backgrounds/background5.png";
+let bg6 = "images/backgrounds/background6.png";
 let battlefieldBackground = [bg1,bg2,bg3,bg4,bg5,bg6];
+
 function setRandomBackground(){
-    let randomBackground = battlefieldBackground[Math.floor(Math.random() * battlefieldBackground.length)]
+    let randomBackground = battlefieldBackground[Math.floor(Math.random() * battlefieldBackground.length)];
     let leftTop = document.getElementById("leftTop");
-    leftTop.style.backgroundImage = "url(" + randomBackground + ")";
+    leftTop.style.backgroundImage = "url('" + randomBackground + "')";
     leftTop.style.backgroundRepeat = "no-repeat";
     leftTop.style.backgroundPosition = "center center";
     leftTop.style.backgroundAttachment = "local";
