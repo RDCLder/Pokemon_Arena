@@ -2078,10 +2078,10 @@ $(function() {
         
         let pokemonIndex1 = Math.floor(Math.random() * pokedex.length);
         let pokemonIndex2 = Math.floor(Math.random() * pokedex.length);
-        // let pokemon1 = allPokemon[pokedex[pokemonIndex1][0]];
-        // let pokemon2 = allPokemon[pokedex[pokemonIndex2][0]];
-        let pokemon1 = allPokemon["pikachu"];
-        let pokemon2 = allPokemon["machamp"];
+        let pokemon1 = allPokemon[pokedex[pokemonIndex1][0]];
+        let pokemon2 = allPokemon[pokedex[pokemonIndex2][0]];
+        // let pokemon1 = allPokemon["pikachu"];
+        // let pokemon2 = allPokemon["machamp"];
         let encounter = new Battle(pokemon1, pokemon2);
         console.log(pokemon1);
         console.log(pokemon2);
@@ -2118,8 +2118,12 @@ $(function() {
             encounter.turnHistory(encounter.turn, "turnCount");
             let checkMessage1 = encounter.checkStatus(pokemon1, pokemon2);
             let checkMessage2 = encounter.checkStatus(pokemon2, pokemon1);
-            encounter.turnHistory(checkMessage1, "turnContent");
-            encounter.turnHistory(checkMessage2, "turnContent");
+            for (let message of checkMessage1) {
+                encounter.turnHistory(message, "turnContent");
+            }
+            for (let message of checkMessage2) {
+                encounter.turnHistory(message, "turnContent");
+            }
             if (pokemon2.speed[0] > pokemon1.speed[0]) {
                 let combatMessages1 = encounter.moveSequence(pokemon2, pokemon1, 0);
                 for (let message of combatMessages1) {
@@ -2135,7 +2139,8 @@ $(function() {
             encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
             $("#movePP1").text(`${encounter.movePPLeftArr[0]}/${encounter.moveArr[0].pp}`);
             encounter.turn ++;
-            setTimeout(() => {encounter.enableButtons();}, 1000);
+            encounter.enableButtons();
+            // setTimeout(() => {encounter.enableButtons();}, 1000);
         });
 
         $("#moveButton2").click(() => {
@@ -2144,8 +2149,12 @@ $(function() {
             encounter.turnHistory(encounter.turn, "turnCount");
             let checkMessage1 = encounter.checkStatus(pokemon1, pokemon2);
             let checkMessage2 = encounter.checkStatus(pokemon2, pokemon1);
-            encounter.turnHistory(checkMessage1, "turnContent");
-            encounter.turnHistory(checkMessage2, "turnContent");
+            for (let message of checkMessage1) {
+                encounter.turnHistory(message, "turnContent");
+            }
+            for (let message of checkMessage2) {
+                encounter.turnHistory(message, "turnContent");
+            }
             if (pokemon2.speed[0] > pokemon1.speed[0]) {
                 let combatMessages1 = encounter.moveSequence(pokemon2, pokemon1, 1);
                 for (let message of combatMessages1) {
@@ -2161,7 +2170,8 @@ $(function() {
             encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
             $("#movePP2").text(`${encounter.movePPLeftArr[1]}/${encounter.moveArr[1].pp}`);
             encounter.turn ++;
-            setTimeout(() => {encounter.enableButtons();}, 1000);
+            encounter.enableButtons();
+            // setTimeout(() => {encounter.enableButtons();}, 1000);
         });
 
         $("#moveButton3").click(() => {
@@ -2170,8 +2180,12 @@ $(function() {
             encounter.turnHistory(encounter.turn, "turnCount");
             let checkMessage1 = encounter.checkStatus(pokemon1, pokemon2);
             let checkMessage2 = encounter.checkStatus(pokemon2, pokemon1);
-            encounter.turnHistory(checkMessage1, "turnContent");
-            encounter.turnHistory(checkMessage2, "turnContent");
+            for (let message of checkMessage1) {
+                encounter.turnHistory(message, "turnContent");
+            }
+            for (let message of checkMessage2) {
+                encounter.turnHistory(message, "turnContent");
+            }
             if (pokemon2.speed[0] > pokemon1.speed[0]) {
                 let combatMessages1 = encounter.moveSequence(pokemon2, pokemon1, 2);
                 for (let message of combatMessages1) {
@@ -2187,7 +2201,8 @@ $(function() {
             encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
             $("#movePP3").text(`${encounter.movePPLeftArr[2]}/${encounter.moveArr[2].pp}`);
             encounter.turn ++;
-            setTimeout(() => {encounter.enableButtons();}, 1000);
+            encounter.enableButtons();
+            // setTimeout(() => {encounter.enableButtons();}, 1000);
         });
 
         $("#moveButton4").click(() => {
@@ -2196,8 +2211,12 @@ $(function() {
             encounter.turnHistory(encounter.turn, "turnCount");
             let checkMessage1 = encounter.checkStatus(pokemon1, pokemon2);
             let checkMessage2 = encounter.checkStatus(pokemon2, pokemon1);
-            encounter.turnHistory(checkMessage1, "turnContent");
-            encounter.turnHistory(checkMessage2, "turnContent");
+            for (let message of checkMessage1) {
+                encounter.turnHistory(message, "turnContent");
+            }
+            for (let message of checkMessage2) {
+                encounter.turnHistory(message, "turnContent");
+            }
             if (pokemon2.speed[0] > pokemon1.speed[0]) {
                 let combatMessages1 = encounter.moveSequence(pokemon2, pokemon1, 3);
                 for (let message of combatMessages1) {
@@ -2213,7 +2232,8 @@ $(function() {
             encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
             $("#movePP4").text(`${encounter.movePPLeftArr[3]}/${encounter.moveArr[3].pp}`);
             encounter.turn ++;
-            setTimeout(() => {encounter.enableButtons();}, 1000);
+            encounter.enableButtons();
+            // setTimeout(() => {encounter.enableButtons();}, 1000);
         });
 
         // ------------------------------------------------------------------------------------
