@@ -3040,51 +3040,51 @@ function player1Lost(){
 
 // Background Image for battlefield
 
-let directory = "images/bakground/";
-let allBackgrounds = [];
+// let directory = "images/bakground/";
+// let allBackgrounds = [];
 
-$.ajax({
-    url : directory,
-    success: function (data) {
-        $(data).find("a").attr("href", function (i, val) {
-            if( val.match(/\.(jpe?g|png|gif)$/) ) { 
-                // $("body").append( "<img src='"+ folder + val +"'>" );
-                allBackgrounds.push(folder + val);
-            } 
-        });
-    }
-});
+// $.ajax({
+//     url : directory,
+//     success: function (data) {
+//         $(data).find("a").attr("href", function (i, val) {
+//             if( val.match(/\.(jpe?g|png|gif)$/) ) { 
+//                 // $("body").append( "<img src='"+ folder + val +"'>" );
+//                 allBackgrounds.push(folder + val);
+//             } 
+//         });
+//     }
+// });
 
-setTimeout(() => {
+// setTimeout(() => {
 
-    function setRandomBackground(){
-        let randomBackground = allBackgrounds[Math.floor(Math.random() * allBackgrounds.length)];
-        let leftTop = document.getElementById("leftTop");
-        leftTop.style.backgroundImage = "url(" + randomBackground + ")";
-        leftTop.style.backgroundRepeat = "no-repeat";
-        leftTop.style.backgroundPosition = "center center";
-        leftTop.style.backgroundAttachment = "local";
-        leftTop.style.backgroundSize = "100% 100%";
-    }
+//     function setRandomBackground(){
+//         let randomBackground = allBackgrounds[Math.floor(Math.random() * allBackgrounds.length)];
+//         let leftTop = document.getElementById("leftTop");
+//         leftTop.style.backgroundImage = "url(" + randomBackground + ")";
+//         leftTop.style.backgroundRepeat = "no-repeat";
+//         leftTop.style.backgroundPosition = "center center";
+//         leftTop.style.backgroundAttachment = "local";
+//         leftTop.style.backgroundSize = "100% 100%";
+//     }
     
-    setRandomBackground();
+//     setRandomBackground();
 
-}, 3000); // End of setRandomBackground
+// }, 3000); // End of setRandomBackground
 
-// let bg1 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d88ppxc-af4394dd-f0d5-4370-801e-13a781f9ae96.png"
-// let bg2 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d86i02s-5d7bc1ed-0c4f-4171-b48f-1dd1072ea7eb.png"
-// let bg3 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85ijvr-c2c4a900-5386-4a6a-bee8-5b73e5235ebf.png"
-// let bg4 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85jk85-38ec6987-8e11-49f8-a6af-8cf85bf53e17.png"
-// let bg5 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85jegc-5191a123-808e-48af-a9a1-d2049e23da43.png"
-// let bg6 = "https://i.imgur.com/wN17Epp.png"
-// let battlefieldBackground = [bg1,bg2,bg3,bg4,bg5,bg6];
-// function setRandomBackground(){
-//     let randomBackground = battlefieldBackground[Math.floor(Math.random() * battlefieldBackground.length)]
-//     let leftTop = document.getElementById("leftTop");
-//     leftTop.style.backgroundImage = "url(" + randomBackground + ")";
-//     leftTop.style.backgroundRepeat = "no-repeat";
-//     leftTop.style.backgroundPosition = "center center";
-//     leftTop.style.backgroundAttachment = "local";
-//     leftTop.style.backgroundSize = "100% 100%";
-// }
-// setRandomBackground();
+let bg1 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d88ppxc-af4394dd-f0d5-4370-801e-13a781f9ae96.png"
+let bg2 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d86i02s-5d7bc1ed-0c4f-4171-b48f-1dd1072ea7eb.png"
+let bg3 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85ijvr-c2c4a900-5386-4a6a-bee8-5b73e5235ebf.png"
+let bg4 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85jk85-38ec6987-8e11-49f8-a6af-8cf85bf53e17.png"
+let bg5 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85jegc-5191a123-808e-48af-a9a1-d2049e23da43.png"
+let bg6 = "https://i.imgur.com/wN17Epp.png"
+let battlefieldBackground = [bg1,bg2,bg3,bg4,bg5,bg6];
+function setRandomBackground(){
+    let randomBackground = battlefieldBackground[Math.floor(Math.random() * battlefieldBackground.length)]
+    let leftTop = document.getElementById("leftTop");
+    leftTop.style.backgroundImage = "url(" + randomBackground + ")";
+    leftTop.style.backgroundRepeat = "no-repeat";
+    leftTop.style.backgroundPosition = "center center";
+    leftTop.style.backgroundAttachment = "local";
+    leftTop.style.backgroundSize = "100% 100%";
+}
+setRandomBackground();
