@@ -349,7 +349,7 @@ $(function() {
                             return `${target.upperName()} is on fire!`;
                         }
                         else {
-                            return `${target.upperName()} is on fire!`;
+                            return `${target.upperName()} is already on fire!`;
                         }
                     }
 
@@ -1020,14 +1020,14 @@ $(function() {
                 else if (this.name == "fire-punch") {
                     let damage = this.damageCalc(user, target);
                     let specialMessage = this.specialEffect(battle, target, "burned", this.effectChance, "permanent");
-                    return `${target.upperName()} lost ${damage} HP!` + specialMessage;
+                    return `${target.upperName()} lost ${damage} HP!\n` + specialMessage;
                 }
 
                 // "Has a $effect_chance% chance to freeze the target."
                 else if (this.name == "ice-punch") {
                     let damage = this.damageCalc(user, target);
                     let specialMessage = this.specialEffect(battle, target, "frozen", this.effectChance, "permanent");
-                    return `${target.upperName()} lost ${damage} HP!` + specialMessage;
+                    return `${target.upperName()} lost ${damage} HP!\n` + specialMessage;
                 }
 
                 // "Has a $effect_chance% chance to paralyze the target."
@@ -1038,7 +1038,7 @@ $(function() {
                     ) {
                     let damage = this.damageCalc(user, target);
                     let specialMessage = this.specialEffect(battle, target, "paralyzed", this.effectChance, "permanent");
-                    return `${target.upperName()} lost ${damage} HP!` + specialMessage;
+                    return `${target.upperName()} lost ${damage} HP!\n` + specialMessage;
                 }
 
                 // "Causes a one-hit KO."
@@ -1081,7 +1081,7 @@ $(function() {
                     ) {
                     let damage = this.damageCalc(user, target);
                     let specialMessage = this.specialEffect(battle, target, "flinched", this.effectChance);
-                    return `${target.upperName()} lost ${damage} HP!` + specialMessage;
+                    return `${target.upperName()} lost ${damage} HP!\n` + specialMessage;
                 }
 
                 // "Hits twice in one turn."
@@ -1111,7 +1111,7 @@ $(function() {
                     let damage = this.damageCalc(user, target);
                     let recoil = Math.floor(damage / 4);
                     user.hp -= recoil;
-                    return `${target.upperName()} lost ${damage} HP!` + `\n${user.upperName()} lost ${recoil} HP!`;
+                    return `${target.upperName()} lost ${damage} HP! \n${user.upperName()} lost ${recoil} HP!`;
                 }
 
                 else if (this.name == "double-edge") {
@@ -1207,7 +1207,7 @@ $(function() {
                 else if (this.name == "rage") {
                     let damage = this.damageCalc(user, target);
                     let specialMessage = this.specialEffect(battle, user, "rage");
-                    return `${target.upperName()} lost ${damage} HP!` + specialMessage;
+                    return `${target.upperName()} lost ${damage} HP!\n` + specialMessage;
                 }
 
                 // "User waits for two turns, then hits back for twice the damage it took."
@@ -1499,7 +1499,7 @@ $(function() {
                     let effect1 = this.specialEffect(battle, target, "burned", 20, "permanent");
                     let effect2 = this.specialEffect(battle, target, "frozen", 20, "permanent");
                     let effect3 = this.specialEffect(battle, target, "paralyzed", 20, "permanent");
-                    return `${target.upperName()} lost ${damage} HP!` + effect1 + effect2 + effect3;
+                    return `${target.upperName()} lost ${damage} HP\n` + effect1 + "\n" + effect2 + "\n" + effect3;
                 }
 
                 else {
@@ -3040,20 +3040,51 @@ function player1Lost(){
 
 // Background Image for battlefield
 
-let bg1 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d88ppxc-af4394dd-f0d5-4370-801e-13a781f9ae96.png"
-let bg2 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d86i02s-5d7bc1ed-0c4f-4171-b48f-1dd1072ea7eb.png"
-let bg3 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85ijvr-c2c4a900-5386-4a6a-bee8-5b73e5235ebf.png"
-let bg4 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85jk85-38ec6987-8e11-49f8-a6af-8cf85bf53e17.png"
-let bg5 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85jegc-5191a123-808e-48af-a9a1-d2049e23da43.png"
-let bg6 = "https://i.imgur.com/wN17Epp.png"
-let battlefieldBackground = [bg1,bg2,bg3,bg4,bg5,bg6];
-function setRandomBackground(){
-    let randomBackground = battlefieldBackground[Math.floor(Math.random() * battlefieldBackground.length)]
-    let leftTop = document.getElementById("leftTop");
-    leftTop.style.backgroundImage = "url(" + randomBackground + ")";
-    leftTop.style.backgroundRepeat = "no-repeat";
-    leftTop.style.backgroundPosition = "center center";
-    leftTop.style.backgroundAttachment = "local";
-    leftTop.style.backgroundSize = "100% 100%";
-}
-setRandomBackground()
+let directory = "images/bakground/";
+let allBackgrounds = [];
+
+$.ajax({
+    url : directory,
+    success: function (data) {
+        $(data).find("a").attr("href", function (i, val) {
+            if( val.match(/\.(jpe?g|png|gif)$/) ) { 
+                // $("body").append( "<img src='"+ folder + val +"'>" );
+                allBackgrounds.push(folder + val);
+            } 
+        });
+    }
+});
+
+setTimeout(() => {
+
+    function setRandomBackground(){
+        let randomBackground = allBackgrounds[Math.floor(Math.random() * allBackgrounds.length)];
+        let leftTop = document.getElementById("leftTop");
+        leftTop.style.backgroundImage = "url(" + randomBackground + ")";
+        leftTop.style.backgroundRepeat = "no-repeat";
+        leftTop.style.backgroundPosition = "center center";
+        leftTop.style.backgroundAttachment = "local";
+        leftTop.style.backgroundSize = "100% 100%";
+    }
+    
+    setRandomBackground();
+
+}, 3000); // End of setRandomBackground
+
+// let bg1 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d88ppxc-af4394dd-f0d5-4370-801e-13a781f9ae96.png"
+// let bg2 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d86i02s-5d7bc1ed-0c4f-4171-b48f-1dd1072ea7eb.png"
+// let bg3 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85ijvr-c2c4a900-5386-4a6a-bee8-5b73e5235ebf.png"
+// let bg4 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85jk85-38ec6987-8e11-49f8-a6af-8cf85bf53e17.png"
+// let bg5 = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/intermediary/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85jegc-5191a123-808e-48af-a9a1-d2049e23da43.png"
+// let bg6 = "https://i.imgur.com/wN17Epp.png"
+// let battlefieldBackground = [bg1,bg2,bg3,bg4,bg5,bg6];
+// function setRandomBackground(){
+//     let randomBackground = battlefieldBackground[Math.floor(Math.random() * battlefieldBackground.length)]
+//     let leftTop = document.getElementById("leftTop");
+//     leftTop.style.backgroundImage = "url(" + randomBackground + ")";
+//     leftTop.style.backgroundRepeat = "no-repeat";
+//     leftTop.style.backgroundPosition = "center center";
+//     leftTop.style.backgroundAttachment = "local";
+//     leftTop.style.backgroundSize = "100% 100%";
+// }
+// setRandomBackground();
