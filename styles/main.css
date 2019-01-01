@@ -25,38 +25,50 @@ body {
 /* //////////////////////////////////////////////////////////////////////// */
 /* Battlefield */
 
-#enemyZone {
-    height: 35%;
-    width: 100%;
-}
-#neutralZone {
+#topPadding {
     height: 30%;
     width: 100%;
 }
-#playerZone {
-    height: 35%;
+
+#enemyZone {
+    height: 30%;
     width: 100%;
 }
+
+#neutralZone {
+    height: 10%;
+    width: 100%;
+}
+
+#playerZone {
+    height: 30%;
+    width: 100%;
+}
+
 #playerPokemonBack {
     height: 100%;
     width: 100%;
     position: absolute;
     z-index: 2;
 }
+
 #playerPokemon{
     position: relative;
     z-index: 1;
 }
+
 #enemyPokemonFront {
     height: 100%;
     width: 100%;
     position: absolute;
     z-index: 2;
 }
+
 #enemyPokemon{
     position: relative;
     z-index: 1;
 }
+
 #enemyGetHit {
     width: 0;
     height: 0;
@@ -82,6 +94,7 @@ body {
     margin: 15px 0 0 -25px;
     z-index: 5;
 }
+
 #playerGetHit {
     width: 0;
     height: 0;
@@ -113,11 +126,13 @@ body {
     top: 30%;
     color: red;
 }
+
 #sleepingAnime2{
     position: absolute;
     top: 30%;
     color: red;
 }
+
 #poisonOverlay {
     position: absolute;
     top:10%;
@@ -130,6 +145,7 @@ body {
     background: rgba(216, 8, 188, 1) -webkit-radial-gradient(center 75%, ellipse contain, rgb(99, 3, 99), rgba(243, 3, 203, 0) 60%);
     box-shadow: inset 0 0px 6px rgba(0,0,0,.5), inset 0 -1px 6px rgba(0,0,0,.4),  inset 0 8px 3px rgba(0,0,0,.3), inset 0 10px 3px rgba(255,255,255,.1), 0 3px 6px rgba(0,0,0,.5);
 }
+
 #poisonOverlay2 {
     position: absolute;
     top:10%;
@@ -142,6 +158,7 @@ body {
     background: rgba(216, 8, 188, 1) -webkit-radial-gradient(center 75%, ellipse contain, rgb(99, 3, 99), rgba(243, 3, 203, 0) 60%);
     box-shadow: inset 0 0px 6px rgba(0,0,0,.5), inset 0 -1px 6px rgba(0,0,0,.4),  inset 0 8px 3px rgba(0,0,0,.3), inset 0 10px 3px rgba(255,255,255,.1), 0 3px 6px rgba(0,0,0,.5);
 }
+
 .burnOverlay{
 
     position: absolute;
@@ -152,6 +169,7 @@ body {
     width: 25px;
     z-index: 5;
 }
+
 #freezeOverlay {
     position: absolute;
     z-index: 5;
@@ -163,7 +181,6 @@ body {
     opacity: .6;
 }
 
-
 #paralyzeOverlay {
     position: absolute;
     top:0;
@@ -172,19 +189,17 @@ body {
     height: 90%;
     z-index: 10;
 }
+
 #player1Lost {
     position: absolute;
     top:0;
     left:0;
     z-index: 10;
-    }
-
-
+}
 
 /* //////////////////////////////////////////////////////////////////////////////////// */
 /* Testing */
 .specialAttack {
-    
     position: absolute;
     width: 100px; 
     height: 57.74px;
@@ -210,12 +225,10 @@ body {
   
   .specialAttack:before {
     top: -35.3553px;
-
   }
   
   .specialAttack:after {
     bottom: -35.3553px;
-
   }
   
   /*cover up extra shadows*/
@@ -231,71 +244,69 @@ body {
   }
 
 /* /////////////////////////////////////////////////////////////////////////// */
-/* Buttons */
+/* Buttons/Sidebar */
 
 button {
     border-radius: 7px;
 }
 
-.turnCount {
-    background-color: mintcream;
-    margin: 0;
-    overflow-wrap: break-word;
-    overflow: scroll;
-    /* margin-left: 1%;
-    margin-right: 1%; */
+:disabled {
+    background-color: #696969;
 }
 
+.sideBar {
+    height:590px;
+    overflow-wrap: break-word;
+    overflow: scroll;
+    background-color: rgb(244, 250, 248);
+}
+
+.turnCount {
+    background-color: rgb(122, 151, 173);
+    margin-left: 1%;
+    margin-right: 1%;
+    /* overflow-wrap: break-word;
+    overflow: scroll; */
+}
+
+.turnContent {
+    margin-left: 1%;
+    margin-top: 0%;
+    margin-bottom: 0%;
+    /* border: solid black; */
+}
 
 h3 {
     margin: 0;
     font-size: 2ch;
 }
-.sideBar{
-    height:590px;
-    overflow-wrap: break-word;
-    overflow: scroll;
-    background-color: rgb(244, 250, 248);
-    
 
-}
-#turnContent{
-    margin-left: 5px;
-    margin-top: 0%;
-    height:547px;
-
-}
-:disabled{
-    background-color: #696969
-
-}
-
-.tooltip {
+/* .tooltip {
     position: relative;
     display: inline-block;
     border-bottom: 1px dotted black;
 }
 
 .tooltip .tooltiptext {
-visibility: hidden;
-width: 120px;
-background-color: black;
-color: #fff;
-text-align: center;
-border-radius: 6px;
-padding: 5px 0;
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
 
-/* Position the tooltip */
-position: absolute;
-z-index: 1;
-bottom: 100%;
-left: 50%;
-margin-left: -60px;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
 }
 
 .tooltip:hover .tooltiptext {
-visibility: visible;
-}
+    visibility: visible;
+} */
+
 /* /////////////////////////////////////////////////////////////////////////// */
 /* Navbar/Archived */
 
