@@ -2173,7 +2173,7 @@ $(function() {
             for (let message of checkMessage2) {
                 encounter.turnHistory(message, "turnContent");
             }
-            updateStatusEffects(pokemon1, pokemon2);
+
             if (pokemon2.speed[0] > pokemon1.speed[0]) {
                 let combatMessages1 = encounter.moveSequence(pokemon2, pokemon1, 0);
                 for (let message of combatMessages1) {
@@ -3178,3 +3178,14 @@ function setRandomBackground(){
     leftTop.style.backgroundSize = "100% 100%";
 }
 setRandomBackground();
+function setPokemonGround(){
+    let pokemon1Ground = document.createElement("div");
+    pokemon1Ground.setAttribute("id","pokemonGround1");
+    let pokemon2Ground = document.createElement("div");
+    pokemon2Ground.setAttribute("id","pokemonGround2");
+    let pokemon1 = document.getElementById("playerPokemon");
+    let pokemon2 = document.getElementById("enemyPokemon");
+    pokemon1.appendChild(pokemon1Ground);
+    pokemon2.appendChild(pokemon2Ground);
+}
+setPokemonGround()

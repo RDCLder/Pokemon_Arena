@@ -65,8 +65,31 @@ body {
 }
 
 #enemyPokemon{
+    width: 100%;
+    height: 100%;
     position: relative;
     z-index: 1;
+}
+#pokemonGround1 {
+    width: 65%;
+    height: 65%;
+    background: #d1a553;
+    border-radius: 70%;
+    border: 1px solid black;
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+}
+#pokemonGround2 {
+    width: 65%;
+    height: 65%;
+
+    background: #d1a553;
+    border-radius: 70%;
+    border: 1px solid black;
+    position: absolute;
+    bottom: 0;
+    left: 25%;
 }
 /* Pokemon Name, Health, Status */
 #playerPokemon1Name{
@@ -99,13 +122,15 @@ body {
     background-color: #CC0000;
     border-radius: 3px;
 }
-.health-value{
+#p1HP{
+    display: block;
+    text-align: left;
+}
+.health-value  {
     width: 100%;
     height: 100%;
     font-size: 1.0em;
     color: Yellow;
-    display: block;
-    text-align: left;
 }
 #playerPokemonStatusEffect {
     height: 10%;
