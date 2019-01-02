@@ -85,7 +85,6 @@ $(function() {
                 if (this.damage_class == "physical") {
                     let baseDamage = (22 * this.power * user.attack[0] / target.defense[0] / 50) + 2;
                     var damage = Math.floor(baseDamage * (Math.floor(Math.random() * (max - min + 1)) + min) / 100);
-                    
                     // Check for critical hit
                     let threshold = Math.floor(user.speed[0] * critModifier * 100 / 512);
                     let critChance = Math.floor(Math.random() * 100);
@@ -98,6 +97,9 @@ $(function() {
                     }
                     if ("dig" in target.status && this.name == "earthquake") {
                         damage = damage * 2;
+                    }
+                    if ("reflect" in target.status) {
+                        damage = Math.floor(damage / 2);
                     }
                     // Check for specific moves that affect damage
                     if (
@@ -123,23 +125,25 @@ $(function() {
                 else if (this.damage_class == "special") {
                     let baseDamage = (22 * this.power * user.specialAttack[0] / target.specialDefense[0] / 50) + 2;
                     var damage = Math.floor(baseDamage * (Math.floor(Math.random() * (max - min + 1)) + min) / 100);
-                    
                     // Check for critical hit
                     let threshold = Math.floor(user.speed[0] * critModifier * 100 / 512);
                     let critChance = Math.floor(Math.random() * 100);
                     if (critChance <= threshold) {
                         damage = damage * 2;
                     }
-                    if (damage > target.hp) {
-                        damage = target.hp;
-                    }
-
                     // Check for status effects that affect damage
                     if ("burned" in user.status) {
                         damage = Math.floor(damage / 2);
                     }
                     if ("dig" in target.status && this.name == "earthquake") {
                         damage = damage * 2;
+                    }
+                    if ("light-sceen" in target.status) {
+                        damage = Math.floor(damage / 2);
+                    }
+                    // Check that damage doesn't exceed target HP
+                    if (damage > target.hp) {
+                        damage = target.hp;
                     }
                     target.hp -= damage;
                     return damage;
@@ -178,7 +182,7 @@ $(function() {
                     chance = 100;
                 }
                 let cutoff = Math.floor(Math.random() * 100);
-                if (chance >= cutoff) {
+                if (chance >= cutoff && "mist" in target.status == false) {
                     if (statName == "Attack") {
                         var stat = target.attack;
                     }
@@ -265,7 +269,7 @@ $(function() {
                     chance = 100;
                 }
                 let cutoff = Math.floor(Math.random() * 100);
-                if (chance >= cutoff) {
+                if (chance >= cutoff && "mist" in target.status == false) {
                     for (let i = 0; i < target.moves.length; i ++) {
                         
                         // Check that stage value is between -6 and 6
@@ -333,7 +337,7 @@ $(function() {
                     chance = 100;
                 }
                 let cutoff = Math.floor(Math.random() * 100);
-                if (chance >= cutoff) {
+                if (chance >= cutoff && "substitute" in target.status == false) {
                     
                     // Non-volatile status conditions are mutually exclusive
                     if (effect == "burned") {
@@ -623,10 +627,17 @@ $(function() {
 
                     else if (effect == "substitute") {
                         if (
-                            "substitute" in target.status == false
+                            "substitute" in target.status == false &&
+                            target.hp >= Math.floor(target.startHP / 4)
                         ) {
                             target.status["substitute"] = [duration += battle.turn];
                             return `${target.upperName()} is substituted!`;
+                        }
+                        else if (
+                            "substitute" in target.status == false &&
+                            target.hp < Math.floor(target.startHP / 4)
+                        ) {
+                            return `It does nothing!`;
                         }
                         else {
                             return `${target.upperName()} is already substituted!`;
@@ -635,7 +646,7 @@ $(function() {
                 
                 }
                 else {
-                    return "";
+                    return ``;
                 }
             } // End of specialEffect method
 
@@ -1935,14 +1946,22 @@ $(function() {
                         allMessages.push(`\n${target.upperName} is still bidding its time!`);
                     }
                     else if (this.turn == target.status["bide"][0]) {
+                        allMessages.push(`\n${target.upperName()} uses Bide!`);
+                        let damage = (target.status["bide"][1] - target.hp) * 2;
+                        otherPokemon.hp -= damage;
+                        allMessages.push(`${otherPokemon.upperName()} lost ${damage} HP!`);
                         delete target.status["bide"];
-                        allMessages.push(`\n${target.upperName()} is ready to act!`);
                     }
                 }
 
                 if ("bound" in target.status) {
-                    if (target.status["bound"][0] == "permanent") {
-                        allMessages.push(`\n${target.upperName} is still bound!`);
+                    if (
+                        target.status["bound"][0] == "permanent" ||
+                        this.turn < target.status["bound"][0]
+                    ) {
+                        let damage = Math.floor(target.startHP / 16);
+                        target.hp -= damage;
+                        allMessages.push(`\n${target.upperName()} is bound and lost ${damage} HP!`);
                     }
                     else if (this.turn == target.status["bound"][0]) {
                         delete target.status["bound"];
@@ -1987,8 +2006,15 @@ $(function() {
                 }
 
                 if ("leech-seed" in target.status) {
-                    if (target.status["leech-seed"][0] == "permanent") {
-                        allMessages.push(`\n${target.upperName} is still afflicted with leech-seed!`);
+                    if (
+                        target.status["leech-seed"][0] == "permanent" ||
+                        this.turn < target.status["leech-seed"][0]
+                    ) {
+                        let damage = Math.floor(target.startHP / 8);
+                        target.hp -= damage;
+                        otherPokemon.hp += damage;
+                        allMessages.push(`\nLeech-seed drains ${damage} HP from ${target.upperName()}!`);
+                        allMessages.push(`${otherPokemon.upperName()} gains ${damage} HP!`);
                     }
                     else if (this.turn == target.status["leech-seed"][0]) {
                         delete target.status["leech-seed"];
