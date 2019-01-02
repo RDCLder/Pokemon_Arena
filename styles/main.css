@@ -415,7 +415,7 @@ h3 {
     font-size: 2ch;
 }
 .container{
-    max-width: 96% !important ;
+    max-width: 85% !important ;
     display: flex
 }
 

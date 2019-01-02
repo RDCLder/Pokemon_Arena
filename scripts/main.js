@@ -2187,10 +2187,11 @@ $(function() {
                 else {
                     console.log("Invalid Message/Type");
                 }
+                
             } // End of turnHistory method
-
+            
         } // End of Battle Class
-
+        
         // ------------------------------------------------------------------------------------
 
         // Initialize Gameplay
@@ -2404,13 +2405,12 @@ $(function() {
             encounter.enableButtons();
             // setTimeout(() => {encounter.enableButtons();}, 1000);
         });
-            
+
         // ------------------------------------------------------------------------------------
 
     }, 3000)
 
 });
-
 
 ///// Pokemon Physical Attack Animation //////
 
@@ -3273,4 +3273,11 @@ function setPokemonGround(){
     pokemon2.appendChild(pokemon2Ground);
 }
 setPokemonGround()
+
+$('button').click(function (){
+	var log = $('.sideBar');
+	log.animate({ scrollTop: log.prop('scrollHeight')}, 1000);   
+});
+
+
 
