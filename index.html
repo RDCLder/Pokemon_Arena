@@ -45,7 +45,14 @@
               <div class="col">Turn 1</div>
             </div>
             <div class="row m-0" id="enemyZone">
-              <div class="col-7"></div>
+              <div class="col-7">
+                  <div class="row m-0" id="enemyPokemon1Name"></div>
+                  <div class="row m-0" id="enemyPokemon1HealthBar">
+                    <div class="col-6 m-0 p-0"><div class="health-value" id="e1HP"></div></div>
+                    <div class="col-6 m-0 p-0"><progress id="enemyPokemon1Health" value="100" max="100"></progress></div>
+                  </div>
+                  <div class="row m-0" id="enemyPokemonStatusEffect"></div>
+              </div>
               <div class="col-5" id="enemyPokemon"></div>
             </div>
             <div class="row m-0" id="neutralZone">
@@ -55,8 +62,15 @@
               <div class="col-3"></div>
             </div>
             <div class="row m-0" id="playerZone">
-              <div class="col-5" id="playerPokemon" onclick="pokemon1Paralyze()"></div>
-              <div class="col-7" id="playerPokemonStatus"></div>
+              <div class="col-5" id="playerPokemon" onclick="pokemon1SpecialAttackPokemon2()"></div>
+              <div class="col-7" id="playerPokemonStatus">
+                <div class="row m-0" id="playerPokemon1Name"></div>
+                <div class="row m-0" id="playerPokemon1HealthBar">
+                  <div class="col-6 m-0 p-0"><progress id="playerPokemon1Health" value="100" max="100"></progress></div>
+                  <div class="col-6 m-0 p-0"><div class="health-value" id="p1HP"></div></div>
+                </div>
+                <div class="row m-0" id="playerPokemonStatusEffect"></div>
+              </div>
             </div>
           </div>
         </div>

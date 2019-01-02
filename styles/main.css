@@ -68,7 +68,105 @@ body {
     position: relative;
     z-index: 1;
 }
+/* Pokemon Name, Health, Status */
+#playerPokemon1Name{
+    height: 20%;
+    text-align: left;
+    display: block;
+    font-size: 1.0em;
+    color: Yellow;
+}
+#playerPokemon1HealthBar {
+    height: 20%;
+}
+#playerPokemon1HealthBar progress {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 100%;
+}
+#playerPokemon1HealthBar progress::-webkit-progress-bar {
+    background: #EEE;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.2) inset;
+    border-radius: 3px;
+}
+#playerPokemon1HealthBar progress::-webkit-progress-value {
+    background-color: #CC0000;
+    border-radius: 3px;
+}
+#playerPokemon1HealthBar -moz-progress-bar {
+    background-color: #CC0000;
+    border-radius: 3px;
+}
+.health-value{
+    width: 100%;
+    height: 100%;
+    font-size: 1.0em;
+    color: Yellow;
+    display: block;
+    text-align: left;
+}
+#playerPokemonStatusEffect {
+    height: 10%;
+    color: Yellow;
+}
+#playerPokemonStatus {
+    height: 100%;
+}
 
+#enemyPokemonStatus {
+    height: 100%;
+}
+#enemyPokemon1Name{
+    height: 20%;
+    width: 100%;
+    font-size: 1.0em;
+    text-align: right;
+    display: block;
+    color: Yellow;
+}
+#enemyPokemon1HealthBar {
+    height: 20%;
+}
+#enemyPokemon1HealthBar progress {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 100%;
+}
+#enemyPokemon1HealthBar progress::-webkit-progress-bar {
+    background: #EEE;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.2) inset;
+    border-radius: 3px;
+}
+#enemyPokemon1HealthBar progress::-webkit-progress-value {
+    background-color: #CC0000;
+    border-radius: 3px;
+}
+#enemyPokemon1HealthBar -moz-progress-bar {
+    background-color: #CC0000;
+    border-radius: 3px;
+}
+.health-value{
+    width: 100%;
+    height: 100%;
+    font-size: 1.0em;
+    display: block;
+    text-align: right;
+    color: Yellow;
+}
+#enemyPokemonStatusEffect {
+    height: 20%;
+    width: 100%;
+    text-align: right;
+    display: block;
+    color: Yellow;
+}
+
+
+/* Moves Animation */
 #enemyGetHit {
     width: 0;
     height: 0;
@@ -197,8 +295,7 @@ body {
     z-index: 10;
 }
 
-/* //////////////////////////////////////////////////////////////////////////////////// */
-/* Testing */
+
 .specialAttack {
     position: absolute;
     width: 100px; 
@@ -206,13 +303,14 @@ body {
     background-color: orange;
     margin: 28.87px 0;
     border-radius: 50% 20% / 10% 40%;
+    z-index: 5;
   }
   
   .specialAttack:before,
   .specialAttack:after {
     content: "";
     position: absolute;
-    z-index: 1;
+    z-index: 5;
     width: 70.71px;
     height: 70.71px;
     -webkit-transform: scaleY(0.5774) rotate(-45deg);
@@ -239,10 +337,11 @@ body {
     left: 0;
     width:100px;
     height:57.7350px;
-    z-index: 2;
+    z-index: 6;
     background: inherit;
   }
-
+/* //////////////////////////////////////////////////////////////////////////////////// */
+/* Testing */
 /* /////////////////////////////////////////////////////////////////////////// */
 /* Buttons/Sidebar */
 

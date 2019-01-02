@@ -1772,7 +1772,7 @@ $(function() {
                 }
                 $('[data-toggle="tooltip"]').tooltip();
             }
-
+        
             // checkStatus method
             // This only checks for non-volatile status conditions
             // Other conditions are checked in useMove() or wherever appropriate
@@ -1795,6 +1795,7 @@ $(function() {
                         delete target.status["burned"];
                         allMessages.push(`\n${target.upperName()} is no longer on fire!`);
                     }
+                    
                 }
 
                 else if ("frozen" in target.status) {
@@ -2085,7 +2086,7 @@ $(function() {
         console.log(pokemon1);
         console.log(pokemon2);
 
-        // Assign sprites for both player and enemy pokemon
+        // Assign sprites and name for both player and enemy pokemon
         for (let i = 0; i < pokedex.length; i++){
             if(pokemon1 == allPokemon[pokedex[i][0]]) {
                 let playerPokemon = document.getElementById("playerPokemon");
@@ -2093,9 +2094,12 @@ $(function() {
                 pokemon1Box.setAttribute("id", "playerPokemonBack");
                 pokemon1Box.src = pokemon1.back;
                 playerPokemon.appendChild(pokemon1Box);
+                let playerPokemon1Name = document.getElementById("playerPokemon1Name");
+                playerPokemon1Name.innerHTML = pokemon1.upperName();
             };
         }
         
+
         for (let i = 0; i < pokedex.length; i++){
             if(pokemon2 == allPokemon[pokedex[i][0]]) {
                 let enemyPokemon = document.getElementById("enemyPokemon");
@@ -2103,8 +2107,55 @@ $(function() {
                 pokemon2Box.setAttribute("id", "enemyPokemonFront");
                 pokemon2Box.src = pokemon2.front;
                 enemyPokemon.appendChild(pokemon2Box);
+                let enemyPokemon1Name = document.getElementById("enemyPokemon1Name");
+                enemyPokemon1Name.innerHTML = pokemon2.upperName()
             };
         }
+        // Assign names, healthbar, and status effects for player pokemon
+        
+        // Update Hp Percentage
+        function updateHpPercentage(){
+            let playerPokemon1HealthBar = document.getElementById('playerPokemon1Health');
+            let playerPokemon1HealthPercentage = document.getElementById('p1HP');
+            let p1HPvalue = playerPokemon1HealthBar.value;
+            let p1Percent = Math.floor(p1HPvalue);
+            playerPokemon1HealthPercentage.innerHTML = p1Percent + "%";
+            let enemyPokemon1HealthBar = document.getElementById('enemyPokemon1Health')
+            let enemyPokemon1HealthPercentage = document.getElementById('e1HP');
+            let e1HPValue = enemyPokemon1HealthBar.value;
+            let e1Percent = Math.floor(e1HPValue);
+            enemyPokemon1HealthPercentage.innerHTML = e1Percent + "%";
+        }
+       updateHpPercentage()
+
+       // Update Status Effect of Pokemon
+       function updateStatusEffects(pokemon1, pokemon2) {
+            let playerPokemonStatusEffect = document.getElementById("playerPokemonStatusEffect");
+            let enemyPokemonStatusEffect = document.getElementById("enemyPokemonStatusEffect");
+            checkStatus(pokemon1, pokemon2)
+            if ("burned" in pokemon1.status == true &&
+            "frozen" in pokemon1.status == true &&
+            "paralyzed" in pokemon1.status == true &&
+            "poisoned" in pokemon1.status == true &&
+            "sleeping" in pokemon1.status == true &&
+            "confused" in pokemon1.status == true){
+                let statusEffect = pokemon1.status
+                playerPokemonStatusEffect.innerHTML = statusEffect
+                //  statusEffect.toLowerCase().split(' ')
+                // .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+                // .join(' ');
+            }
+            if ("burned" in pokemon2.status == true &&
+            "frozen" in pokemon2.status == true &&
+            "paralyzed" in pokemon2.status == true &&
+            "poisoned" in pokemon2.status == true &&
+            "sleeping" in pokemon2.status == true &&
+            "confused" in pokemon2.status == true){
+                let statusEffect = pokemon2.status;
+                enemyPokemonStatusEffect.innerHTML = statusEffect;
+            }
+        }
+
 
         // ------------------------------------------------------------------------------------
 
@@ -2122,6 +2173,7 @@ $(function() {
             for (let message of checkMessage2) {
                 encounter.turnHistory(message, "turnContent");
             }
+            updateStatusEffects(pokemon1, pokemon2);
             if (pokemon2.speed[0] > pokemon1.speed[0]) {
                 let combatMessages1 = encounter.moveSequence(pokemon2, pokemon1, 0);
                 for (let message of combatMessages1) {
@@ -2323,12 +2375,14 @@ function pokemon1SpecialAttackPokemon2(){
     let specialAttack = document.createElement("div");
     specialAttack.setAttribute("class","specialAttack");
     specialAttack.style.left = "50%"
+    specialAttack.style.top = "0"
     playerPokemon1.appendChild(specialAttack);
     let i = 1;
     while(i < 6){
         let specialAttack = document.createElement("div")
         specialAttack.className = "specialAttack specialAttack"+ i;
         specialAttack.style.left = "50%"
+        specialAttack.style.top = "0"
         playerPokemon1.appendChild(specialAttack);
         i++;
     }
@@ -2425,6 +2479,7 @@ function pokemon2SpecialAttackPokemon1(){
     specialAttack.setAttribute("class","specialAttack")
     specialAttack.style.top = "40%"
     specialAttack.style.left = "20%"
+    
     enemyPokemon1.appendChild(specialAttack);
     let i = 1;
     while(i < 6){
@@ -2451,7 +2506,7 @@ function pokemon2SpecialAttackPokemon1(){
         delay: 100,
         targets: specialAttack,
         translateX: '-310%',
-        translateY: '300%',
+        translateY: '225%',
         scale: 1.,
         rotate: '5turn',
         easing: 'linear',
@@ -2464,7 +2519,7 @@ function pokemon2SpecialAttackPokemon1(){
         targets: '.specialAttack1',
         opacity: .85,
         translateX: '-310%',
-        translateY: '300%',
+        translateY: '225%',
         rotate: '5turn',
         easing: 'linear',
         complete: function(){
@@ -2476,7 +2531,7 @@ function pokemon2SpecialAttackPokemon1(){
         targets: '.specialAttack2',
         opacity:.75,
         translateX: '-310%',
-        translateY: '300%',
+        translateY: '225%',
         rotate: '5turn',
         easing: 'linear',
         complete: function(){
@@ -2488,7 +2543,7 @@ function pokemon2SpecialAttackPokemon1(){
         targets: '.specialAttack3',
         opacity:.65,
         translateX: '-310%',
-        translateY: '300%',
+        translateY: '225%',
         rotate: '5turn',
         easing: 'linear',
         complete: function(){
@@ -2500,7 +2555,7 @@ function pokemon2SpecialAttackPokemon1(){
         targets: '.specialAttack4',
         opacity:.55,
         translateX: '-310%',
-        translateY: '300%',
+        translateY: '225%',
         rotate: '5turn',
         easing: 'linear',
         complete: function(){
@@ -2512,7 +2567,7 @@ function pokemon2SpecialAttackPokemon1(){
         targets: '.specialAttack5',
         opacity:.45,
         translateX: '-310%',
-        translateY: '300%',
+        translateY: '225%',
         rotate: '5turn',
         easing: 'linear',
         complete: function(){
@@ -2955,24 +3010,60 @@ function pokemon1Paralyze() {
     })
     anime.timeline({
         targets: paralyzeOverlay,
-        translateY: '50%',
-        scaleX: 1.2,
-        scaleY: 1.4,
         loop: 2,
         easing: 'linear',
-        direction: 'alternate'
+        direction: 'alternate',
+        duration: 700,
     }).add({
+        translateY: '50%',
+    }).add({
+        translateX: 0,
+        scaleX: .8,
+        scaleY: .9,
         rotate: '1turn',
-        scaleX: 1.2,
-        scaleY: 1.4,
-        loop: 2,
-        duration: 1000,
-        easing: 'linear',
-        direction: 'normal',
-        complete: function (){
+    }).add({
+        complete: function(){
             paralyzeOverlay.remove()
         }
     })
+};
+function pokemon2Paralyze() {
+    let enemyPokemon = document.getElementById("enemyPokemon");
+    let paralyzeOverlay = document.createElement("img");
+    paralyzeOverlay.setAttribute("id", "paralyzeOverlay");
+    paralyzeOverlay.src = "./images/lightning-3050.png";
+    paralyzeOverlay.style.top = "-20%";
+    paralyzeOverlay.style.left = "10%";
+    enemyPokemon.appendChild(paralyzeOverlay);
+    let enemyPokemonImg = document.getElementById('enemyPokemonFront')
+    anime({
+        targets: enemyPokemonImg,
+        translateX: '5%', 
+        loop:4,
+        easing: 'easeInOutSine',
+        direction: 'alternate',
+        filter: 'sepia(100%) saturate(1000%)',
+        webkitFilter: 'sepia(100%) saturate(1000%)',
+    })
+    let pokemon2Paralyze = anime.timeline({
+        targets: paralyzeOverlay,
+        loop: 2,
+        easing: 'linear',
+        direction: 'alternate',
+        duration: 700,
+    }).add({
+        translateY: '50%',
+    }).add({
+        translateX: 0,
+        scaleX: .8,
+        scaleY: .9,
+        rotate: 360,
+    }).add({
+        complete: function(){
+            paralyzeOverlay.remove()
+        }
+    })
+    pokemon2Paralyze.speed = 2;
 };
   
 
