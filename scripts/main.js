@@ -1703,6 +1703,7 @@ $(function() {
                                 move.ailment != "sleep" ||
                                 move.ailment != "confusion" ){
                                     return pokemon1PhysicalAttackPokemon2();
+            
                                 }
                                 // else if (){
                                 //     pokemon1StatusAttackPokemon2();
@@ -1791,8 +1792,8 @@ $(function() {
                 this.enemy = pokemon2;
                 
                 // Assign moves and their properties to the move buttons
-                this.moveArr = [allMoves["bite"], pokemon1.moves[1], pokemon1.moves[2], pokemon1.moves[3]];
-                // this.moveArr = pokemon1.moves; // Array 
+                // this.moveArr = [allMoves["bite"], pokemon1.moves[1], pokemon1.moves[2], pokemon1.moves[3]];
+                this.moveArr = pokemon1.moves; // Array 
                 this.moveNameArr = [];
                 this.moveClassArr = [];
                 this.moveTypeArr = [];
@@ -2557,12 +2558,13 @@ $(function() {
             encounter.enableButtons();
             // setTimeout(() => {encounter.enableButtons();}, 1000);
         });
-
+            
         // ------------------------------------------------------------------------------------
 
     }, 3000)
 
 });
+
 
 ///// Pokemon Physical Attack Animation //////
 
@@ -2799,7 +2801,7 @@ function pokemon2SpecialAttackPokemon1(){
         delay: 100,
         targets: specialAttack,
         translateX: '-310%',
-        translateY: '225%',
+        translateY: '180%',
         scale: 1.,
         rotate: '5turn',
         easing: 'linear',
@@ -2812,7 +2814,7 @@ function pokemon2SpecialAttackPokemon1(){
         targets: '.specialAttack1',
         opacity: .85,
         translateX: '-310%',
-        translateY: '225%',
+        translateY: '180%',
         rotate: '5turn',
         easing: 'linear',
         complete: function(){
@@ -2824,7 +2826,7 @@ function pokemon2SpecialAttackPokemon1(){
         targets: '.specialAttack2',
         opacity:.75,
         translateX: '-310%',
-        translateY: '225%',
+        translateY: '180%',
         rotate: '5turn',
         easing: 'linear',
         complete: function(){
@@ -2836,7 +2838,7 @@ function pokemon2SpecialAttackPokemon1(){
         targets: '.specialAttack3',
         opacity:.65,
         translateX: '-310%',
-        translateY: '225%',
+        translateY: '180%',
         rotate: '5turn',
         easing: 'linear',
         complete: function(){
@@ -2848,7 +2850,7 @@ function pokemon2SpecialAttackPokemon1(){
         targets: '.specialAttack4',
         opacity:.55,
         translateX: '-310%',
-        translateY: '225%',
+        translateY: '180%',
         rotate: '5turn',
         easing: 'linear',
         complete: function(){
@@ -2860,7 +2862,7 @@ function pokemon2SpecialAttackPokemon1(){
         targets: '.specialAttack5',
         opacity:.45,
         translateX: '-310%',
-        translateY: '225%',
+        translateY: '180%',
         rotate: '5turn',
         easing: 'linear',
         complete: function(){
@@ -3446,3 +3448,4 @@ function setPokemonGround(){
     pokemon2.appendChild(pokemon2Ground);
 }
 setPokemonGround()
+
