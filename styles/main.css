@@ -4,6 +4,8 @@
 body {
     background: rgb(244, 250, 248);
     z-index: -2;
+    
+    
 }
 
 #leftTop {
@@ -407,6 +409,10 @@ button {
 h3 {
     margin: 0;
     font-size: 2ch;
+}
+.container{
+    max-width: 96% !important ;
+    display: flex
 }
 
 /* .tooltip {
