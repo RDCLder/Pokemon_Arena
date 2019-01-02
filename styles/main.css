@@ -96,7 +96,7 @@ body {
     height: 20%;
     text-align: left;
     display: block;
-    font-size: 1.0em;
+    font-size: .8em;
     color: Yellow;
 }
 #playerPokemon1HealthBar {
@@ -129,7 +129,7 @@ body {
 .health-value  {
     width: 100%;
     height: 100%;
-    font-size: 1.0em;
+    font-size: .8em;
     color: Yellow;
 }
 #playerPokemonStatusEffect {
@@ -146,7 +146,7 @@ body {
 #enemyPokemon1Name{
     height: 20%;
     width: 100%;
-    font-size: 1.0em;
+    font-size: .8em;
     text-align: right;
     display: block;
     color: Yellow;
@@ -177,7 +177,7 @@ body {
 .health-value{
     width: 100%;
     height: 100%;
-    font-size: 1.0em;
+    font-size: .8em;
     display: block;
     text-align: right;
     color: Yellow;
