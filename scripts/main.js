@@ -119,7 +119,9 @@ $(function() {
                     }
                     target.hp -= damage;
                     return damage;
+                    
                 }
+                
                 else if (this.damage_class == "special") {
                     let baseDamage = (22 * this.power * user.specialAttack[0] / target.specialDefense[0] / 50) + 2;
                     var damage = Math.floor(baseDamage * (Math.floor(Math.random() * (max - min + 1)) + min) / 100);
@@ -1647,6 +1649,13 @@ $(function() {
                     if (hit >= evade || move.damage_class == "status") {
                         if (move.damage_class == "physical") {
                             let message = move.classPhysical(battle, this, target);
+                            if (this == battle.player) {
+                                return pokemon1PhysicalAttackPokemon2();
+                                
+                            }
+                            else if (this == battle.enemy) {
+                                return pokemon2PhysicalAttackPokemon1()
+                            }
                             return message;
                         }
                         else if (move.damage_class == "special") {
@@ -2415,8 +2424,8 @@ $(function() {
 
 // Player Pokemon Physical Attack
 
-function pokemon1AttackPokemon2(){
-    let playerPokemon = document.getElementById("playerPokemon");
+function pokemon1PhysicalAttackPokemon2(){
+    let playerPokemon = document.getElementById("playerPokemonBack");
     let enemyPokemon = document.getElementById("enemyPokemon");
     let starHit = document.createElement("div");
     starHit.setAttribute("id","enemyGetHit");
@@ -2441,7 +2450,7 @@ function pokemon1AttackPokemon2(){
     });
     starAnimation
     .add({
-        complete: function(anim) {
+        complete: function() {
             starHit.remove();
         }
         
@@ -2450,7 +2459,7 @@ function pokemon1AttackPokemon2(){
 
 // Enemy Pokemon Physical Attack
 
-function pokemon2AttackPokemon1(){
+function pokemon2PhysicalAttackPokemon1(){
     let enemyPokemon = document.getElementById("enemyPokemon");
     let playerPokemon = document.getElementById("playerPokemon");
     let starHit = document.createElement("div");
