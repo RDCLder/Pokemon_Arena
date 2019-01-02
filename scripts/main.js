@@ -662,7 +662,7 @@ $(function() {
                 else if (this.name == "growth") {
                     let statMessage1 = this.statEffect(user, "Attack", 1);
                     let statMessage2 = this.statEffect(user, "Special Attack", 1);
-                    return statMessage1 + statMessage2;
+                    return statMessage1 + "\n" + statMessage2;
                 }
 
                 else if (
@@ -890,6 +890,7 @@ $(function() {
                     for (let i = 0; i < target.moves.length; i ++) {
                         target.moves[i].accuracy[0] = target.moves[i].startAccuracy;
                     }
+                    return `All stats have been reset!`;
                 }
 
                 // "Reduces damage from physical attacks by half."
@@ -1240,7 +1241,7 @@ $(function() {
                 else if (this.name == "skull-bash") {
                     let statMessage = this.statEffect(user, "Defense", 1);
                     let specialMessage = this.specialEffect(battle, user, "chargeTurn", 100, 1);
-                    return statMessage + specialMessage;
+                    return statMessage + "\n" + specialMessage;
                 }
 
                 // "Has a $effect_chance% chance to lower the target's Speed by one stage."
@@ -1263,7 +1264,7 @@ $(function() {
                 else if (this.name == "sky-attack") {
                     let specialMessage1 = this.specialEffect(battle, target, "chargeTurn", 100, 1);
                     let specialMessage2 = this.specialEffect(battle, target, "flinched", this.effectChance);
-                    return specialMessage1 + specialMessage2;
+                    return specialMessage1 + "\n" + specialMessage2;
                 }
 
                 // "Has a $effect_chance% chance to confuse the target."
@@ -1745,6 +1746,7 @@ $(function() {
                     this.moveClassArr.push(move.damage_class[0].toUpperCase() + move.damage_class.slice(1, move.damage_class.length));
                     this.moveTypeArr.push(move.type[0].toUpperCase() + move.type.slice(1, move.type.length));
                     this.movePPLeftArr.push(move.pp);
+                    console.log(this.moveArr[i].description);
                 }
 
                 // Assign previous values to button text
