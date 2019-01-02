@@ -63,6 +63,7 @@ $(function() {
                 //     this.duration = 1;
                 // }
                 this.type = moveObject.type.name;
+                this.ailment = moveObject.meta.ailment.name;
                 this.description = moveObject.effect_entries[0].short_effect;
             }
 
@@ -1626,6 +1627,7 @@ $(function() {
 
             // useMove method
             useMove(battle, move, target) {   
+                console.log(move.name, move.ailment);
                 if ("paralyzed" in this.status) {
                     let skipMove = Math.floor(Math.random() * 4);
                     if (skipMove = 0) {
@@ -1947,7 +1949,10 @@ $(function() {
                     "skipTurn" in target.status ||
                     "flinched" in target.status
                     ) {
-                    if (this.turn == target.status["chargeTurn"][0]) {
+                    if (
+                        this.turn == target.status["skipTurn"][0] ||
+                        this.turn == target.status["flinched"][0]
+                        ) {
                         delete target.status["skipTurn"];
                         delete target.status["flinched"];
                         allMessages.push(`\n${target.upperName()} skips the turn!`);
@@ -1960,7 +1965,7 @@ $(function() {
                         target.status["bide"][0] == "permanent" ||
                         this.turn < target.status["bide"][0]
                         ) {
-                        allMessages.push(`\n${target.upperName} is still bidding its time!`);
+                        allMessages.push(`\n${target.upperName()} is still bidding its time!`);
                     }
                     else if (this.turn == target.status["bide"][0]) {
                         allMessages.push(`\n${target.upperName()} uses Bide!`);
@@ -2133,13 +2138,10 @@ $(function() {
                 // actingPokemon has been determined when this function is called by the click event
                 if (actingPokemon == this.player) {
                     var move1 = this.moveArr[moveButtonNumber];
-                    let i = Math.floor(Math.random() * otherPokemon.moves.length);
-                    var move2 = otherPokemon.moves[i];
                 }
                 else if (actingPokemon == this.enemy) {
                     let i = Math.floor(Math.random() * actingPokemon.moves.length);
                     var move1 = actingPokemon.moves[i];
-                    var move2 = this.moveArr[moveButtonNumber];
                 }
                 // Player is still required to press a button to see these status conditions
                 // If status apply, then no move is used and no PP is subtracted when move is clicked
@@ -2169,34 +2171,6 @@ $(function() {
                     allMessages.push(useMessage1, outcomeMessage1);
                     if (actingPokemon == this.player) {
                         this.movePPLeftArr[moveButtonNumber] --;
-                    }
-                }
-                // otherPokemon uses move if alive
-                if (otherPokemon.alive() && actingPokemon.alive()) {
-                    if (
-                        "frozen" in otherPokemon.status || 
-                        "sleeping" in otherPokemon.status ||
-                        "rest" in otherPokemon.status
-                    ) {
-                        allMessages.push(`${otherPokemon.upperName()} cannot use any moves!`);
-                    }
-                    else if ("chargeTurn" in otherPokemon.status) {
-                        allMessages.push(`${otherPokemon.upperName()} is charging!`);
-                    }
-                    else if ("skipTurn" in otherPokemon.status) {
-                        allMessages.push(`${otherPokemon.upperName()} is recovering from last turn!`);
-                    }
-                    else if ("dig" in otherPokemon.status) {
-                        allMessages.push(`${otherPokemon.upperName()} used Dig last turn!`);
-                    }
-                    else {
-                        let useMessage2 = `${otherPokemon.upperName()} uses ${move2.upperName()}!`;
-                        let outcomeMessage2 = otherPokemon.useMove(this,  move2, actingPokemon);
-                        otherPokemon.lastMove = move2;
-                        allMessages.push(useMessage2, outcomeMessage2);
-                        if (otherPokemon == this.player) {
-                            this.movePPLeftArr[moveButtonNumber] --;
-                        } 
                     }
                 }
                 return allMessages;
@@ -2277,164 +2251,358 @@ $(function() {
         let pokemonIndex2 = Math.floor(Math.random() * pokedex.length);
         let pokemon1 = allPokemon[pokedex[pokemonIndex1][0]];
         let pokemon2 = allPokemon[pokedex[pokemonIndex2][0]];
+        // let pokemon1 = allPokemon["tentacruel"];
+        // let pokemon2 = allPokemon["gloom"];
+
+        let baseURL = "https://pokemondb.net/sprites/";
+        $.get(baseURL + pokemon1.name)
+        .done((result) => {
+            let myObject = $.parseHTML(result);
+            let animatedSprite1 = $(myObject).find(".sprite-anim");
+            if (animatedSprite1.length == 8) {
+                pokemon1.back = animatedSprite1[4].href;
+            }
+            else if (animatedSprite1.length == 4) {
+                pokemon1.back = animatedSprite1[2].href;
+            }
+        });
+
+        $.get(baseURL + pokemon2.name)
+        .done((result) => {
+            let myObject = $.parseHTML(result);
+            let animatedSprite2 = $(myObject).find(".sprite-anim");
+            pokemon2.front = animatedSprite2[0].href;
+        });
+
+        setTimeout(() => {
+            let encounter = new Battle(pokemon1, pokemon2);
+            console.log(pokemon1);
+            console.log(pokemon2);
+
+            // Assign sprites for both player and enemy pokemon
+            for (let i = 0; i < pokedex.length; i++){
+                if(pokemon1 == allPokemon[pokedex[i][0]]) {
+                    let playerPokemon = document.getElementById("playerPokemon");
+                    let pokemon1Box = document.createElement("img");
+                    pokemon1Box.setAttribute("id", "playerPokemonBack");
+                    pokemon1Box.src = pokemon1.back;
+                    playerPokemon.appendChild(pokemon1Box);
+                };
+            }
+            
+            for (let i = 0; i < pokedex.length; i++){
+                if(pokemon2 == allPokemon[pokedex[i][0]]) {
+                    let enemyPokemon = document.getElementById("enemyPokemon");
+                    let pokemon2Box = document.createElement("img");
+                    pokemon2Box.setAttribute("id", "enemyPokemonFront");
+                    pokemon2Box.src = pokemon2.front;
+                    enemyPokemon.appendChild(pokemon2Box);
+                };
+            }
+
+            // ------------------------------------------------------------------------------------
+
+            // Main Gameplay
+
+            $("#moveButton1").click(() => {
+
+                encounter.disableButtons();
+                encounter.turnHistory(encounter.turn, "turnCount");
+                let checkMessage1 = encounter.checkStatus(pokemon1, pokemon2);
+                let checkMessage2 = encounter.checkStatus(pokemon2, pokemon1);
+                for (let message of checkMessage1) {
+                    encounter.turnHistory(message, "turnContent");
+                }
+                for (let message of checkMessage2) {
+                    encounter.turnHistory(message, "turnContent");
+                }
+                if (pokemon2.speed[0] > pokemon1.speed[0]) {
+                    let combatMessages1 = encounter.moveSequence(pokemon2, pokemon1, 0);
+                    for (let message of combatMessages1) {
+                        encounter.turnHistory(message, "turnContent");
+                    }
+                    setTimeout(() => {
+                        if (pokemon1.alive() && pokemon2.alive()) {
+                            let combatMessages2 = encounter.moveSequence(pokemon1, pokemon2, 0);
+                            for (let message of combatMessages2) {
+                                encounter.turnHistory(message, "turnContent");
+                            }
+                        }
+                    }, 2500);
+                }
+                else {
+                    let combatMessages1 = encounter.moveSequence(pokemon1, pokemon2, 0);
+                    for (let message of combatMessages1) {
+                        encounter.turnHistory(message, "turnContent");
+                    }
+                    setTimeout(() => {
+                        if (pokemon1.alive() && pokemon2.alive()) {
+                            let combatMessages2 = encounter.moveSequence(pokemon2, pokemon1, 0);
+                            for (let message of combatMessages2) {
+                                encounter.turnHistory(message, "turnContent");
+                            }
+                        }
+                    }, 2500);
+                }
+                encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
+                $("#movePP1").text(`${encounter.movePPLeftArr[0]}/${encounter.moveArr[0].pp}`);
+                encounter.turn ++;
+                encounter.enableButtons();
+                // setTimeout(() => {encounter.enableButtons();}, 1000);
+            });
+
+            $("#moveButton2").click(() => {
+                
+                encounter.disableButtons();
+                encounter.turnHistory(encounter.turn, "turnCount");
+                let checkMessage1 = encounter.checkStatus(pokemon1, pokemon2);
+                let checkMessage2 = encounter.checkStatus(pokemon2, pokemon1);
+                for (let message of checkMessage1) {
+                    encounter.turnHistory(message, "turnContent");
+                }
+                for (let message of checkMessage2) {
+                    encounter.turnHistory(message, "turnContent");
+                }
+                if (pokemon2.speed[0] > pokemon1.speed[0]) {
+                    let combatMessages1 = encounter.moveSequence(pokemon2, pokemon1, 1);
+                    for (let message of combatMessages1) {
+                        encounter.turnHistory(message, "turnContent");
+                    }
+                }
+                else {
+                    let combatMessages2 = encounter.moveSequence(pokemon1, pokemon2, 1);
+                    for (let message of combatMessages2) {
+                        encounter.turnHistory(message, "turnContent");
+                    }
+                }
+                encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
+                $("#movePP2").text(`${encounter.movePPLeftArr[1]}/${encounter.moveArr[1].pp}`);
+                encounter.turn ++;
+                encounter.enableButtons();
+                // setTimeout(() => {encounter.enableButtons();}, 1000);
+            });
+
+            $("#moveButton3").click(() => {
+                
+                encounter.disableButtons();
+                encounter.turnHistory(encounter.turn, "turnCount");
+                let checkMessage1 = encounter.checkStatus(pokemon1, pokemon2);
+                let checkMessage2 = encounter.checkStatus(pokemon2, pokemon1);
+                for (let message of checkMessage1) {
+                    encounter.turnHistory(message, "turnContent");
+                }
+                for (let message of checkMessage2) {
+                    encounter.turnHistory(message, "turnContent");
+                }
+                if (pokemon2.speed[0] > pokemon1.speed[0]) {
+                    let combatMessages1 = encounter.moveSequence(pokemon2, pokemon1, 2);
+                    for (let message of combatMessages1) {
+                        encounter.turnHistory(message, "turnContent");
+                    }
+                }
+                else {
+                    let combatMessages2 = encounter.moveSequence(pokemon1, pokemon2, 2);
+                    for (let message of combatMessages2) {
+                        encounter.turnHistory(message, "turnContent");
+                    }
+                }
+                encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
+                $("#movePP3").text(`${encounter.movePPLeftArr[2]}/${encounter.moveArr[2].pp}`);
+                encounter.turn ++;
+                encounter.enableButtons();
+                // setTimeout(() => {encounter.enableButtons();}, 1000);
+            });
+
+            $("#moveButton4").click(() => {
+                
+                encounter.disableButtons();
+                encounter.turnHistory(encounter.turn, "turnCount");
+                let checkMessage1 = encounter.checkStatus(pokemon1, pokemon2);
+                let checkMessage2 = encounter.checkStatus(pokemon2, pokemon1);
+                for (let message of checkMessage1) {
+                    encounter.turnHistory(message, "turnContent");
+                }
+                for (let message of checkMessage2) {
+                    encounter.turnHistory(message, "turnContent");
+                }
+                if (pokemon2.speed[0] > pokemon1.speed[0]) {
+                    let combatMessages1 = encounter.moveSequence(pokemon2, pokemon1, 3);
+                    for (let message of combatMessages1) {
+                        encounter.turnHistory(message, "turnContent");
+                    }
+                }
+                else {
+                    let combatMessages2 = encounter.moveSequence(pokemon1, pokemon2, 3);
+                    for (let message of combatMessages2) {
+                        encounter.turnHistory(message, "turnContent");
+                    }
+                }
+                encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
+                $("#movePP4").text(`${encounter.movePPLeftArr[3]}/${encounter.moveArr[3].pp}`);
+                encounter.turn ++;
+                encounter.enableButtons();
+                // setTimeout(() => {encounter.enableButtons();}, 1000);
+            });
+        }, 1000);
+
         // let pokemon1 = allPokemon["pikachu"];
         // let pokemon2 = allPokemon["machamp"];
-        let encounter = new Battle(pokemon1, pokemon2);
-        console.log(pokemon1);
-        console.log(pokemon2);
+        // let encounter = new Battle(pokemon1, pokemon2);
+        // console.log(pokemon1);
+        // console.log(pokemon2);
 
-        // Assign sprites for both player and enemy pokemon
-        for (let i = 0; i < pokedex.length; i++){
-            if(pokemon1 == allPokemon[pokedex[i][0]]) {
-                let playerPokemon = document.getElementById("playerPokemon");
-                let pokemon1Box = document.createElement("img");
-                pokemon1Box.setAttribute("id", "playerPokemonBack");
-                pokemon1Box.src = pokemon1.back;
-                playerPokemon.appendChild(pokemon1Box);
-            };
-        }
+        // // Assign sprites for both player and enemy pokemon
+        // for (let i = 0; i < pokedex.length; i++){
+        //     if(pokemon1 == allPokemon[pokedex[i][0]]) {
+        //         let playerPokemon = document.getElementById("playerPokemon");
+        //         let pokemon1Box = document.createElement("img");
+        //         pokemon1Box.setAttribute("id", "playerPokemonBack");
+        //         pokemon1Box.src = pokemon1.back;
+        //         playerPokemon.appendChild(pokemon1Box);
+        //     };
+        // }
         
-        for (let i = 0; i < pokedex.length; i++){
-            if(pokemon2 == allPokemon[pokedex[i][0]]) {
-                let enemyPokemon = document.getElementById("enemyPokemon");
-                let pokemon2Box = document.createElement("img");
-                pokemon2Box.setAttribute("id", "enemyPokemonFront");
-                pokemon2Box.src = pokemon2.front;
-                enemyPokemon.appendChild(pokemon2Box);
-            };
-        }
+        // for (let i = 0; i < pokedex.length; i++){
+        //     if(pokemon2 == allPokemon[pokedex[i][0]]) {
+        //         let enemyPokemon = document.getElementById("enemyPokemon");
+        //         let pokemon2Box = document.createElement("img");
+        //         pokemon2Box.setAttribute("id", "enemyPokemonFront");
+        //         pokemon2Box.src = pokemon2.front;
+        //         enemyPokemon.appendChild(pokemon2Box);
+        //     };
+        // }
+
+        // // ------------------------------------------------------------------------------------
+
+        // // Main Gameplay
+
+        // $("#moveButton1").click(() => {
+
+        //     encounter.disableButtons();
+        //     encounter.turnHistory(encounter.turn, "turnCount");
+        //     let checkMessage1 = encounter.checkStatus(pokemon1, pokemon2);
+        //     let checkMessage2 = encounter.checkStatus(pokemon2, pokemon1);
+        //     for (let message of checkMessage1) {
+        //         encounter.turnHistory(message, "turnContent");
+        //     }
+        //     for (let message of checkMessage2) {
+        //         encounter.turnHistory(message, "turnContent");
+        //     }
+        //     if (pokemon2.speed[0] > pokemon1.speed[0]) {
+        //         let combatMessages1 = encounter.moveSequence(pokemon2, pokemon1, 0);
+        //         for (let message of combatMessages1) {
+        //             encounter.turnHistory(message, "turnContent");
+        //         }
+        //     }
+        //     else {
+        //         let combatMessages2 = encounter.moveSequence(pokemon1, pokemon2, 0);
+        //         for (let message of combatMessages2) {
+        //             encounter.turnHistory(message, "turnContent");
+        //         }
+        //     }
+        //     encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
+        //     $("#movePP1").text(`${encounter.movePPLeftArr[0]}/${encounter.moveArr[0].pp}`);
+        //     encounter.turn ++;
+        //     encounter.enableButtons();
+        //     // setTimeout(() => {encounter.enableButtons();}, 1000);
+        // });
+
+        // $("#moveButton2").click(() => {
+            
+        //     encounter.disableButtons();
+        //     encounter.turnHistory(encounter.turn, "turnCount");
+        //     let checkMessage1 = encounter.checkStatus(pokemon1, pokemon2);
+        //     let checkMessage2 = encounter.checkStatus(pokemon2, pokemon1);
+        //     for (let message of checkMessage1) {
+        //         encounter.turnHistory(message, "turnContent");
+        //     }
+        //     for (let message of checkMessage2) {
+        //         encounter.turnHistory(message, "turnContent");
+        //     }
+        //     if (pokemon2.speed[0] > pokemon1.speed[0]) {
+        //         let combatMessages1 = encounter.moveSequence(pokemon2, pokemon1, 1);
+        //         for (let message of combatMessages1) {
+        //             encounter.turnHistory(message, "turnContent");
+        //         }
+        //     }
+        //     else {
+        //         let combatMessages2 = encounter.moveSequence(pokemon1, pokemon2, 1);
+        //         for (let message of combatMessages2) {
+        //             encounter.turnHistory(message, "turnContent");
+        //         }
+        //     }
+        //     encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
+        //     $("#movePP2").text(`${encounter.movePPLeftArr[1]}/${encounter.moveArr[1].pp}`);
+        //     encounter.turn ++;
+        //     encounter.enableButtons();
+        //     // setTimeout(() => {encounter.enableButtons();}, 1000);
+        // });
+
+        // $("#moveButton3").click(() => {
+            
+        //     encounter.disableButtons();
+        //     encounter.turnHistory(encounter.turn, "turnCount");
+        //     let checkMessage1 = encounter.checkStatus(pokemon1, pokemon2);
+        //     let checkMessage2 = encounter.checkStatus(pokemon2, pokemon1);
+        //     for (let message of checkMessage1) {
+        //         encounter.turnHistory(message, "turnContent");
+        //     }
+        //     for (let message of checkMessage2) {
+        //         encounter.turnHistory(message, "turnContent");
+        //     }
+        //     if (pokemon2.speed[0] > pokemon1.speed[0]) {
+        //         let combatMessages1 = encounter.moveSequence(pokemon2, pokemon1, 2);
+        //         for (let message of combatMessages1) {
+        //             encounter.turnHistory(message, "turnContent");
+        //         }
+        //     }
+        //     else {
+        //         let combatMessages2 = encounter.moveSequence(pokemon1, pokemon2, 2);
+        //         for (let message of combatMessages2) {
+        //             encounter.turnHistory(message, "turnContent");
+        //         }
+        //     }
+        //     encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
+        //     $("#movePP3").text(`${encounter.movePPLeftArr[2]}/${encounter.moveArr[2].pp}`);
+        //     encounter.turn ++;
+        //     encounter.enableButtons();
+        //     // setTimeout(() => {encounter.enableButtons();}, 1000);
+        // });
+
+        // $("#moveButton4").click(() => {
+            
+        //     encounter.disableButtons();
+        //     encounter.turnHistory(encounter.turn, "turnCount");
+        //     let checkMessage1 = encounter.checkStatus(pokemon1, pokemon2);
+        //     let checkMessage2 = encounter.checkStatus(pokemon2, pokemon1);
+        //     for (let message of checkMessage1) {
+        //         encounter.turnHistory(message, "turnContent");
+        //     }
+        //     for (let message of checkMessage2) {
+        //         encounter.turnHistory(message, "turnContent");
+        //     }
+        //     if (pokemon2.speed[0] > pokemon1.speed[0]) {
+        //         let combatMessages1 = encounter.moveSequence(pokemon2, pokemon1, 3);
+        //         for (let message of combatMessages1) {
+        //             encounter.turnHistory(message, "turnContent");
+        //         }
+        //     }
+        //     else {
+        //         let combatMessages2 = encounter.moveSequence(pokemon1, pokemon2, 3);
+        //         for (let message of combatMessages2) {
+        //             encounter.turnHistory(message, "turnContent");
+        //         }
+        //     }
+        //     encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
+        //     $("#movePP4").text(`${encounter.movePPLeftArr[3]}/${encounter.moveArr[3].pp}`);
+        //     encounter.turn ++;
+        //     encounter.enableButtons();
+        //     // setTimeout(() => {encounter.enableButtons();}, 1000);
+        // });
 
         // ------------------------------------------------------------------------------------
 
-        // Main Gameplay
-
-        $("#moveButton1").click(() => {
-
-            encounter.disableButtons();
-            encounter.turnHistory(encounter.turn, "turnCount");
-            let checkMessage1 = encounter.checkStatus(pokemon1, pokemon2);
-            let checkMessage2 = encounter.checkStatus(pokemon2, pokemon1);
-            for (let message of checkMessage1) {
-                encounter.turnHistory(message, "turnContent");
-            }
-            for (let message of checkMessage2) {
-                encounter.turnHistory(message, "turnContent");
-            }
-            if (pokemon2.speed[0] > pokemon1.speed[0]) {
-                let combatMessages1 = encounter.moveSequence(pokemon2, pokemon1, 0);
-                for (let message of combatMessages1) {
-                    encounter.turnHistory(message, "turnContent");
-                }
-            }
-            else {
-                let combatMessages2 = encounter.moveSequence(pokemon1, pokemon2, 0);
-                for (let message of combatMessages2) {
-                    encounter.turnHistory(message, "turnContent");
-                }
-            }
-            encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
-            $("#movePP1").text(`${encounter.movePPLeftArr[0]}/${encounter.moveArr[0].pp}`);
-            encounter.turn ++;
-            encounter.enableButtons();
-            // setTimeout(() => {encounter.enableButtons();}, 1000);
-        });
-
-        $("#moveButton2").click(() => {
-            
-            encounter.disableButtons();
-            encounter.turnHistory(encounter.turn, "turnCount");
-            let checkMessage1 = encounter.checkStatus(pokemon1, pokemon2);
-            let checkMessage2 = encounter.checkStatus(pokemon2, pokemon1);
-            for (let message of checkMessage1) {
-                encounter.turnHistory(message, "turnContent");
-            }
-            for (let message of checkMessage2) {
-                encounter.turnHistory(message, "turnContent");
-            }
-            if (pokemon2.speed[0] > pokemon1.speed[0]) {
-                let combatMessages1 = encounter.moveSequence(pokemon2, pokemon1, 1);
-                for (let message of combatMessages1) {
-                    encounter.turnHistory(message, "turnContent");
-                }
-            }
-            else {
-                let combatMessages2 = encounter.moveSequence(pokemon1, pokemon2, 1);
-                for (let message of combatMessages2) {
-                    encounter.turnHistory(message, "turnContent");
-                }
-            }
-            encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
-            $("#movePP2").text(`${encounter.movePPLeftArr[1]}/${encounter.moveArr[1].pp}`);
-            encounter.turn ++;
-            encounter.enableButtons();
-            // setTimeout(() => {encounter.enableButtons();}, 1000);
-        });
-
-        $("#moveButton3").click(() => {
-            
-            encounter.disableButtons();
-            encounter.turnHistory(encounter.turn, "turnCount");
-            let checkMessage1 = encounter.checkStatus(pokemon1, pokemon2);
-            let checkMessage2 = encounter.checkStatus(pokemon2, pokemon1);
-            for (let message of checkMessage1) {
-                encounter.turnHistory(message, "turnContent");
-            }
-            for (let message of checkMessage2) {
-                encounter.turnHistory(message, "turnContent");
-            }
-            if (pokemon2.speed[0] > pokemon1.speed[0]) {
-                let combatMessages1 = encounter.moveSequence(pokemon2, pokemon1, 2);
-                for (let message of combatMessages1) {
-                    encounter.turnHistory(message, "turnContent");
-                }
-            }
-            else {
-                let combatMessages2 = encounter.moveSequence(pokemon1, pokemon2, 2);
-                for (let message of combatMessages2) {
-                    encounter.turnHistory(message, "turnContent");
-                }
-            }
-            encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
-            $("#movePP3").text(`${encounter.movePPLeftArr[2]}/${encounter.moveArr[2].pp}`);
-            encounter.turn ++;
-            encounter.enableButtons();
-            // setTimeout(() => {encounter.enableButtons();}, 1000);
-        });
-
-        $("#moveButton4").click(() => {
-            
-            encounter.disableButtons();
-            encounter.turnHistory(encounter.turn, "turnCount");
-            let checkMessage1 = encounter.checkStatus(pokemon1, pokemon2);
-            let checkMessage2 = encounter.checkStatus(pokemon2, pokemon1);
-            for (let message of checkMessage1) {
-                encounter.turnHistory(message, "turnContent");
-            }
-            for (let message of checkMessage2) {
-                encounter.turnHistory(message, "turnContent");
-            }
-            if (pokemon2.speed[0] > pokemon1.speed[0]) {
-                let combatMessages1 = encounter.moveSequence(pokemon2, pokemon1, 3);
-                for (let message of combatMessages1) {
-                    encounter.turnHistory(message, "turnContent");
-                }
-            }
-            else {
-                let combatMessages2 = encounter.moveSequence(pokemon1, pokemon2, 3);
-                for (let message of combatMessages2) {
-                    encounter.turnHistory(message, "turnContent");
-                }
-            }
-            encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
-            $("#movePP4").text(`${encounter.movePPLeftArr[3]}/${encounter.moveArr[3].pp}`);
-            encounter.turn ++;
-            encounter.enableButtons();
-            // setTimeout(() => {encounter.enableButtons();}, 1000);
-        });
-
-        // ------------------------------------------------------------------------------------
-
-    }, 3000)
+    }, 3500)
 
 });
 
