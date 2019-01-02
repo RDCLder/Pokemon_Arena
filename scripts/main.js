@@ -83,6 +83,7 @@ $(function() {
                 if (this.damage_class == "physical") {
                     let baseDamage = (22 * this.power * user.attack[0] / target.defense[0] / 50) + 2;
                     var damage = Math.floor(baseDamage * (Math.floor(Math.random() * (max - min + 1)) + min) / 100);
+                    
                     // Check for critical hit
                     let threshold = Math.floor(user.speed[0] * critModifier * 100 / 512);
                     let critChance = Math.floor(Math.random() * 100);
@@ -95,9 +96,6 @@ $(function() {
                     }
                     if ("dig" in target.status && this.name == "earthquake") {
                         damage = damage * 2;
-                    }
-                    if ("reflect" in target.status) {
-                        damage = Math.floor(damage / 2);
                     }
                     // Check for specific moves that affect damage
                     if (
@@ -123,25 +121,23 @@ $(function() {
                 else if (this.damage_class == "special") {
                     let baseDamage = (22 * this.power * user.specialAttack[0] / target.specialDefense[0] / 50) + 2;
                     var damage = Math.floor(baseDamage * (Math.floor(Math.random() * (max - min + 1)) + min) / 100);
+                    
                     // Check for critical hit
                     let threshold = Math.floor(user.speed[0] * critModifier * 100 / 512);
                     let critChance = Math.floor(Math.random() * 100);
                     if (critChance <= threshold) {
                         damage = damage * 2;
                     }
+                    if (damage > target.hp) {
+                        damage = target.hp;
+                    }
+
                     // Check for status effects that affect damage
                     if ("burned" in user.status) {
                         damage = Math.floor(damage / 2);
                     }
                     if ("dig" in target.status && this.name == "earthquake") {
                         damage = damage * 2;
-                    }
-                    if ("light-sceen" in target.status) {
-                        damage = Math.floor(damage / 2);
-                    }
-                    // Check that damage doesn't exceed target HP
-                    if (damage > target.hp) {
-                        damage = target.hp;
                     }
                     target.hp -= damage;
                     return damage;
@@ -180,7 +176,7 @@ $(function() {
                     chance = 100;
                 }
                 let cutoff = Math.floor(Math.random() * 100);
-                if (chance >= cutoff && "mist" in target.status == false) {
+                if (chance >= cutoff) {
                     if (statName == "Attack") {
                         var stat = target.attack;
                     }
@@ -267,7 +263,7 @@ $(function() {
                     chance = 100;
                 }
                 let cutoff = Math.floor(Math.random() * 100);
-                if (chance >= cutoff && "mist" in target.status == false) {
+                if (chance >= cutoff) {
                     for (let i = 0; i < target.moves.length; i ++) {
                         
                         // Check that stage value is between -6 and 6
@@ -335,7 +331,7 @@ $(function() {
                     chance = 100;
                 }
                 let cutoff = Math.floor(Math.random() * 100);
-                if (chance >= cutoff && "substitute" in target.status == false) {
+                if (chance >= cutoff) {
                     
                     // Non-volatile status conditions are mutually exclusive
                     if (effect == "burned") {
@@ -625,17 +621,10 @@ $(function() {
 
                     else if (effect == "substitute") {
                         if (
-                            "substitute" in target.status == false &&
-                            target.hp >= Math.floor(target.startHP / 4)
+                            "substitute" in target.status == false
                         ) {
                             target.status["substitute"] = [duration += battle.turn];
                             return `${target.upperName()} is substituted!`;
-                        }
-                        else if (
-                            "substitute" in target.status == false &&
-                            target.hp < Math.floor(target.startHP / 4)
-                        ) {
-                            return `It does nothing!`;
                         }
                         else {
                             return `${target.upperName()} is already substituted!`;
@@ -644,7 +633,7 @@ $(function() {
                 
                 }
                 else {
-                    return ``;
+                    return "";
                 }
             } // End of specialEffect method
 
@@ -1791,7 +1780,7 @@ $(function() {
                 }
                 $('[data-toggle="tooltip"]').tooltip();
             }
-
+        
             // checkStatus method
             // This only checks for non-volatile status conditions
             // Other conditions are checked in useMove() or wherever appropriate
@@ -1814,6 +1803,7 @@ $(function() {
                         delete target.status["burned"];
                         allMessages.push(`\n${target.upperName()} is no longer on fire!`);
                     }
+                    
                 }
 
                 else if ("frozen" in target.status) {
@@ -1944,22 +1934,14 @@ $(function() {
                         allMessages.push(`\n${target.upperName} is still bidding its time!`);
                     }
                     else if (this.turn == target.status["bide"][0]) {
-                        allMessages.push(`\n${target.upperName()} uses Bide!`);
-                        let damage = (target.status["bide"][1] - target.hp) * 2;
-                        otherPokemon.hp -= damage;
-                        allMessages.push(`${otherPokemon.upperName()} lost ${damage} HP!`);
                         delete target.status["bide"];
+                        allMessages.push(`\n${target.upperName()} is ready to act!`);
                     }
                 }
 
                 if ("bound" in target.status) {
-                    if (
-                        target.status["bound"][0] == "permanent" ||
-                        this.turn < target.status["bound"][0]
-                    ) {
-                        let damage = Math.floor(target.startHP / 16);
-                        target.hp -= damage;
-                        allMessages.push(`\n${target.upperName()} is bound and lost ${damage} HP!`);
+                    if (target.status["bound"][0] == "permanent") {
+                        allMessages.push(`\n${target.upperName} is still bound!`);
                     }
                     else if (this.turn == target.status["bound"][0]) {
                         delete target.status["bound"];
@@ -2004,15 +1986,8 @@ $(function() {
                 }
 
                 if ("leech-seed" in target.status) {
-                    if (
-                        target.status["leech-seed"][0] == "permanent" ||
-                        this.turn < target.status["leech-seed"][0]
-                    ) {
-                        let damage = Math.floor(target.startHP / 8);
-                        target.hp -= damage;
-                        otherPokemon.hp += damage;
-                        allMessages.push(`\nLeech-seed drains ${damage} HP from ${target.upperName()}!`);
-                        allMessages.push(`${otherPokemon.upperName()} gains ${damage} HP!`);
+                    if (target.status["leech-seed"][0] == "permanent") {
+                        allMessages.push(`\n${target.upperName} is still afflicted with leech-seed!`);
                     }
                     else if (this.turn == target.status["leech-seed"][0]) {
                         delete target.status["leech-seed"];
@@ -2228,7 +2203,7 @@ $(function() {
         console.log(pokemon1);
         console.log(pokemon2);
 
-        // Assign sprites for both player and enemy pokemon
+        // Assign sprites and name for both player and enemy pokemon
         for (let i = 0; i < pokedex.length; i++){
             if(pokemon1 == allPokemon[pokedex[i][0]]) {
                 let playerPokemon = document.getElementById("playerPokemon");
@@ -2236,9 +2211,12 @@ $(function() {
                 pokemon1Box.setAttribute("id", "playerPokemonBack");
                 pokemon1Box.src = pokemon1.back;
                 playerPokemon.appendChild(pokemon1Box);
+                let playerPokemon1Name = document.getElementById("playerPokemon1Name");
+                playerPokemon1Name.innerHTML = pokemon1.upperName();
             };
         }
         
+
         for (let i = 0; i < pokedex.length; i++){
             if(pokemon2 == allPokemon[pokedex[i][0]]) {
                 let enemyPokemon = document.getElementById("enemyPokemon");
@@ -2246,8 +2224,55 @@ $(function() {
                 pokemon2Box.setAttribute("id", "enemyPokemonFront");
                 pokemon2Box.src = pokemon2.front;
                 enemyPokemon.appendChild(pokemon2Box);
+                let enemyPokemon1Name = document.getElementById("enemyPokemon1Name");
+                enemyPokemon1Name.innerHTML = pokemon2.upperName()
             };
         }
+        // Assign names, healthbar, and status effects for player pokemon
+        
+        // Update Hp Percentage
+        function updateHpPercentage(){
+            let playerPokemon1HealthBar = document.getElementById('playerPokemon1Health');
+            let playerPokemon1HealthPercentage = document.getElementById('p1HP');
+            let p1HPvalue = playerPokemon1HealthBar.value;
+            let p1Percent = Math.floor(p1HPvalue);
+            playerPokemon1HealthPercentage.innerHTML = p1Percent + "%";
+            let enemyPokemon1HealthBar = document.getElementById('enemyPokemon1Health')
+            let enemyPokemon1HealthPercentage = document.getElementById('e1HP');
+            let e1HPValue = enemyPokemon1HealthBar.value;
+            let e1Percent = Math.floor(e1HPValue);
+            enemyPokemon1HealthPercentage.innerHTML = e1Percent + "%";
+        }
+       updateHpPercentage()
+
+       // Update Status Effect of Pokemon
+       function updateStatusEffects(pokemon1, pokemon2) {
+            let playerPokemonStatusEffect = document.getElementById("playerPokemonStatusEffect");
+            let enemyPokemonStatusEffect = document.getElementById("enemyPokemonStatusEffect");
+            checkStatus(pokemon1, pokemon2)
+            if ("burned" in pokemon1.status == true &&
+            "frozen" in pokemon1.status == true &&
+            "paralyzed" in pokemon1.status == true &&
+            "poisoned" in pokemon1.status == true &&
+            "sleeping" in pokemon1.status == true &&
+            "confused" in pokemon1.status == true){
+                let statusEffect = pokemon1.status
+                playerPokemonStatusEffect.innerHTML = statusEffect
+                //  statusEffect.toLowerCase().split(' ')
+                // .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+                // .join(' ');
+            }
+            if ("burned" in pokemon2.status == true &&
+            "frozen" in pokemon2.status == true &&
+            "paralyzed" in pokemon2.status == true &&
+            "poisoned" in pokemon2.status == true &&
+            "sleeping" in pokemon2.status == true &&
+            "confused" in pokemon2.status == true){
+                let statusEffect = pokemon2.status;
+                enemyPokemonStatusEffect.innerHTML = statusEffect;
+            }
+        }
+
 
         // ------------------------------------------------------------------------------------
 
@@ -2376,7 +2401,7 @@ $(function() {
             encounter.enableButtons();
             // setTimeout(() => {encounter.enableButtons();}, 1000);
         });
-
+            
         // ------------------------------------------------------------------------------------
 
     }, 3000)
@@ -2466,12 +2491,14 @@ function pokemon1SpecialAttackPokemon2(){
     let specialAttack = document.createElement("div");
     specialAttack.setAttribute("class","specialAttack");
     specialAttack.style.left = "50%"
+    specialAttack.style.top = "0"
     playerPokemon1.appendChild(specialAttack);
     let i = 1;
     while(i < 6){
         let specialAttack = document.createElement("div")
         specialAttack.className = "specialAttack specialAttack"+ i;
         specialAttack.style.left = "50%"
+        specialAttack.style.top = "0"
         playerPokemon1.appendChild(specialAttack);
         i++;
     }
@@ -2568,6 +2595,7 @@ function pokemon2SpecialAttackPokemon1(){
     specialAttack.setAttribute("class","specialAttack")
     specialAttack.style.top = "40%"
     specialAttack.style.left = "20%"
+    
     enemyPokemon1.appendChild(specialAttack);
     let i = 1;
     while(i < 6){
@@ -2594,7 +2622,7 @@ function pokemon2SpecialAttackPokemon1(){
         delay: 100,
         targets: specialAttack,
         translateX: '-310%',
-        translateY: '300%',
+        translateY: '225%',
         scale: 1.,
         rotate: '5turn',
         easing: 'linear',
@@ -2607,7 +2635,7 @@ function pokemon2SpecialAttackPokemon1(){
         targets: '.specialAttack1',
         opacity: .85,
         translateX: '-310%',
-        translateY: '300%',
+        translateY: '225%',
         rotate: '5turn',
         easing: 'linear',
         complete: function(){
@@ -2619,7 +2647,7 @@ function pokemon2SpecialAttackPokemon1(){
         targets: '.specialAttack2',
         opacity:.75,
         translateX: '-310%',
-        translateY: '300%',
+        translateY: '225%',
         rotate: '5turn',
         easing: 'linear',
         complete: function(){
@@ -2631,7 +2659,7 @@ function pokemon2SpecialAttackPokemon1(){
         targets: '.specialAttack3',
         opacity:.65,
         translateX: '-310%',
-        translateY: '300%',
+        translateY: '225%',
         rotate: '5turn',
         easing: 'linear',
         complete: function(){
@@ -2643,7 +2671,7 @@ function pokemon2SpecialAttackPokemon1(){
         targets: '.specialAttack4',
         opacity:.55,
         translateX: '-310%',
-        translateY: '300%',
+        translateY: '225%',
         rotate: '5turn',
         easing: 'linear',
         complete: function(){
@@ -2655,7 +2683,7 @@ function pokemon2SpecialAttackPokemon1(){
         targets: '.specialAttack5',
         opacity:.45,
         translateX: '-310%',
-        translateY: '300%',
+        translateY: '225%',
         rotate: '5turn',
         easing: 'linear',
         complete: function(){
@@ -3098,24 +3126,60 @@ function pokemon1Paralyze() {
     })
     anime.timeline({
         targets: paralyzeOverlay,
-        translateY: '50%',
-        scaleX: 1.2,
-        scaleY: 1.4,
         loop: 2,
         easing: 'linear',
-        direction: 'alternate'
+        direction: 'alternate',
+        duration: 700,
     }).add({
+        translateY: '50%',
+    }).add({
+        translateX: 0,
+        scaleX: .8,
+        scaleY: .9,
         rotate: '1turn',
-        scaleX: 1.2,
-        scaleY: 1.4,
-        loop: 2,
-        duration: 1000,
-        easing: 'linear',
-        direction: 'normal',
-        complete: function (){
+    }).add({
+        complete: function(){
             paralyzeOverlay.remove()
         }
     })
+};
+function pokemon2Paralyze() {
+    let enemyPokemon = document.getElementById("enemyPokemon");
+    let paralyzeOverlay = document.createElement("img");
+    paralyzeOverlay.setAttribute("id", "paralyzeOverlay");
+    paralyzeOverlay.src = "./images/lightning-3050.png";
+    paralyzeOverlay.style.top = "-20%";
+    paralyzeOverlay.style.left = "10%";
+    enemyPokemon.appendChild(paralyzeOverlay);
+    let enemyPokemonImg = document.getElementById('enemyPokemonFront')
+    anime({
+        targets: enemyPokemonImg,
+        translateX: '5%', 
+        loop:4,
+        easing: 'easeInOutSine',
+        direction: 'alternate',
+        filter: 'sepia(100%) saturate(1000%)',
+        webkitFilter: 'sepia(100%) saturate(1000%)',
+    })
+    let pokemon2Paralyze = anime.timeline({
+        targets: paralyzeOverlay,
+        loop: 2,
+        easing: 'linear',
+        direction: 'alternate',
+        duration: 700,
+    }).add({
+        translateY: '50%',
+    }).add({
+        translateX: 0,
+        scaleX: .8,
+        scaleY: .9,
+        rotate: 360,
+    }).add({
+        complete: function(){
+            paralyzeOverlay.remove()
+        }
+    })
+    pokemon2Paralyze.speed = 2;
 };
   
 
@@ -3194,3 +3258,15 @@ function setRandomBackground(){
     leftTop.style.backgroundSize = "100% 100%";
 }
 setRandomBackground();
+function setPokemonGround(){
+    let pokemon1Ground = document.createElement("div");
+    pokemon1Ground.setAttribute("id","pokemonGround1");
+    let pokemon2Ground = document.createElement("div");
+    pokemon2Ground.setAttribute("id","pokemonGround2");
+    let pokemon1 = document.getElementById("playerPokemon");
+    let pokemon2 = document.getElementById("enemyPokemon");
+    pokemon1.appendChild(pokemon1Ground);
+    pokemon2.appendChild(pokemon2Ground);
+}
+setPokemonGround()
+
