@@ -2404,12 +2404,13 @@ $(function() {
             encounter.enableButtons();
             // setTimeout(() => {encounter.enableButtons();}, 1000);
         });
-
+            
         // ------------------------------------------------------------------------------------
 
     }, 3000)
 
 });
+
 
 ///// Pokemon Physical Attack Animation //////
 
@@ -3272,3 +3273,4 @@ function setPokemonGround(){
     pokemon2.appendChild(pokemon2Ground);
 }
 setPokemonGround()
+

@@ -4,7 +4,9 @@
 body {
     background: rgb(244, 250, 248);
     z-index: -2;
+    
 }
+
 
 #leftTop {
     height: 70%;
@@ -372,6 +374,12 @@ body {
 
 button {
     border-radius: 7px;
+    padding: 0%;
+    border: 1px solid white;
+    box-shadow: 0 1px 0 1px black,
+                inset 0 1px 0 1px black,
+                0 0 0 1px black,
+                inset 0 0 0 1px black;
 }
 
 :disabled {
@@ -405,7 +413,32 @@ h3 {
     margin: 0;
     font-size: 2ch;
 }
+.container{
+    max-width: 96% !important ;
+}
 
+@media only screen and (max-width: 700px) {
+    .specialAttack {
+        height: 45%;
+        width:56%;
+    }
+    .specialAttack:before,
+    .specialAttack:after {
+    content: "";
+    position: absolute;
+    z-index: 5;
+    width: 80%;
+    height: 173%;
+    -webkit-transform: scaleY(0.5774) rotate(-45deg);
+    -ms-transform: scaleY(0.5774) rotate(-45deg);
+    transform: scaleY(0.5774) rotate(-45deg);
+    background-color: inherit;
+    left: 10%;
+    border-radius: 50% 20% / 10% 40%;
+}
+
+
+}
 /* .tooltip {
     position: relative;
     display: inline-block;
