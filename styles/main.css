@@ -2,6 +2,7 @@ body {
     background: rgb(244, 250, 248);
     z-index: -2;
     
+    
 }
 
 
@@ -411,6 +412,7 @@ h3 {
 }
 .container{
     max-width: 96% !important ;
+    display: flex
 }
 
 @media only screen and (max-width: 700px) {
