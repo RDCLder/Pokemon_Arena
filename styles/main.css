@@ -1,15 +1,16 @@
-/* /////////////////////////////////////////////////////////////////////////// */
-/* Main Elements */
-
 body {
     background: rgb(244, 250, 248);
+    z-index: -2;
 }
 
 #leftTop {
     height: 70%;
+    padding: 0px;
+    width: 100%;
+    z-index: 0;
 }
 
-#leftBottm {
+#leftBottom {
     height: 30%;
 }
 
@@ -18,24 +19,288 @@ body {
     width: 100%;
 }
 
-.col {
-    /* border: solid orange; */
+/* //////////////////////////////////////////////////////////////////////// */
+/* Battlefield */
+
+#topPadding {
+    height: 30%;
+    width: 100%;
 }
 
+#enemyZone {
+    height: 30%;
+    width: 100%;
+}
+
+#neutralZone {
+    height: 10%;
+    width: 100%;
+}
+
+#playerZone {
+    height: 30%;
+    width: 100%;
+}
+
+#playerPokemonBack {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+}
+
+#playerPokemon{
+    position: relative;
+    z-index: 1;
+}
+
+#enemyPokemonFront {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+}
+
+#enemyPokemon{
+    position: relative;
+    z-index: 1;
+}
+
+#enemyGetHit {
+    width: 0;
+    height: 0;
+    display: block;
+    position: absolute;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: 50px solid red;
+    margin: 10px auto;
+    top: 20%;
+    right: 40%;
+    z-index: 5;
+}
+
+#enemyGetHit:after {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-top: 50px solid red;
+    margin: 15px 0 0 -25px;
+    z-index: 5;
+}
+
+#playerGetHit {
+    width: 0;
+    height: 0;
+    display: block;
+    position: absolute;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: 50px solid red;
+    margin: 10px auto;
+    top: 20%;
+    right: 20%;
+    z-index: 5;
+}
+
+#playerGetHit:after {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-top: 50px solid red;
+    margin: 15px 0 0 -25px;
+    z-index: 5;
+}
+
+#sleepingAnime{
+    position: absolute;
+    top: 30%;
+    color: red;
+}
+
+#sleepingAnime2{
+    position: absolute;
+    top: 30%;
+    color: red;
+}
+
+#poisonOverlay {
+    position: absolute;
+    top:10%;
+    left: 45%;
+    z-index: 10;
+    height: 25px;
+    width:25px;
+    margin: 20px auto;
+    border-radius: 50%;
+    background: rgba(216, 8, 188, 1) -webkit-radial-gradient(center 75%, ellipse contain, rgb(99, 3, 99), rgba(243, 3, 203, 0) 60%);
+    box-shadow: inset 0 0px 6px rgba(0,0,0,.5), inset 0 -1px 6px rgba(0,0,0,.4),  inset 0 8px 3px rgba(0,0,0,.3), inset 0 10px 3px rgba(255,255,255,.1), 0 3px 6px rgba(0,0,0,.5);
+}
+
+#poisonOverlay2 {
+    position: absolute;
+    top:10%;
+    left: 58%;
+    z-index: 10;
+    height: 25px;
+    width:25px;
+    margin: 20px auto;
+    border-radius: 50%;
+    background: rgba(216, 8, 188, 1) -webkit-radial-gradient(center 75%, ellipse contain, rgb(99, 3, 99), rgba(243, 3, 203, 0) 60%);
+    box-shadow: inset 0 0px 6px rgba(0,0,0,.5), inset 0 -1px 6px rgba(0,0,0,.4),  inset 0 8px 3px rgba(0,0,0,.3), inset 0 10px 3px rgba(255,255,255,.1), 0 3px 6px rgba(0,0,0,.5);
+}
+
+.burnOverlay{
+
+    position: absolute;
+    border-radius: 50% 0% 50% 50%;
+    transform: rotate(-45deg);
+    background-color: rgb(247, 104, 53);
+    height: 25px;
+    width: 25px;
+    z-index: 5;
+}
+
+#freezeOverlay {
+    position: absolute;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    border-radius: 50% 50% 15% 15%;
+    background-color: rgb(169, 231, 233);
+    z-index: 5;
+    opacity: .6;
+}
+
+#paralyzeOverlay {
+    position: absolute;
+    top:0;
+    left:0;
+    width: 90%;
+    height: 90%;
+    z-index: 10;
+}
+
+#player1Lost {
+    position: absolute;
+    top:0;
+    left:0;
+    z-index: 10;
+}
+
+/* //////////////////////////////////////////////////////////////////////////////////// */
+/* Testing */
+.specialAttack {
+    position: absolute;
+    width: 100px; 
+    height: 57.74px;
+    background-color: orange;
+    margin: 28.87px 0;
+    border-radius: 50% 20% / 10% 40%;
+  }
+  
+  .specialAttack:before,
+  .specialAttack:after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    width: 70.71px;
+    height: 70.71px;
+    -webkit-transform: scaleY(0.5774) rotate(-45deg);
+    -ms-transform: scaleY(0.5774) rotate(-45deg);
+    transform: scaleY(0.5774) rotate(-45deg);
+    background-color: inherit;
+    left: 14.6447px;
+    border-radius: 50% 20% / 10% 40%;
+  }
+  
+  .specialAttack:before {
+    top: -35.3553px;
+  }
+  
+  .specialAttack:after {
+    bottom: -35.3553px;
+  }
+  
+  /*cover up extra shadows*/
+  .specialAttack span {
+    display: block;
+    position: absolute;
+    top:0px;
+    left: 0;
+    width:100px;
+    height:57.7350px;
+    z-index: 2;
+    background: inherit;
+  }
+
 /* /////////////////////////////////////////////////////////////////////////// */
-/* Buttons */
+/* Buttons/Sidebar */
 
 button {
     border-radius: 7px;
 }
 
-#turnContent {
-    overflow-x: hidden;
+:disabled {
+    background-color: #696969;
 }
 
-#turnCounter {
-    margin:0;    
+.sideBar {
+    height:30rem;
+    width: 100%;
+    overflow-wrap: break-word;
+    overflow: scroll;
+    background-color: rgb(244, 250, 248);
 }
+
+.turnCount {
+    background-color: rgb(122, 151, 173);
+    margin-left: 1%;
+    margin-right: 1%;
+    /* overflow-wrap: break-word;
+    overflow: scroll; */
+}
+
+.turnContent {
+    margin-left: 1%;
+    margin-top: 0%;
+    margin-bottom: 0%;
+    /* border: solid black; */
+}
+
+h3 {
+    margin: 0;
+    font-size: 2ch;
+}
+
+/* .tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
+}
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+} */
 
 /* /////////////////////////////////////////////////////////////////////////// */
 /* Navbar/Archived */
@@ -43,11 +308,9 @@ button {
 /* .ask {
     border: solid black;
 }
-
 .far {
     padding-left: 25px; 
 }
-
 nav {
     justify-content: space-between;
     align-self: flex-end;
@@ -57,27 +320,10 @@ nav {
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-<<<<<<< HEAD
-}
-#btnText{
-    font-size: 1px
-}
-.far{
-    padding-left: 25px;
-    
-/* }
-@media screen and (max-width: 600px) {
-    .sidebar {
-    visibility: hidden;
-    display: none;
-    
-    }
-=======
     height: 5em;  
 } */
 
 /* .container {
     height: 50em;
     overflow-y: scroll; 
->>>>>>> 4da70f73cec721d10b2801f3ade05c913f810db4
 } */

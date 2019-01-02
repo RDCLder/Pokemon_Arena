@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Pokemon Aren a</title>
+  <title>Pokemon Arena</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,8 +10,8 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
     crossorigin="anonymous">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
-    crossorigin="anonymous">
+  <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
+    crossorigin="anonymous"> -->
   <link rel="stylesheet" href="styles/main.css">
 </head>
 
@@ -19,93 +19,114 @@
 
 <!-- ////////////////////////////////////////////////////////////////////////////// -->
 
-  <div class="row">
-    <div class="col"></div>
+  <div class="row" style="margin: 1%;">
+    <!-- <div class="col"></div>
     <div class="col-1">
-      <h5>samson</h5>
+      <h5>Name</h5>
     </div>
     <div class="col-2 justify-content-md-end">
       <button id="speaker"><i class="fas fa-volume-down"></i></button>
       <button id="setting"><i class="fas fa-cogs"></i></button>
-    </div>
+    </div> -->
   </div>
 
 <!-- ////////////////////////////////////////////////////////////////////////////// -->
 
   <!-- Start of Container -->
-  <div class="container ">
-    <div class="row">
+  <div class="container p-0">
+    <div class="row ">
 
       <!-- Start of Left Column -->
-      <div class="col-lg-7 col-sm-12">
+      <div class="col-lg-7 col-sm-8 m-0 p-0">
 
-        <div class="row border border-dark" id="leftTop"></div>
+        <div class="row border border-dark p-0 m-0" id="leftTop">
+          <div class="col-12 m-0 p-0">
+            <div class="row m-0" id="topPadding">
+              <div class="col">Turn 1</div>
+            </div>
+            <div class="row m-0" id="enemyZone">
+              <div class="col-7"></div>
+              <div class="col-5" id="enemyPokemon"></div>
+            </div>
+            <div class="row m-0" id="neutralZone">
+              <div class="col-3"></div>
+              <div class="col-3" id="circleStart"></div>
+              <div class="col-3"></div>
+              <div class="col-3"></div>
+            </div>
+            <div class="row m-0" id="playerZone">
+              <div class="col-5" id="playerPokemon" onclick="pokemon1Paralyze()"></div>
+              <div class="col-7" id="wiggles"></div>
+            </div>
+          </div>
+        </div>
 
 <!-- ////////////////////////////////////////////////////////////////////////////// -->
 
         <!-- Start of Left Bottom -->
-        <div class="row justify-content-md-center border border-dark" id="leftBottom">
+        <div class="row justify-content-md-center border border-dark m-0 p-0" id="leftBottom">
 
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-3">
-              <h5>What Do?</h5>
+              <h5>Make a Move</h5>
             </div>
             <div class="col-7"></div>
             <div class="col-2">
               <p class="border border-dark mt-1" id="num/num">num/num</p>
             </div>
-          </div>
+          </div> -->
 
           <div class="row">
-            <h4 style="color:red; margin-left: 2%;">Moves</h4>
+            <h4 style="color:maroon; margin-left: 2%">Moves</h4>
           </div>
 
           <!-- Start of Moves -->
-          <div class="row justify-content-md-around" style="margin-left: 2%;">
+          <div class="row justify-content-md-around m-0 p-0">
             
             <!-- Move 1 -->
             <!-- <div class="col"> -->
-              <button id="moveButton1" style="width: 20%;">
-                <div class="row justify-content-md-center" id="move1">Move 1</div>
-                <div class="row">
-                  <div class="col">Normal</div>
-                  <div class="col"></div>
-                  <div class="col">num/num</div>
+              <button id="moveButton1" data-toggle="tooltip" data-placement="top" title="Test text" style="width: 24%;">
+                <h6 id="moveName1">Move 1</h6>
+                <div class="row justify-content-md-between m-0" style="font-size: 10px;">
+                  <div class="col-4 m-0 p-0" id="moveClass1">Class</div>
+                  <div class="col-4 m-0 p-0" id="moveType1">Type</div>
+                  <div class="col-4 m-0 p-0" id="movePP1">P/P</div>
                 </div>
               </button>
             <!-- </div> -->
 
             <!-- Move 2 -->
             <!-- <div class="col"> -->
-              <button id="moveButton2" style="width: 20%;">
-                <div class="row justify-content-md-center" id="move2">Move 2</div>
-                <div class="row">
-                  <div class="col">Normal</div>
-                  <div class="col">num/num</div>
+              <button id="moveButton2" data-toggle="tooltip" data-placement="top" title= "moveButton2" style="width: 24%;">
+                <h6 id="moveName2">Move 2</h6>
+                <div class="row justify-content-md-between m-0" style="font-size: 10px;">
+                  <div class="col-4 m-0 p-0" id="moveClass2">Class</div>
+                  <div class="col-4 m-0 p-0" id="moveType2">Type</div>
+                  <div class="col-4 m-0 p-0" id="movePP2">P/P</div>
                 </div>
               </button>
             <!-- </div> -->
 
             <!-- Move 3 -->
             <!-- <div class="col"> -->
-              <button id="moveButton3" style="width: 20%;">
-                <div class="row justify-content-md-center" id="move3">Move 3</div>
-                <div class="row">
-                  <div class="col">Normal</div>
-                  <div class="col"></div>
-                  <div class="col">num/num</div>
+              <button title="moveButton3" data-toggle="tooltip" data-placement="top" title="moveButton3" id="moveButton3" style="width: 24%;">
+                <h6 id="moveName3">Move 3</h6>
+                <div class="row justify-content-md-between m-0" style="font-size: 10px;">
+                  <div class="col-4 m-0 p-0" id="moveClass3">Class</div>
+                  <div class="col-4 m-0 p-0" id="moveType3">Type</div>
+                  <div class="col-4 m-0 p-0" id="movePP3">P/P</div>
                 </div>
               </button>
             <!-- </div> -->
 
             <!-- Move 4 -->
             <!-- <div class="col"> -->
-              <button id="moveButton4" style="width: 20%;">
-                <div class="row justify-content-md-center" id="move4">Move 4</div>
-                <div class="row">
-                  <div class="col">Normal</div>
-                  <div class="col"></div>
-                  <div class="col">num/num</div>
+              <button title="moveButton4" data-toggle="tooltip" data-placement="top" title="moveButton4" id="moveButton4" style="width: 24%;">
+                <h6 id="moveName4">Move 4</h6>
+                <div class="row justify-content-md-between m-0" style="font-size: 10px;">
+                  <div class="col-4 m-0 p-0" id="moveClass4">Class</div>
+                  <div class="col-4 m-0 p-0" id="moveType4">Type</div>
+                  <div class="col-4 m-0 p-0" id="movePP4">P/P</div>
                 </div>
               </button>
             <!-- </div> -->
@@ -113,18 +134,20 @@
           </div>
           <!-- End of Moves -->
 
-          <div class="row">
-            <h4 style="color:blue; margin-left: 2%;">Switch</h4>
-          </div>
+          <div class="row" style="margin: 1%;"></div>
 
-          <div class="row justify-content-md-around" id="switchContainer">
-            <button id="chara1 ">Char 1</button>
-            <button id="chara2">Char 2</button>
-            <button id="chara3">Char 3</button>
-            <button id="chara4">Char 4 </button>
-            <button id="chara5">Char 5</button>
-            <button id="chara6">Char 6</button>
+          <!-- <div class="row">
+            <h4 style="color: royalblue; margin-left: 2%;">Switch</h4>
           </div>
+          <div class="row justify-content-md-around m-0 p-0" id="switchContainer">
+            <button id="chara1" style="width: 16%;">Char 1</button>
+            <button id="chara2" style="width: 16%;">Char 2</button>
+            <button id="chara3" style="width: 16%;">Char 3</button>
+            <button id="chara4" style="width: 16%;">Char 4 </button>
+            <button id="chara5" style="width: 16%;">Char 5</button>
+            <button id="chara6" style="width: 16%;">Char 6</button>
+          </div>
+          <div class="row" style="margin: 1%;"></div> -->
 
         </div>
         <!-- End of Left Bottom -->
@@ -137,11 +160,10 @@
 <!-- ////////////////////////////////////////////////////////////////////////////// -->
 
       <!-- Start of Sidebar -->
-      <div class="sideBar col-lg-5 col-sm-12 border border-dark" style="height: 50em; padding: 0px;">
-        <h3 class="headturn" style="background: #bdc3c7;"> Turn Counter</h3>
-        <p class="turnContent" style="background: #E9E4F0; ">Text goes here</p>
-        <div id="player"></div>
-      </div>
+      <div class="sideBar col-lg-5 col-sm-4 border border-dark m-0 p-0">
+      <h3 class="turnCount">Turn Counter</h3>
+      <div class="turnContent">Turn Content</div>
+      
       <!-- End of Sidebar -->
 
 <!-- ////////////////////////////////////////////////////////////////////////////// -->
@@ -155,6 +177,7 @@
     crossorigin="anonymous">
     </script>
   <!-- Start of JavaScript -->
+  <script src="https://unpkg.com/animejs@2.2.0/anime.min.js"></script>
   <script src="scripts/main.js"></script>
   <script src="scripts/test.js"></script>
   <!-- End of JavaScript -->
