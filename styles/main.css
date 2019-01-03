@@ -2,10 +2,10 @@
 /* Main Elements */
 
 body {
-    background: rgb(244, 250, 248);
+    
     z-index: -2;
     height: 100vh;
-    background-image: url(https://www.imgbase.info/images/safe-wallpapers/anime/pokemon/41394_pokemon.jpg)
+    background: url(/images/pokemon.jpg) no-repeat center;
 }
 
 #leftTop {
@@ -17,6 +17,10 @@ body {
 
 #leftBottom {
     height: 30%;
+    background: #EEE;
+
+    
+    
 }
 
 .row {
@@ -101,7 +105,7 @@ body {
     text-align: left;
     display: block;
     font-size: .8em;
-    color: Yellow;
+    color: black;
 }
 #playerPokemon1HealthBar {
     height: 20%;
@@ -134,18 +138,31 @@ body {
     width: 100%;
     height: 100%;
     font-size: .8em;
-    color: Yellow;
+    color: black;
 }
 #playerPokemonStatusEffect {
     height: 10%;
-    color: Yellow;
+    color: black;
 }
 #playerPokemonStatus {
-    height: 100%;
+    height: 90%;
+    background: #F8F8D8;
+    border: 6px solid #506860;
+    border-radius: 10px;
+    max-width: 50%;
+    font-family: 'Sarabun', sans-serif;
+
 }
 
 #enemyPokemonStatus {
-    height: 100%;
+    height: 80%;
+    background: #F8F8D8;
+    border: 6px solid #506860;
+    border-radius: 10px;
+    max-width: 50%;
+    margin-left: 7%;
+    font-family: 'Sarabun', sans-serif;
+
 }
 #enemyPokemon1Name{
     height: 20%;
@@ -153,10 +170,11 @@ body {
     font-size: .8em;
     text-align: right;
     display: block;
-    color: Yellow;
+    color: black;
 }
 #enemyPokemon1HealthBar {
     height: 20%;
+    
 }
 #enemyPokemon1HealthBar progress {
     -webkit-appearance: none;
@@ -184,14 +202,14 @@ body {
     font-size: .8em;
     display: block;
     text-align: right;
-    color: Yellow;
+    color: black;
 }
 #enemyPokemonStatusEffect {
     height: 20%;
     width: 100%;
     text-align: right;
     display: block;
-    color: Yellow;
+    color: black;
 }
 
 
@@ -330,7 +348,7 @@ body {
     position: absolute;
     width: 100px; 
     height: 57.74px;
-    background-color: orange;
+    background-color: rgba(185, 209, 240, 0.774);
     margin: 28.87px 0;
     border-radius: 50% 20% / 10% 40%;
     z-index: 5;
@@ -377,6 +395,8 @@ body {
 
 button {
     border-radius: 7px;
+    font-family: 'Sarabun', sans-serif;
+
 }
 
 :disabled {
@@ -389,10 +409,13 @@ button {
     overflow-wrap: break-word;
     overflow: scroll;
     background-color: rgb(244, 250, 248);
+    font-family: 'Sarabun', sans-serif;
+
+
 }
 
 .turnCount {
-    background-color: rgb(122, 151, 173);
+    background-color: #79BEEE;
     margin-left: 1%;
     margin-right: 1%;
     /* overflow-wrap: break-word;
@@ -412,7 +435,13 @@ h3 {
 }
 .container{
     max-width: 85% !important ;
-    display: flex
+    display: flex;
+
+
+}
+.tooltip{
+    font-family: 'Sarabun', sans-serif;
+
 }
 
 @media only screen and (max-width: 700px) {
