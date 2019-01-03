@@ -2452,7 +2452,7 @@ $(function() {
                     $turnContent.attr("class", "turnContent");
                     $turnContent.text(message);
                     $(".sideBar").append($turnContent);
-                    responsiveVoice.speak(message, "UK English Male");
+                    // responsiveVoice.speak(message, "UK English Male");
                 }
                 else {
                     return "Invalid Message/Type";
