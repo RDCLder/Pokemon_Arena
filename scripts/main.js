@@ -1515,6 +1515,7 @@ $(function() {
                     let baseDamage = (22 * this.power * user.attack[0] / target.defense[0] / 50) + 2;
                     let percentage = Math.floor(baseDamage * (Math.floor(Math.random() * (max - min + 1)) + min) / 100)
                     var damage = Math.floor(50 * percentage);
+                    let threshold = Math.floor(user.speed[0] * 1 * 100 / 512);
                     let critChance = Math.floor(Math.random() * 100);
                     if (critChance <= threshold) {
                         damage = damage * 2;
@@ -1838,8 +1839,8 @@ $(function() {
                 this.enemy = pokemon2;
                 
                 // Assign moves and their properties to the move buttons
-                // this.moveArr = [allMoves["toxic"], pokemon1.moves[1], pokemon1.moves[2], pokemon1.moves[3]];
-                this.moveArr = pokemon1.moves; // Array 
+                this.moveArr = [allMoves["toxic"], allMoves["psywave"], pokemon1.moves[2], pokemon1.moves[3]];
+                // this.moveArr = pokemon1.moves; // Array 
                 this.moveNameArr = [];
                 this.moveClassArr = [];
                 this.moveTypeArr = [];

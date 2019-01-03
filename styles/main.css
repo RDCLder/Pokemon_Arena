@@ -5,9 +5,8 @@ body {
     
     z-index: -2;
     height: 100vh;
-    background: url(/images/pokemon.jpg) no-repeat center;
+    /* background: url(/images/pokemon.jpg) no-repeat center;*/
 }
-
 #leftTop {
     height: 70%;
     padding: 0px;
