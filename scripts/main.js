@@ -2304,6 +2304,7 @@ $(function() {
                     $turnContent.attr("class", "turnContent");
                     $turnContent.text(message);
                     $(".sideBar").append($turnContent);
+                    // responsiveVoice.speak(message, "UK English Male");
                 }
                 else {
                     console.log("Invalid Message/Type");
@@ -2354,6 +2355,7 @@ $(function() {
         }
         // Assign names, healthbar, and status effects for player pokemon
         
+        // updateAllPokemonHP method
         // Update Hp Percentage
         function updateAllPokemonHP(){
             let playerPokemon1HealthBar = document.getElementById('playerPokemon1Health');
@@ -2416,20 +2418,24 @@ $(function() {
             let checkMessage2 = encounter.checkStatus(pokemon2, pokemon1);
             for (let message of checkMessage1) {
                 encounter.turnHistory(message, "turnContent");
+                
             }
             for (let message of checkMessage2) {
                 encounter.turnHistory(message, "turnContent");
+                
             }
             if (pokemon2.speed[0] > pokemon1.speed[0]) {
                 let combatMessages1 = encounter.moveSequence(pokemon2, pokemon1, 0);
                 for (let message of combatMessages1) {
                     encounter.turnHistory(message, "turnContent");
+                    
                 }
                 setTimeout(() => {
                     if (pokemon1.alive() && pokemon2.alive()) {
                         let combatMessages2 = encounter.moveSequence(pokemon1, pokemon2, 0);
                         for (let message of combatMessages2) {
                             encounter.turnHistory(message, "turnContent");
+                            
                         }
                     } updateAllPokemonHP()
                 }, 1850);
@@ -2606,7 +2612,7 @@ $(function() {
 
         // ------------------------------------------------------------------------------------
 
-    }, 3000)
+    }, 3500) // End of setTimeout
 
 });
 
@@ -3497,6 +3503,3 @@ $('button').click(function (){
 	var log = $('.sideBar');
 	log.animate({ scrollTop: log.prop('scrollHeight')}, 1000);   
 });
-
-
-
