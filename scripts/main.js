@@ -2304,6 +2304,7 @@ $(function() {
                     $turnContent.attr("class", "turnContent");
                     $turnContent.text(message);
                     $(".sideBar").append($turnContent);
+                    // responsiveVoice.speak(message, "UK English Male");
                 }
                 else {
                     console.log("Invalid Message/Type");
@@ -2324,6 +2325,23 @@ $(function() {
         // let pokemon1 = allPokemon["pikachu"];
         // let pokemon2 = allPokemon["machamp"];
 
+<<<<<<< HEAD
+=======
+        for (let i = 0; i < pokedex.length; i++){
+            if(pokemon2 == allPokemon[pokedex[i][0]]) {
+                let enemyPokemon = document.getElementById("enemyPokemon");
+                let pokemon2Box = document.createElement("img");
+                pokemon2Box.setAttribute("id", "enemyPokemonFront");
+                pokemon2Box.src = pokemon2.front;
+                enemyPokemon.appendChild(pokemon2Box);
+                let enemyPokemon1Name = document.getElementById("enemyPokemon1Name");
+                enemyPokemon1Name.innerHTML = pokemon2.upperName()
+            };
+        }
+        // Assign names, healthbar, and status effects for player pokemon
+        
+        // updateAllPokemonHP method
+>>>>>>> a51f0c7eb2d2a3f14f1b5541bce5322fcdf073d3
         // Update Hp Percentage
         function updateAllPokemonHP() {
             let playerPokemon1HealthBar = document.getElementById('playerPokemon1Health');
@@ -2393,6 +2411,7 @@ $(function() {
             pokemon2.front = animatedSprite2[0].href;
         });
 
+<<<<<<< HEAD
         setTimeout(() => {
 
             let encounter = new Battle(pokemon1, pokemon2);
@@ -2423,6 +2442,19 @@ $(function() {
                     let enemyPokemon1Name = document.getElementById("enemyPokemon1Name");
                     enemyPokemon1Name.innerHTML = pokemon2.upperName()
                 };
+=======
+            encounter.disableButtons();
+            encounter.turnHistory(encounter.turn, "turnCount");
+            let checkMessage1 = encounter.checkStatus(pokemon1, pokemon2);
+            let checkMessage2 = encounter.checkStatus(pokemon2, pokemon1);
+            for (let message of checkMessage1) {
+                encounter.turnHistory(message, "turnContent");
+                
+            }
+            for (let message of checkMessage2) {
+                encounter.turnHistory(message, "turnContent");
+                
+>>>>>>> a51f0c7eb2d2a3f14f1b5541bce5322fcdf073d3
             }
             // Assign names, healthbar, and status effects for player pokemon
             
@@ -2488,8 +2520,25 @@ $(function() {
                 let checkMessage2 = encounter.checkStatus(pokemon2, pokemon1);
                 for (let message of checkMessage1) {
                     encounter.turnHistory(message, "turnContent");
+                    
                 }
+<<<<<<< HEAD
                 for (let message of checkMessage2) {
+=======
+                setTimeout(() => {
+                    if (pokemon1.alive() && pokemon2.alive()) {
+                        let combatMessages2 = encounter.moveSequence(pokemon1, pokemon2, 0);
+                        for (let message of combatMessages2) {
+                            encounter.turnHistory(message, "turnContent");
+                            
+                        }
+                    } updateAllPokemonHP()
+                }, 1850);
+            }
+            else {
+                let combatMessages1 = encounter.moveSequence(pokemon1, pokemon2, 0);
+                for (let message of combatMessages1) {
+>>>>>>> a51f0c7eb2d2a3f14f1b5541bce5322fcdf073d3
                     encounter.turnHistory(message, "turnContent");
                 }
                 if (pokemon2.speed[0] > pokemon1.speed[0]) {
@@ -2680,7 +2729,7 @@ $(function() {
 
         // ------------------------------------------------------------------------------------
 
-    }, 3000)
+    }, 3500) // End of setTimeout
 
 });
 
@@ -3571,6 +3620,3 @@ $('button').click(function (){
 	var log = $('.sideBar');
 	log.animate({ scrollTop: log.prop('scrollHeight')}, 1000);   
 });
-
-
-
