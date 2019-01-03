@@ -1904,8 +1904,8 @@ $(function() {
                 this.enemy = pokemon2;
                 
                 // Assign moves and their properties to the move buttons
-                this.moveArr = [allMoves["toxic"], allMoves["hypnosis"], pokemon1.moves[2], pokemon1.moves[3]];
-                // this.moveArr = pokemon1.moves; // Array 
+                // this.moveArr = [allMoves["toxic"], allMoves["hypnosis"], pokemon1.moves[2], pokemon1.moves[3]];
+                this.moveArr = pokemon1.moves; // Array 
                 this.moveNameArr = [];
                 this.moveClassArr = [];
                 this.moveTypeArr = [];
