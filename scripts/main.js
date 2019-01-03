@@ -58,6 +58,7 @@ $(function() {
                 this.effectChance = moveObject.effect_chance;
                 this.pp = moveObject.pp;
                 this.damage_class = moveObject.damage_class.name;
+                this.ailment = moveObject.meta.ailment.name;
                 // How to account for moves that last multiple turns?
                 // if (this.damage_class == "physical") {
                 //     this.duration = 1;
@@ -85,7 +86,6 @@ $(function() {
                 if (this.damage_class == "physical") {
                     let baseDamage = (22 * this.power * user.attack[0] / target.defense[0] / 50) + 2;
                     var damage = Math.floor(baseDamage * (Math.floor(Math.random() * (max - min + 1)) + min) / 100);
-                    
                     // Check for critical hit
                     let threshold = Math.floor(user.speed[0] * critModifier * 100 / 512);
                     let critChance = Math.floor(Math.random() * 100);
@@ -98,6 +98,9 @@ $(function() {
                     }
                     if ("dig" in target.status && this.name == "earthquake") {
                         damage = damage * 2;
+                    }
+                    if ("reflect" in target.status) {
+                        damage = Math.floor(damage / 2);
                     }
                     // Check for specific moves that affect damage
                     if (
@@ -119,27 +122,31 @@ $(function() {
                     }
                     target.hp -= damage;
                     return damage;
+                    
                 }
+                
                 else if (this.damage_class == "special") {
                     let baseDamage = (22 * this.power * user.specialAttack[0] / target.specialDefense[0] / 50) + 2;
                     var damage = Math.floor(baseDamage * (Math.floor(Math.random() * (max - min + 1)) + min) / 100);
-                    
                     // Check for critical hit
                     let threshold = Math.floor(user.speed[0] * critModifier * 100 / 512);
                     let critChance = Math.floor(Math.random() * 100);
                     if (critChance <= threshold) {
                         damage = damage * 2;
                     }
-                    if (damage > target.hp) {
-                        damage = target.hp;
-                    }
-
                     // Check for status effects that affect damage
                     if ("burned" in user.status) {
                         damage = Math.floor(damage / 2);
                     }
                     if ("dig" in target.status && this.name == "earthquake") {
                         damage = damage * 2;
+                    }
+                    if ("light-sceen" in target.status) {
+                        damage = Math.floor(damage / 2);
+                    }
+                    // Check that damage doesn't exceed target HP
+                    if (damage > target.hp) {
+                        damage = target.hp;
                     }
                     target.hp -= damage;
                     return damage;
@@ -178,7 +185,7 @@ $(function() {
                     chance = 100;
                 }
                 let cutoff = Math.floor(Math.random() * 100);
-                if (chance >= cutoff) {
+                if (chance >= cutoff && "mist" in target.status == false) {
                     if (statName == "Attack") {
                         var stat = target.attack;
                     }
@@ -265,7 +272,7 @@ $(function() {
                     chance = 100;
                 }
                 let cutoff = Math.floor(Math.random() * 100);
-                if (chance >= cutoff) {
+                if (chance >= cutoff && "mist" in target.status == false) {
                     for (let i = 0; i < target.moves.length; i ++) {
                         
                         // Check that stage value is between -6 and 6
@@ -333,7 +340,7 @@ $(function() {
                     chance = 100;
                 }
                 let cutoff = Math.floor(Math.random() * 100);
-                if (chance >= cutoff) {
+                if (chance >= cutoff && "substitute" in target.status == false) {
                     
                     // Non-volatile status conditions are mutually exclusive
                     if (effect == "burned") {
@@ -343,9 +350,11 @@ $(function() {
                             "paralyzed" in target.status == false &&
                             "poisoned" in target.status == false &&
                             "sleeping" in target.status == false &&
+                            "rest" in target.status == false &&
                             !target.type.includes("fire")
                         ) {
                             target.status["burned"] = [duration += battle.turn];
+                            // Add "burned" animation here
                             return `${target.upperName()} is on fire!`;
                         }
                         else {
@@ -361,9 +370,11 @@ $(function() {
                             "poisoned" in target.status == false &&
                             "badly-poisoned" in target.status == false &&
                             "sleeping" in target.status == false &&
+                            "rest" in target.status == false &&
                             !target.type.includes("ice")
                         ) {
                             target.status["frozen"] = [duration += battle.turn];
+                            // Add "frozen" animation here
                             return `${target.upperName()} is frozen!`;
                         }
                         else {
@@ -379,9 +390,11 @@ $(function() {
                             "poisoned" in target.status == false &&
                             "badly-poisoned" in target.status == false &&
                             "sleeping" in target.status == false &&
+                            "rest" in target.status == false &&
                             !target.type.includes(this.type)
                         ) {
                             target.status["paralyzed"] = [duration += battle.turn];
+                            // Add "paralyzed" animation here
                             target.speed[0] = Math.floor(target.speed[0] * 3 / 4);
                             return `${target.upperName()} is paralyzed!`;
                         }
@@ -398,9 +411,11 @@ $(function() {
                             "poisoned" in target.status == false &&
                             "badly-poisoned" in target.status == false &&
                             "sleeping" in target.status == false &&
+                            "rest" in target.status == false &&
                             !target.type.includes("poison")
                         ) {
                             target.status["poisoned"] = [duration += battle.turn];
+                            // Add "poisoned" animation here
                             return `${target.upperName()} is poisoned!`;
                         }
                         else {
@@ -416,13 +431,34 @@ $(function() {
                             "poisoned" in target.status == false &&
                             "badly-poisoned" in target.status == false &&
                             "sleeping" in target.status == false &&
+                            "rest" in target.status == false &&
                             !target.type.includes("poison")
                         ) {
                             target.status["poisoned"] = [duration += battle.turn, battle.turn];
+                            // Add "poisoned" animation here
                             return `${target.upperName()} is poisoned!`;
                         }
                         else {
                             return `${target.upperName()} is already poisoned!`;
+                        }
+                    }
+
+                    else if (effect == "rest") {
+                        if (
+                            "rest" in target.status == false &&
+                            "sleep" in target.status == false
+                        ) {
+                            delete target.status["burned"];
+                            delete target.status["frozen"];
+                            delete target.status["paralyzed"];
+                            delete target.status["poisoned"];
+                            delete target.status["badly-poisoned"];
+                            target.status["rest"] = [duration += battle.turn];
+                            target.hp = target.startHP;
+                            return `${target.upperName()} is resting and has recovered its HP!`;
+                        }
+                        else {
+                            return `${target.upperName()} is resting!`;
                         }
                     }
 
@@ -433,10 +469,12 @@ $(function() {
                             "paralyzed" in target.status == false &&
                             "poisoned" in target.status == false &&
                             "badly-poisoned" in target.status == false &&
-                            "sleeping" in target.status == false
+                            "sleeping" in target.status == false &&
+                            "rest" in target.status == false
                         ) {
                             let turns = Math.floor(Math.random() * 7) + 1;
                             target.status["sleeping"] = [duration += battle.turn + turns];
+                            // Add "sleeping" animation here
                             return `${target.upperName()} is sleeping!`;
                         }
                         else {
@@ -596,37 +634,26 @@ $(function() {
                             "reflect" in target.status == false
                         ) {
                             target.status["reflect"] = [duration];
-                            return `${target.upperName()} is reflecting all attacks!`;
+                            return `${target.upperName()} is reflecting attacks!`;
                         }
                         else {
-                            return `${target.upperName()} is reflecting all attacks!`;
-                        }
-                    }
-
-                    else if (effect == "rest") {
-                        if (
-                            "rest" in target.status == false
-                        ) {
-                            delete target.status["burned"];
-                            delete target.status["frozen"];
-                            delete target.status["paralyzed"];
-                            delete target.status["poisoned"];
-                            delete target.status["badly-poisoned"];
-                            delete target.status["sleeping"];
-                            target.status["rest"] = [duration += battle.turn];
-                            return `${target.upperName()} is resting!`;
-                        }
-                        else {
-                            return `${target.upperName()} is resting!`;
+                            return `${target.upperName()} is reflecting attacks!`;
                         }
                     }
 
                     else if (effect == "substitute") {
                         if (
-                            "substitute" in target.status == false
+                            "substitute" in target.status == false &&
+                            target.hp >= Math.floor(target.startHP / 4)
                         ) {
                             target.status["substitute"] = [duration += battle.turn];
                             return `${target.upperName()} is substituted!`;
+                        }
+                        else if (
+                            "substitute" in target.status == false &&
+                            target.hp < Math.floor(target.startHP / 4)
+                        ) {
+                            return `It does nothing!`;
                         }
                         else {
                             return `${target.upperName()} is already substituted!`;
@@ -635,7 +662,7 @@ $(function() {
                 
                 }
                 else {
-                    return "";
+                    return ``;
                 }
             } // End of specialEffect method
 
@@ -651,7 +678,7 @@ $(function() {
                 else if (this.name == "growth") {
                     let statMessage1 = this.statEffect(user, "Attack", 1);
                     let statMessage2 = this.statEffect(user, "Special Attack", 1);
-                    return statMessage1 + statMessage2;
+                    return statMessage1 + "\n" + statMessage2;
                 }
 
                 else if (
@@ -768,11 +795,15 @@ $(function() {
 
                 // "Disables the target's last used move for 1-8 turns."
                 else if (this.name == "disable") {
-                    if ("disable" in target.status == false) {
+                    if (target.lastMove == "") {
+                        return `It does nothing!`;
+                    }
+                    else if ("disable" in target.status == false) {
                         let duration = Math.floor(Math.random() * 8) + battle.turn + 1;
                         let disabledMove = target.lastMove;
                         target.status["disable"] = [duration, disabledMove];
-                        return `${target.upperName()}'s ${disabledMove} is disabled for ${duration} turns!`
+                        console.log(disabledMove);
+                        return `${target.upperName()}'s ${disabledMove.upperName()} is disabled for ${duration} turns!`
                     }
                     else {
                         return `Disable failed!  Only one move can be disabled at a time!`;
@@ -879,6 +910,7 @@ $(function() {
                     for (let i = 0; i < target.moves.length; i ++) {
                         target.moves[i].accuracy[0] = target.moves[i].startAccuracy;
                     }
+                    return `All stats have been reset!`;
                 }
 
                 // "Reduces damage from physical attacks by half."
@@ -1229,7 +1261,7 @@ $(function() {
                 else if (this.name == "skull-bash") {
                     let statMessage = this.statEffect(user, "Defense", 1);
                     let specialMessage = this.specialEffect(battle, user, "chargeTurn", 100, 1);
-                    return statMessage + specialMessage;
+                    return statMessage + "\n" + specialMessage;
                 }
 
                 // "Has a $effect_chance% chance to lower the target's Speed by one stage."
@@ -1252,7 +1284,7 @@ $(function() {
                 else if (this.name == "sky-attack") {
                     let specialMessage1 = this.specialEffect(battle, target, "chargeTurn", 100, 1);
                     let specialMessage2 = this.specialEffect(battle, target, "flinched", this.effectChance);
-                    return specialMessage1 + specialMessage2;
+                    return specialMessage1 + "\n" + specialMessage2;
                 }
 
                 // "Has a $effect_chance% chance to confuse the target."
@@ -1647,14 +1679,45 @@ $(function() {
                     if (hit >= evade || move.damage_class == "status") {
                         if (move.damage_class == "physical") {
                             let message = move.classPhysical(battle, this, target);
+                            if (this == pokemon1) {
+                                return pokemon1PhysicalAttackPokemon2();
+                            }
+                            if (this == pokemon2) {
+                                return pokemon2PhysicalAttackPokemon1()
+                            }
                             return message;
                         }
                         else if (move.damage_class == "special") {
                             let message = move.classSpecial(battle, this, target);
+                            if (this == pokemon1){
+                                return pokemon1SpecialAttackPokemon2();
+                            };
+                            if (this == pokemon2){
+                                return pokemon2SpecialAttackPokemon1();
+                            };
                             return message;
                         }
                         else if (move.damage_class == "status") {
                             let message = move.classStatus(battle, this, target);
+                            if (this == pokemon1) {
+                                if (move.ailment != "poison" || 
+                                move.ailment != "burn" ||
+                                move.ailment != "paralysis" ||
+                                move.ailment != "freeze" ||
+                                move.ailment != "sleep" ||
+                                move.ailment != "confusion" ){
+                                    return pokemon1PhysicalAttackPokemon2();
+            
+                                }
+                                // else if (){
+                                //     pokemon1StatusAttackPokemon2();
+
+                                // }
+
+                            }
+                            if (this == pokemon2) {
+                                return pokemon2StatusAttackPokemon1()
+                            }
                             return message;
                         }
                         else {
@@ -1669,10 +1732,22 @@ $(function() {
                 else {
                     if (move.damage_class == "physical") {
                         let message = move.classPhysical(battle, this, target);
+                        if (this == pokemon1) {
+                            return pokemon1PhysicalAttackPokemon2();
+                        }
+                        if (this == pokemon2) {
+                            return pokemon2PhysicalAttackPokemon1();
+                        };
                         return message;
                     }
                     else if (move.damage_class == "special") {
                         let message = move.classSpecial(battle, this, target);
+                        if (this == pokemon1){
+                            return pokemon1SpecialAttackPokemon2();
+                        };
+                        if (this == pokemon2){
+                            return pokemon2SpecialAttackPokemon1();
+                        };
                         return message;
                     }
                     else if (move.damage_class == "status") {
@@ -1721,7 +1796,7 @@ $(function() {
                 this.enemy = pokemon2;
                 
                 // Assign moves and their properties to the move buttons
-                // this.moveArr = [allMoves["mimic"], allMoves["metronome"], pokemon1.moves[2], pokemon1.moves[3]];
+                // this.moveArr = [allMoves["disable"], pokemon1.moves[1], pokemon1.moves[2], pokemon1.moves[3]];
                 this.moveArr = pokemon1.moves; // Array 
                 this.moveNameArr = [];
                 this.moveClassArr = [];
@@ -1734,6 +1809,7 @@ $(function() {
                     this.moveClassArr.push(move.damage_class[0].toUpperCase() + move.damage_class.slice(1, move.damage_class.length));
                     this.moveTypeArr.push(move.type[0].toUpperCase() + move.type.slice(1, move.type.length));
                     this.movePPLeftArr.push(move.pp);
+                    console.log(this.moveArr[i].description);
                 }
 
                 // Assign previous values to button text
@@ -1791,15 +1867,19 @@ $(function() {
                 
                 // Non-volatile status conditions are mutually exclusive
                 if ("burned" in target.status) {
-                    if (target.status["burned"][0] == "permanent") {
+                    if (
+                        target.status["burned"][0] == "permanent" ||
+                        this.turn < target.status["burned"][0]
+                        ) {
                         let damage = Math.floor(target.startHP / 16);
                         target.hp -= damage;
                         allMessages.push(`\n${target.upperName()} is on fire and lost ${damage} HP!`);
-                    }
-                    else if (this.turn < target.status["burned"][0]) {
-                        let damage = Math.floor(target.startHP / 16);
-                        target.hp -= damage;
-                        allMessages.push(`\n${target.upperName()} is on fire and lost ${damage} HP!`);
+                        // if (target == battle.player){
+                        //     return pokemon1Burn()
+                        // }
+                        // else if (target == battle.enemy){
+                        //     return pokemon2Burn()
+                        // }
                     }
                     else if (this.turn == target.status["burned"][0]) {
                         delete target.status["burned"];
@@ -1809,17 +1889,10 @@ $(function() {
                 }
 
                 else if ("frozen" in target.status) {
-                    if (target.status["frozen"][0] == "permanent") {
-                        let thaw = Math.floor(Math.random() * 5);
-                        if (thaw == 0) {
-                            delete target.status["frozen"];
-                            allMessages.push(`\n${target.upperName()} has thawed!`);
-                        }
-                        else {
-                            allMessages.push(`\n${target.upperName()} is frozen!`);
-                        }
-                    }
-                    else if (this.turn < target.status["frozen"][0]) {
+                    if (
+                        target.status["frozen"][0] == "permanent" ||
+                        this.turn < target.status["frozen"][0]
+                        ) {
                         let thaw = Math.floor(Math.random() * 5);
                         if (thaw == 0) {
                             delete target.status["frozen"];
@@ -1836,10 +1909,10 @@ $(function() {
                 }
 
                 else if ("paralyzed" in target.status) {
-                    if (target.status["paralyzed"][0] == "permanent") {
-                        allMessages.push(`\n${target.upperName()} is paralyzed!`);
-                    }
-                    else if (this.turn < target.status["paralyzed"][0]) {
+                    if (
+                        target.status["paralyzed"][0] == "permanent" ||
+                        this.turn < target.status["paralyzed"][0]
+                        ) {
                         allMessages.push(`\n${target.upperName()} is paralyzed!`);
                     }
                     else if (this.turn == target.status["paralyzed"][0]) {
@@ -1850,12 +1923,10 @@ $(function() {
                 }
                 
                 else if ("poisoned" in target.status) {
-                    if (target.status["poisoned"][0] == "permanent") {
-                        let damage = Math.floor(target.startHP / 8);
-                        target.hp -= damage;
-                        allMessages.push(`\n${target.upperName()} is poisoned and lost ${damage} HP!`);
-                    }
-                    else if (this.turn < target.status["poisoned"][0]) {
+                    if (
+                        target.status["poisoned"][0] == "permanent" ||
+                        this.turn < target.status["poisoned"][0]
+                        ) {
                         let damage = Math.floor(target.startHP / 8);
                         target.hp -= damage;
                         allMessages.push(`\n${target.upperName()} is poisoned and lost ${damage} HP!`);
@@ -1867,29 +1938,39 @@ $(function() {
                 }
 
                 else if ("badly-poisoned" in target.status) {
-                    if (target.status["poisoned"][0] == "permanent") {
-                        let n = this.turn - target.status["poisoned"][1];
+                    if (
+                        target.status["badly-poisoned"][0] == "permanent" ||
+                        this.turn < target.status["badly-poisoned"][0]
+                        ) {
+                        let n = this.turn - target.status["badly-poisoned"][1];
                         let damage = Math.floor(target.startHP * n / 16);
                         target.hp -= damage;
                         allMessages.push(`\n${target.upperName()} is badly-poisoned and lost ${damage} HP!`);
                     }
-                    else if (this.turn < target.status["poisoned"][0]) {
-                        let n = this.turn - target.status["poisoned"][1];
-                        let damage = Math.floor(target.startHP * n / 16);
-                        target.hp -= damage;
-                        allMessages.push(`\n${target.upperName()} is badly-poisoned and lost ${damage} HP!`);
-                    }
-                    else if (this.turn == target.status["poisoned"][0]) {
-                        delete target.status["poisoned"];
+                    else if (this.turn == target.status["badly-poisoned"][0]) {
+                        delete target.status["badly-poisoned"];
                         allMessages.push(`\n${target.upperName()} is no longer poisoned!`);
                     }
                 }
 
-                else if ("sleeping" in target.status) {
-                    if (target.status["sleeping"][0] == "permanent") {
-                        allMessages.push(`\n${target.upperName()} is sleeping!`);
+                else if ("rest" in target.status) {
+                    if (
+                        target.status["rest"][0] == "permanent" ||
+                        this.turn < target.status["rest"][0]
+                        ) {
+                        allMessages.push(`\n${target.upperName()} is resting!`);
                     }
-                    else if (this.turn < target.status["sleeping"][0]) {
+                    else if (this.turn == target.status["rest"][0]) {
+                        allMessages.push(`\n${target.upperName()} is awake!`);
+                        delete target.status["rest"];
+                    }
+                }
+
+                else if ("sleeping" in target.status) {
+                    if (
+                        target.status["sleeping"][0] == "permanent" ||
+                        this.turn < target.status["sleeping"][0]
+                        ) {
                         allMessages.push(`\n${target.upperName()} is sleeping!`);
                     }
                     else if (this.turn == target.status["sleeping"][0]) {
@@ -1920,30 +2001,51 @@ $(function() {
                 }
                 
                 if (
-                    "skipTurn" in target.status ||
+                    "skipTurn" in target.status
+                    ) {
+                    if (this.turn == target.status["skipTurn"][0]
+                    ) {
+                        delete target.status["skipTurn"];
+                        allMessages.push(`\n${target.upperName()} skips the turn!`);
+                    }
+                }
+
+                if (
                     "flinched" in target.status
                     ) {
-                    if (this.turn == target.status["chargeTurn"][0]) {
-                        delete target.status["skipTurn"];
+                    if (
+                    this.turn == target.status["flinched"][0]
+                    ) {
                         delete target.status["flinched"];
-                        allMessages.push(`${target.upperName()} skips the turn!`);
+                        allMessages.push(`\n${target.upperName()} skips the turn!`);
                     }
                 }
 
                 // Other status conditions are not mutually exclusive
                 if ("bide" in target.status) {
-                    if (target.status["bide"][0] == "permanent") {
-                        allMessages.push(`\n${target.upperName} is still bidding its time!`);
+                    if (
+                        target.status["bide"][0] == "permanent" ||
+                        this.turn < target.status["bide"][0]
+                        ) {
+                        allMessages.push(`\n${target.upperName()} is still bidding its time!`);
                     }
                     else if (this.turn == target.status["bide"][0]) {
+                        allMessages.push(`\n${target.upperName()} uses Bide!`);
+                        let damage = (target.status["bide"][1] - target.hp) * 2;
+                        otherPokemon.hp -= damage;
+                        allMessages.push(`\n${otherPokemon.upperName()} lost ${damage} HP!`);
                         delete target.status["bide"];
-                        allMessages.push(`\n${target.upperName()} is ready to act!`);
                     }
                 }
 
                 if ("bound" in target.status) {
-                    if (target.status["bound"][0] == "permanent") {
-                        allMessages.push(`\n${target.upperName} is still bound!`);
+                    if (
+                        target.status["bound"][0] == "permanent" ||
+                        this.turn < target.status["bound"][0]
+                    ) {
+                        let damage = Math.floor(target.startHP / 16);
+                        target.hp -= damage;
+                        allMessages.push(`\n${target.upperName()} is bound and lost ${damage} HP!`);
                     }
                     else if (this.turn == target.status["bound"][0]) {
                         delete target.status["bound"];
@@ -1952,8 +2054,11 @@ $(function() {
                 }
                 
                 if ("confused" in target.status) {
-                    if (target.status["confused"][0] == "permanent") {
-                        allMessages.push(`\n${target.upperName} is still confused!`);
+                    if (
+                        target.status["confused"][0] == "permanent" ||
+                        this.turn < target.status["confused"][0]
+                    ) {
+                        allMessages.push(`\n${target.upperName()} is still confused!`);
                     }
                     else if (this.turn == target.status["confused"][0]) {
                         delete target.status["confused"];
@@ -1961,9 +2066,15 @@ $(function() {
                     }
                 }
 
+                // Both Dig and Fly do damage the turn after use and count as that turn's move
                 if ("dig" in target.status) {
-                    // Dig does damage the turn after it's used and counts as that next turn
-                    if (this.turn == target.status["dig"][0]) {
+                    if (
+                        target.status["dig"][0] == "permanent" ||
+                        this.turn < target.status["dig"][0]
+                        ) {
+                        allMessages.push(`\n${target.upperName()} is still underground!`);
+                    }
+                    else if (this.turn == target.status["dig"][0]) {
                         let move = target.status["dig"][1];
                         allMessages.push(`\n${target.upperName()} has surfaced!`);
                         let damage = move.damageCalc(target, otherPokemon);
@@ -1976,7 +2087,13 @@ $(function() {
                 }
 
                 if ("flying" in target.status) {
-                    if (this.turn == target.status["flying"][0]) {
+                    if (
+                        target.status["flying"][0] == "permanent" ||
+                        this.turn < target.status["flying"][0]
+                        ) {
+                        allMessages.push(`\n${target.upperName()} is still flying!`);
+                    }
+                    else if (this.turn == target.status["flying"][0]) {
                         let move = target.status["flying"][1];
                         allMessages.push(`\n${target.upperName()} has descended!`);
                         let damage = move.damageCalc(target, otherPokemon);
@@ -1988,8 +2105,15 @@ $(function() {
                 }
 
                 if ("leech-seed" in target.status) {
-                    if (target.status["leech-seed"][0] == "permanent") {
-                        allMessages.push(`\n${target.upperName} is still afflicted with leech-seed!`);
+                    if (
+                        target.status["leech-seed"][0] == "permanent" ||
+                        this.turn < target.status["leech-seed"][0]
+                    ) {
+                        let damage = Math.floor(target.startHP / 8);
+                        target.hp -= damage;
+                        otherPokemon.hp += damage;
+                        allMessages.push(`\nLeech-seed drains ${damage} HP from ${target.upperName()}!`);
+                        allMessages.push(`\n${otherPokemon.upperName()} gains ${damage} HP!`);
                     }
                     else if (this.turn == target.status["leech-seed"][0]) {
                         delete target.status["leech-seed"];
@@ -1998,8 +2122,11 @@ $(function() {
                 }
 
                 if ("light-screen" in target.status) {
-                    if (target.status["light-screen"][0] == "permanent") {
-                        allMessages.push(`\n${target.upperName} is protected by a screen of light!`);
+                    if (
+                        target.status["light-screen"][0] == "permanent" ||
+                        this.turn < target.status["light-screen"][0]
+                        ) {
+                        allMessages.push(`\n${target.upperName()} is protected by a screen of light!`);
                     }
                     else if (this.turn == target.status["light-screen"][0]) {
                         delete target.status["light-screen"];
@@ -2008,8 +2135,11 @@ $(function() {
                 }
 
                 if ("mist" in target.status) {
-                    if (target.status["mist"][0] == "permanent") {
-                        allMessages.push(`\n${target.upperName} is shrouded in mist!`);
+                    if (
+                        target.status["mist"][0] == "permanent" ||
+                        this.turn < target.status["mist"][0]
+                        ) {
+                        allMessages.push(`\n${target.upperName()} is shrouded in mist!`);
                     }
                     else if (this.turn == target.status["mist"][0]) {
                         delete target.status["mist"];
@@ -2018,13 +2148,12 @@ $(function() {
                 }
 
                 if ("rage" in target.status) {
-                    if (target.status["rage"][0] == "permanent") {
-                        allMessages.push(`\n${target.upperName} is still enraged!`);
-                    }
-                    else if (
-                        this.turn == target.status["rage"][0] &&
+                    if (
+                        target.status["rage"][0] == "permanent" ||
+                        this.turn <= target.status["rage"][0] &&
                         target.status["rage"][1] > target.hp
-                    ) {
+                        ) {
+                        allMessages.push(`\n${target.upperName()} is enraged!`);
                         let statMessage = target.lastMove.statEffect(target, "Attack", 1);
                         allMessages.push(`\n` + statMessage);
                         delete target.status["rage"];
@@ -2035,16 +2164,32 @@ $(function() {
                     }
                 }
 
+                if ("reflect" in target.status) {
+                    if (
+                        target.status["reflect"][0] == "permanent" ||
+                        this.turn < target.status["reflect"][0]
+                        ) {
+                        allMessages.push(`\n${target.upperName()} is reflecting attacks!`);
+                    }
+                    else if (this.turn == target.status["reflect"][0]) {
+                        delete target.status["reflect"];
+                        allMessages.push(`\n${target.upperName()} is no longer reflecting attacks!`);
+                    }
+                }
+
                 if ("substituted" in target.status) {
-                    if (target.status["substituted"][0] == "permanent") {
-                        allMessages.push(`\n${target.upperName} is still substituted!`);
+                    if (
+                        target.status["substituted"][0] == "permanent" ||
+                        this.turn < target.status["substituted"][0]
+                        ) {
+                        allMessages.push(`\n${target.upperName()} is still substituted!`);
                     }
                     else if (this.turn == target.status["substituted"][0]) {
                         delete target.status["substituted"];
                         allMessages.push(`\n${target.upperName()} is no longer substituted!`);
                     }
                 }
-
+                updateAllPokemonHP();
                 return allMessages;
             }
 
@@ -2092,36 +2237,12 @@ $(function() {
                     if (actingPokemon == this.player) {
                         this.movePPLeftArr[moveButtonNumber] --;
                     }
+                    console.log(this.movePPLeftArr[moveButtonNumber]);
                 }
-                // otherPokemon uses move if alive
-                if (otherPokemon.alive() && actingPokemon.alive()) {
-                    if (
-                        "frozen" in otherPokemon.status || 
-                        "sleeping" in otherPokemon.status ||
-                        "rest" in otherPokemon.status
-                    ) {
-                        allMessages.push(`${otherPokemon.upperName()} cannot use any moves!`);
-                    }
-                    else if ("chargeTurn" in otherPokemon.status) {
-                        allMessages.push(`${otherPokemon.upperName()} is charging!`);
-                    }
-                    else if ("skipTurn" in otherPokemon.status) {
-                        allMessages.push(`${otherPokemon.upperName()} is recovering from last turn!`);
-                    }
-                    else if ("dig" in otherPokemon.status) {
-                        allMessages.push(`${otherPokemon.upperName()} used Dig last turn!`);
-                    }
-                    else {
-                        let useMessage2 = `${otherPokemon.upperName()} uses ${move2.upperName()}!`;
-                        let outcomeMessage2 = otherPokemon.useMove(this,  move2, actingPokemon);
-                        otherPokemon.lastMove = move2;
-                        allMessages.push(useMessage2, outcomeMessage2);
-                        if (otherPokemon == this.player) {
-                            this.movePPLeftArr[moveButtonNumber] --;
-                        } 
-                    }
-                }
+                updateAllPokemonHP() 
                 return allMessages;
+                
+                
             } // End of moveSequence method
 
             // Start of disableButtons method
@@ -2234,19 +2355,25 @@ $(function() {
         // Assign names, healthbar, and status effects for player pokemon
         
         // Update Hp Percentage
-        function updateHpPercentage(){
+        function updateAllPokemonHP(){
             let playerPokemon1HealthBar = document.getElementById('playerPokemon1Health');
+            playerPokemon1HealthBar.max = pokemon1.startHP
+            playerPokemon1HealthBar.value = pokemon1.hp
             let playerPokemon1HealthPercentage = document.getElementById('p1HP');
+            let playerHPBarMax = playerPokemon1HealthBar.max
             let p1HPvalue = playerPokemon1HealthBar.value;
-            let p1Percent = Math.floor(p1HPvalue);
-            playerPokemon1HealthPercentage.innerHTML = p1Percent + "%";
+            let p1Percent = p1HPvalue + "/" + playerHPBarMax;
+            playerPokemon1HealthPercentage.innerHTML = p1Percent;
             let enemyPokemon1HealthBar = document.getElementById('enemyPokemon1Health')
+            enemyPokemon1HealthBar.max = pokemon2.startHP
+            enemyPokemon1HealthBar.value = pokemon2.hp
             let enemyPokemon1HealthPercentage = document.getElementById('e1HP');
+            let enemyHPBarMax = enemyPokemon1HealthBar.max;
             let e1HPValue = enemyPokemon1HealthBar.value;
-            let e1Percent = Math.floor(e1HPValue);
-            enemyPokemon1HealthPercentage.innerHTML = e1Percent + "%";
+            let e1Percent = e1HPValue + "/" + enemyHPBarMax;
+            enemyPokemon1HealthPercentage.innerHTML = e1Percent ;
         }
-       updateHpPercentage()
+        updateAllPokemonHP()
 
        // Update Status Effect of Pokemon
        function updateStatusEffects(pokemon1, pokemon2) {
@@ -2293,23 +2420,40 @@ $(function() {
             for (let message of checkMessage2) {
                 encounter.turnHistory(message, "turnContent");
             }
-
             if (pokemon2.speed[0] > pokemon1.speed[0]) {
                 let combatMessages1 = encounter.moveSequence(pokemon2, pokemon1, 0);
                 for (let message of combatMessages1) {
                     encounter.turnHistory(message, "turnContent");
                 }
+                setTimeout(() => {
+                    if (pokemon1.alive() && pokemon2.alive()) {
+                        let combatMessages2 = encounter.moveSequence(pokemon1, pokemon2, 0);
+                        for (let message of combatMessages2) {
+                            encounter.turnHistory(message, "turnContent");
+                        }
+                    } updateAllPokemonHP()
+                }, 1850);
             }
             else {
-                let combatMessages2 = encounter.moveSequence(pokemon1, pokemon2, 0);
-                for (let message of combatMessages2) {
+                let combatMessages1 = encounter.moveSequence(pokemon1, pokemon2, 0);
+                for (let message of combatMessages1) {
                     encounter.turnHistory(message, "turnContent");
                 }
+                setTimeout(() => {
+                    if (pokemon1.alive() && pokemon2.alive()) {
+                        let combatMessages2 = encounter.moveSequence(pokemon2, pokemon1, 0);
+                        for (let message of combatMessages2) {
+                            encounter.turnHistory(message, "turnContent");
+                        }
+                    } updateAllPokemonHP()
+                }, 1850);
             }
-            encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
-            $("#movePP1").text(`${encounter.movePPLeftArr[0]}/${encounter.moveArr[0].pp}`);
-            encounter.turn ++;
-            encounter.enableButtons();
+            setTimeout(() => {
+                encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
+                $("#movePP1").text(`${encounter.movePPLeftArr[0]}/${encounter.moveArr[0].pp}`);
+                encounter.turn ++;
+                encounter.enableButtons();
+            }, 1850);
             // setTimeout(() => {encounter.enableButtons();}, 1000);
         });
 
@@ -2330,17 +2474,35 @@ $(function() {
                 for (let message of combatMessages1) {
                     encounter.turnHistory(message, "turnContent");
                 }
+                setTimeout(() => {
+                    if (pokemon1.alive() && pokemon2.alive()) {
+                        let combatMessages2 = encounter.moveSequence(pokemon1, pokemon2, 1);
+                        for (let message of combatMessages2) {
+                            encounter.turnHistory(message, "turnContent");
+                        }
+                    } updateAllPokemonHP()
+                }, 1850);
             }
             else {
-                let combatMessages2 = encounter.moveSequence(pokemon1, pokemon2, 1);
-                for (let message of combatMessages2) {
+                let combatMessages1 = encounter.moveSequence(pokemon1, pokemon2, 1);
+                for (let message of combatMessages1) {
                     encounter.turnHistory(message, "turnContent");
                 }
+                setTimeout(() => {
+                    if (pokemon1.alive() && pokemon2.alive()) {
+                        let combatMessages2 = encounter.moveSequence(pokemon2, pokemon1, 1);
+                        for (let message of combatMessages2) {
+                            encounter.turnHistory(message, "turnContent");
+                        }
+                    } updateAllPokemonHP()
+                }, 1850);
             }
-            encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
-            $("#movePP2").text(`${encounter.movePPLeftArr[1]}/${encounter.moveArr[1].pp}`);
-            encounter.turn ++;
-            encounter.enableButtons();
+            setTimeout(() => {
+                encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
+                $("#movePP2").text(`${encounter.movePPLeftArr[1]}/${encounter.moveArr[1].pp}`);
+                encounter.turn ++;
+                encounter.enableButtons();
+            }, 1850);
             // setTimeout(() => {encounter.enableButtons();}, 1000);
         });
 
@@ -2361,17 +2523,35 @@ $(function() {
                 for (let message of combatMessages1) {
                     encounter.turnHistory(message, "turnContent");
                 }
+                setTimeout(() => {
+                    if (pokemon1.alive() && pokemon2.alive()) {
+                        let combatMessages2 = encounter.moveSequence(pokemon1, pokemon2, 2);
+                        for (let message of combatMessages2) {
+                            encounter.turnHistory(message, "turnContent");
+                        }
+                    } updateAllPokemonHP()
+                }, 1850);
             }
             else {
-                let combatMessages2 = encounter.moveSequence(pokemon1, pokemon2, 2);
-                for (let message of combatMessages2) {
+                let combatMessages1 = encounter.moveSequence(pokemon1, pokemon2, 2);
+                for (let message of combatMessages1) {
                     encounter.turnHistory(message, "turnContent");
                 }
+                setTimeout(() => {
+                    if (pokemon1.alive() && pokemon2.alive()) {
+                        let combatMessages2 = encounter.moveSequence(pokemon2, pokemon1, 2);
+                        for (let message of combatMessages2) {
+                            encounter.turnHistory(message, "turnContent");
+                        }
+                    } updateAllPokemonHP()
+                }, 1850);
             }
-            encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
-            $("#movePP3").text(`${encounter.movePPLeftArr[2]}/${encounter.moveArr[2].pp}`);
-            encounter.turn ++;
-            encounter.enableButtons();
+            setTimeout(() => {
+                encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
+                $("#movePP3").text(`${encounter.movePPLeftArr[2]}/${encounter.moveArr[2].pp}`);
+                encounter.turn ++;
+                encounter.enableButtons();
+            }, 1850);
             // setTimeout(() => {encounter.enableButtons();}, 1000);
         });
 
@@ -2392,17 +2572,35 @@ $(function() {
                 for (let message of combatMessages1) {
                     encounter.turnHistory(message, "turnContent");
                 }
+                setTimeout(() => {
+                    if (pokemon1.alive() && pokemon2.alive()) {
+                        let combatMessages2 = encounter.moveSequence(pokemon1, pokemon2, 3);
+                        for (let message of combatMessages2) {
+                            encounter.turnHistory(message, "turnContent");
+                        }
+                    } updateAllPokemonHP()
+                }, 1850);
             }
             else {
-                let combatMessages2 = encounter.moveSequence(pokemon1, pokemon2, 3);
-                for (let message of combatMessages2) {
+                let combatMessages1 = encounter.moveSequence(pokemon1, pokemon2, 3);
+                for (let message of combatMessages1) {
                     encounter.turnHistory(message, "turnContent");
                 }
+                setTimeout(() => {
+                    if (pokemon1.alive() && pokemon2.alive()) {
+                        let combatMessages2 = encounter.moveSequence(pokemon2, pokemon1, 3);
+                        for (let message of combatMessages2) {
+                            encounter.turnHistory(message, "turnContent");
+                        }
+                    } updateAllPokemonHP()
+                }, 1850);
             }
-            encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
-            $("#movePP4").text(`${encounter.movePPLeftArr[3]}/${encounter.moveArr[3].pp}`);
-            encounter.turn ++;
-            encounter.enableButtons();
+            setTimeout(() => {
+                encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
+                $("#movePP4").text(`${encounter.movePPLeftArr[3]}/${encounter.moveArr[3].pp}`);
+                encounter.turn ++;
+                encounter.enableButtons();
+            }, 1850);
             // setTimeout(() => {encounter.enableButtons();}, 1000);
         });
 
@@ -2416,8 +2614,8 @@ $(function() {
 
 // Player Pokemon Physical Attack
 
-function pokemon1AttackPokemon2(){
-    let playerPokemon = document.getElementById("playerPokemon");
+function pokemon1PhysicalAttackPokemon2(){
+    let playerPokemon = document.getElementById("playerPokemonBack");
     let enemyPokemon = document.getElementById("enemyPokemon");
     let starHit = document.createElement("div");
     starHit.setAttribute("id","enemyGetHit");
@@ -2442,7 +2640,7 @@ function pokemon1AttackPokemon2(){
     });
     starAnimation
     .add({
-        complete: function(anim) {
+        complete: function() {
             starHit.remove();
         }
         
@@ -2451,8 +2649,8 @@ function pokemon1AttackPokemon2(){
 
 // Enemy Pokemon Physical Attack
 
-function pokemon2AttackPokemon1(){
-    let enemyPokemon = document.getElementById("enemyPokemon");
+function pokemon2PhysicalAttackPokemon1(){
+    let enemyPokemon = document.getElementById("enemyPokemonFront");
     let playerPokemon = document.getElementById("playerPokemon");
     let starHit = document.createElement("div");
     starHit.setAttribute("id","playerGetHit")
@@ -2483,9 +2681,30 @@ function pokemon2AttackPokemon1(){
         
     });
 }
+// Pokemon Status Move Animation - "still in alpha"
+// Player Pokemon Status Attack Moves Animation
 
+function pokemon1StatusAttackPokemon2(){
+    let playerPokemon = document.getElementById("playerPokemon")
+    anime({
+        targets: playerPokemon,
+        translateX: '40%',
+        translateY: '-60%',
+        loop: 2,
+        direction: 'alternate',
+    });
 
+}
+function pokemon2StatusAttackPokemon1(){
+    let enemyPokemon = document.getElementById("enemyPokemonFront");
+    anime({
+        targets: enemyPokemon,
+        translateX: '-5%',
+        loop: 2,
+        direction: 'alternate',
+    });
 
+}
 
 // Pokemon Special Attack Animation
 
@@ -2626,7 +2845,7 @@ function pokemon2SpecialAttackPokemon1(){
         delay: 100,
         targets: specialAttack,
         translateX: '-310%',
-        translateY: '225%',
+        translateY: '180%',
         scale: 1.,
         rotate: '5turn',
         easing: 'linear',
@@ -2639,7 +2858,7 @@ function pokemon2SpecialAttackPokemon1(){
         targets: '.specialAttack1',
         opacity: .85,
         translateX: '-310%',
-        translateY: '225%',
+        translateY: '180%',
         rotate: '5turn',
         easing: 'linear',
         complete: function(){
@@ -2651,7 +2870,7 @@ function pokemon2SpecialAttackPokemon1(){
         targets: '.specialAttack2',
         opacity:.75,
         translateX: '-310%',
-        translateY: '225%',
+        translateY: '180%',
         rotate: '5turn',
         easing: 'linear',
         complete: function(){
@@ -2663,7 +2882,7 @@ function pokemon2SpecialAttackPokemon1(){
         targets: '.specialAttack3',
         opacity:.65,
         translateX: '-310%',
-        translateY: '225%',
+        translateY: '180%',
         rotate: '5turn',
         easing: 'linear',
         complete: function(){
@@ -2675,7 +2894,7 @@ function pokemon2SpecialAttackPokemon1(){
         targets: '.specialAttack4',
         opacity:.55,
         translateX: '-310%',
-        translateY: '225%',
+        translateY: '180%',
         rotate: '5turn',
         easing: 'linear',
         complete: function(){
@@ -2687,7 +2906,7 @@ function pokemon2SpecialAttackPokemon1(){
         targets: '.specialAttack5',
         opacity:.45,
         translateX: '-310%',
-        translateY: '225%',
+        translateY: '180%',
         rotate: '5turn',
         easing: 'linear',
         complete: function(){
