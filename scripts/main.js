@@ -1701,64 +1701,64 @@ $(function() {
                         else if (move.damage_class == "status") {
                             let message = move.classStatus(battle, this, target);
                             if (this == pokemon1) {
-                                if (move.ailment != "poison" || 
-                                move.ailment != "burn" ||
-                                move.ailment != "paralysis" ||
-                                move.ailment != "freeze" ||
-                                move.ailment != "sleeping" ||
-                                move.ailment != "confusion" ){
-                                    pokemon1PhysicalAttackPokemon2();
+                                // if (move.ailment != "poison" || 
+                                // move.ailment != "burn" ||
+                                // move.ailment != "paralysis" ||
+                                // move.ailment != "freeze" ||
+                                // move.ailment != "sleeping" ||
+                                // move.ailment != "confusion" ){
+                                //     pokemon1PhysicalAttackPokemon2();
+                                // }
+                                if (move.ailment == "poison"){
+                                    pokemon1StatusAttackPokemon2();
+                                    pokemon2Poison();
                                 }
-                                // else if (move.ailment == "poison"){
-                                //     pokemon1StatusAttackPokemon2();
-                                //     pokemon2Poison();
-                                // }
-                                // else if (move.ailment == "burn"){
-                                //     pokemon1StatusAttackPokemon2();
-                                //     pokemon2Burn();
-                                // }
-                                // else if (move.ailment == "paralysis"){
-                                //     pokemon1StatusAttackPokemon2();
-                                //     pokemon2Paralyze();
-                                // }
-                                // else if (move.ailment == "freeze"){
-                                //     pokemon1StatusAttackPokemon2();
-                                //     pokemon2Frozen();
-                                // }
-                                // else if (move.ailment == "sleeping"){
-                                //     pokemon1StatusAttackPokemon2();
-                                //     pokemon2Sleeping();
-                                // }
+                                else if (move.ailment == "burn"){
+                                    // pokemon1StatusAttackPokemon2();
+                                    pokemon2Burn();
+                                }
+                                else if (move.ailment == "paralysis"){
+                                    // pokemon1StatusAttackPokemon2();
+                                    pokemon2Paralyze();
+                                }
+                                else if (move.ailment == "freeze"){
+                                    // pokemon1StatusAttackPokemon2();
+                                    pokemon2Frozen();
+                                }
+                                else if (move.ailment == "sleeping"){
+                                    // pokemon1StatusAttackPokemon2();
+                                    pokemon2Sleeping();
+                                }
                             }   
                             if (this == pokemon2) {
-                                if (move.ailment != "poison" || 
-                                move.ailment != "burn" ||
-                                move.ailment != "paralysis" ||
-                                move.ailment != "freeze" ||
-                                move.ailment != "sleeping" ||
-                                move.ailment != "confusion" ){
+                                // if (move.ailment != "poison" || 
+                                // move.ailment != "burn" ||
+                                // move.ailment != "paralysis" ||
+                                // move.ailment != "freeze" ||
+                                // move.ailment != "sleeping" ||
+                                // move.ailment != "confusion" ){
+                                //     pokemon2StatusAttackPokemon1();
+                                // }
+                                if (move.ailment == "poison"){
                                     pokemon2StatusAttackPokemon1();
+                                    pokemon1Poison();
                                 }
-                                // else if (move.ailment == "poison"){
-                                //     pokemon2StatusAttackPokemon1();
-                                //     pokemon1Poison();
-                                // }
-                                // else if (move.ailment == "burn"){
-                                //     pokemon2StatusAttackPokemon1();
-                                //     pokemon1Burn();
-                                // }
-                                // else if (move.ailment == "paralysis"){
-                                //     pokemon2StatusAttackPokemon1();
-                                //     pokemon1Paralyze();
-                                // }
-                                // else if (move.ailment == "freeze"){
-                                //     pokemon2StatusAttackPokemon1();
-                                //     pokemon1Frozen();
-                                // }
-                                // else if (move.ailment == "sleeping"){
-                                //     pokemon2StatusAttackPokemon1();
-                                //     pokemon1Sleeping();
-                                // }
+                                else if (move.ailment == "burn"){
+                                    pokemon2StatusAttackPokemon1();
+                                    pokemon1Burn();
+                                }
+                                else if (move.ailment == "paralysis"){
+                                    pokemon2StatusAttackPokemon1();
+                                    pokemon1Paralyze();
+                                }
+                                else if (move.ailment == "freeze"){
+                                    pokemon2StatusAttackPokemon1();
+                                    pokemon1Frozen();
+                                }
+                                else if (move.ailment == "sleeping"){
+                                    pokemon2StatusAttackPokemon1();
+                                    pokemon1Sleeping();
+                                }
                             }
                             return message;
                         }
@@ -1838,8 +1838,8 @@ $(function() {
                 this.enemy = pokemon2;
                 
                 // Assign moves and their properties to the move buttons
-                this.moveArr = [allMoves["rest"], pokemon1.moves[1], pokemon1.moves[2], pokemon1.moves[3]];
-                // this.moveArr = pokemon1.moves; // Array 
+                // this.moveArr = [allMoves["toxic"], pokemon1.moves[1], pokemon1.moves[2], pokemon1.moves[3]];
+                this.moveArr = pokemon1.moves; // Array 
                 this.moveNameArr = [];
                 this.moveClassArr = [];
                 this.moveTypeArr = [];
@@ -2769,7 +2769,7 @@ function pokemon2PhysicalAttackPokemon1(){
 // Player Pokemon Status Attack Moves Animation
 
 function pokemon1StatusAttackPokemon2(){
-    let playerPokemon = document.getElementById("playerPokemon")
+    let playerPokemon = document.getElementById("playerPokemonBack")
     anime({
         targets: playerPokemon,
         translateX: '40%',
