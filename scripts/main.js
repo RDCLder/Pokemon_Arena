@@ -353,12 +353,23 @@ $(function() {
                             "rest" in target.status == false &&
                             !target.type.includes("fire")
                         ) {
-                            target.status["burned"] = [duration += battle.turn];
+                            if (duration == "permanent") {
+                                target.status["burned"] = [duration];
+                            }
+                            else {
+                                target.status["burned"] = [duration += battle.turn];
+                            }
                             // Add "burned" animation here
                             return `${target.upperName()} is on fire!`;
                         }
+                        else if (target.type.includes("fire")) {
+                            return `${target.upperName()} cannot be burned!`;
+                        }
+                        else if ("burned" in target.status) {
+                            return `${target.upperName()} is already burned!`;
+                        }
                         else {
-                            return `${target.upperName()} is already on fire!`;
+                            return ``;
                         }
                     }
 
@@ -373,12 +384,23 @@ $(function() {
                             "rest" in target.status == false &&
                             !target.type.includes("ice")
                         ) {
-                            target.status["frozen"] = [duration += battle.turn];
+                            if (duration == "permanent") {
+                                target.status["frozen"] = [duration];
+                            }
+                            else {
+                                target.status["frozen"] = [duration += battle.turn];
+                            }
                             // Add "frozen" animation here
                             return `${target.upperName()} is frozen!`;
                         }
-                        else {
+                        else if (target.type.includes("ice")) {
+                            return `${target.upperName()} cannot be frozen!`;
+                        }
+                        else if ("frozen" in target.status) {
                             return `${target.upperName()} is already frozen!`;
+                        }
+                        else {
+                            return ``;
                         }
                     }
 
@@ -393,13 +415,24 @@ $(function() {
                             "rest" in target.status == false &&
                             !target.type.includes(this.type)
                         ) {
-                            target.status["paralyzed"] = [duration += battle.turn];
+                            if (duration == "permanent") {
+                                target.status["paralyzed"] = [duration];
+                            }
+                            else {
+                                target.status["paralyzed"] = [duration += battle.turn];
+                            }
                             // Add "paralyzed" animation here
                             target.speed[0] = Math.floor(target.speed[0] * 3 / 4);
                             return `${target.upperName()} is paralyzed!`;
                         }
-                        else {
+                        else if (target.type.includes("paralyzed")) {
+                            return `${target.upperName()} cannot be burned!`;
+                        }
+                        else if ("paralyzed" in target.status) {
                             return `${target.upperName()} is already paralyzed!`;
+                        }
+                        else {
+                            return ``;
                         }
                     }
 
@@ -414,12 +447,23 @@ $(function() {
                             "rest" in target.status == false &&
                             !target.type.includes("poison")
                         ) {
-                            target.status["poisoned"] = [duration += battle.turn];
+                            if (duration == "permanent") {
+                                target.status["poisoned"] = [duration];
+                            }
+                            else {
+                                target.status["poisoned"] = [duration += battle.turn];
+                            }
                             // Add "poisoned" animation here
                             return `${target.upperName()} is poisoned!`;
                         }
-                        else {
+                        else if (target.type.includes("poison")) {
+                            return `${target.upperName()} cannot be poisoned!`;
+                        }
+                        else if ("poisoned" in target.status) {
                             return `${target.upperName()} is already poisoned!`;
+                        }
+                        else {
+                            return ``;
                         }
                     }
 
@@ -434,12 +478,23 @@ $(function() {
                             "rest" in target.status == false &&
                             !target.type.includes("poison")
                         ) {
-                            target.status["poisoned"] = [duration += battle.turn, battle.turn];
+                            if (duration == "permanent") {
+                                target.status["badly-poisoned"] = [duration, battle.turn];
+                            }
+                            else {
+                                target.status["badly-poisoned"] = [duration += battle.turn];
+                            }
                             // Add "poisoned" animation here
-                            return `${target.upperName()} is poisoned!`;
+                            return `${target.upperName()} is badly-poisoned!`;
+                        }
+                        else if (target.type.includes("poison")) {
+                            return `${target.upperName()} cannot be poisoned!`;
+                        }
+                        else if ("badly-poisoned" in target.status) {
+                            return `${target.upperName()} is already badly-poisoned!`;
                         }
                         else {
-                            return `${target.upperName()} is already poisoned!`;
+                            return ``;
                         }
                     }
 
@@ -457,8 +512,11 @@ $(function() {
                             target.hp = target.startHP;
                             return `${target.upperName()} is resting and has recovered its HP!`;
                         }
+                        else if ("rest" in target.status) {
+                            return `${target.upperName()} is already sleeping!`;
+                        }
                         else {
-                            return `${target.upperName()} is resting!`;
+                            return ``;
                         }
                     }
 
@@ -1275,6 +1333,9 @@ $(function() {
                     let damage = this.damageCalc(user, target);
                     let drain = Math.floor(damage / 2);
                     user.hp += drain;
+                    if (user.hp > user.startHP) {
+                        user.hp = user.startHP;
+                    }
                     return `${target.upperName()} lost ${damage} HP!
                     ${user.upperName()} gained ${drain} HP!`;
                 }
@@ -1406,6 +1467,9 @@ $(function() {
                     let damage = this.damageCalc(user, target);
                     let drain = Math.floor(damage / 2);
                     user.hp += drain;
+                    if (user.hp > user.startHP) {
+                        user.hp = user.startHP;
+                    }
                     return `${target.upperName()} lost ${damage} HP! \n${user.upperName()} gained ${drain} HP!`;
                 }
 
@@ -1499,6 +1563,9 @@ $(function() {
                         let damage = this.damageCalc(user, target);
                         let drain = Math.floor(damage / 2);
                         user.hp += drain;
+                        if (user.hp > user.startHP) {
+                            user.hp = user.startHP;
+                        }
                         return `${target.upperName()} lost ${damage} HP!
                         ${user.upperName()} gained ${drain} HP!`
                     }
@@ -1713,19 +1780,19 @@ $(function() {
                                     pokemon2Poison();
                                 }
                                 else if (move.ailment == "burn"){
-                                    // pokemon1StatusAttackPokemon2();
+                                    pokemon1StatusAttackPokemon2();
                                     pokemon2Burn();
                                 }
                                 else if (move.ailment == "paralysis"){
-                                    // pokemon1StatusAttackPokemon2();
+                                    pokemon1StatusAttackPokemon2();
                                     pokemon2Paralyze();
                                 }
                                 else if (move.ailment == "freeze"){
-                                    // pokemon1StatusAttackPokemon2();
+                                    pokemon1StatusAttackPokemon2();
                                     pokemon2Frozen();
                                 }
                                 else if (move.ailment == "sleeping"){
-                                    // pokemon1StatusAttackPokemon2();
+                                    pokemon1StatusAttackPokemon2();
                                     pokemon2Sleeping();
                                 }
                             }   
@@ -1806,7 +1873,7 @@ $(function() {
                 if (this.hp <= 0) {
                     return `${name} fainted!`;
                 }
-                return `${name} has ${this.hp} hp.`;
+                return `${name} has ${this.hp} HP.`;
             }
 
             alive() {
@@ -1837,7 +1904,7 @@ $(function() {
                 this.enemy = pokemon2;
                 
                 // Assign moves and their properties to the move buttons
-                this.moveArr = [allMoves["toxic"], pokemon1.moves[1], pokemon1.moves[2], pokemon1.moves[3]];
+                this.moveArr = [allMoves["toxic"], allMoves["hypnosis"], pokemon1.moves[2], pokemon1.moves[3]];
                 // this.moveArr = pokemon1.moves; // Array 
                 this.moveNameArr = [];
                 this.moveClassArr = [];
@@ -1858,7 +1925,6 @@ $(function() {
                 $("#moveType1").text(this.moveTypeArr[0]);
                 $("#movePP1").text(`${this.movePPLeftArr[0]}/${this.moveArr[0].pp}`);
                 $("#moveButton1").prop("title", this.moveArr[0].description);
-                console.log(this.moveArr);
 
                 if (this.moveArr.length > 1) {
                     $("#moveName2").text(this.moveNameArr[1]);
@@ -1897,10 +1963,8 @@ $(function() {
                 }
                 $('[data-toggle="tooltip"]').tooltip();
             }
-           
+            
             // checkStatus method
-            // This only checks for non-volatile status conditions
-            // Other conditions are checked in useMove() or wherever appropriate
             checkStatus(target, otherPokemon) {
                 let allMessages = [];
                 // Non-volatile status conditions are mutually exclusive
@@ -2193,6 +2257,9 @@ $(function() {
                         let damage = Math.floor(target.startHP / 8);
                         target.hp -= damage;
                         otherPokemon.hp += damage;
+                        if (otherPokemon.hp > otherPokemon.startHP) {
+                            otherPokemon.hp = otherPokemon.startHP;
+                        }
                         allMessages.push(`\nLeech-seed drains ${damage} HP from ${target.upperName()}!`);
                         allMessages.push(`\n${otherPokemon.upperName()} gains ${damage} HP!`);
                     }
@@ -2270,6 +2337,7 @@ $(function() {
                         allMessages.push(`\n${target.upperName()} is no longer substituted!`);
                     }
                 }
+                
                 updateAllPokemonHP();
                 return allMessages;
             }
@@ -2387,7 +2455,7 @@ $(function() {
                     responsiveVoice.speak(message, "UK English Male");
                 }
                 else {
-                    console.log("Invalid Message/Type");
+                    return "Invalid Message/Type";
                 }
                 
             } // End of turnHistory method
@@ -2400,13 +2468,11 @@ $(function() {
         
         let pokemonIndex1 = Math.floor(Math.random() * pokedex.length);
         let pokemonIndex2 = Math.floor(Math.random() * pokedex.length);
-        // let pokemon1 = allPokemon[pokedex[pokemonIndex1][0]];
+        let pokemon1 = allPokemon[pokedex[pokemonIndex1][0]];
         let pokemon2 = allPokemon[pokedex[pokemonIndex2][0]];
-        let pokemon1 = allPokemon["gengar"];
+        // let pokemon1 = allPokemon["gengar"];
         // let pokemon2 = allPokemon["machamp"];
         let encounter = new Battle(pokemon1, pokemon2);
-        console.log(pokemon1);
-        console.log(pokemon2);
 
         // Assign sprites and name for both player and enemy pokemon
         for (let i = 0; i < pokedex.length; i++){
@@ -2420,7 +2486,6 @@ $(function() {
                 playerPokemon1Name.innerHTML = pokemon1.upperName();
             };
         }
-        
 
         for (let i = 0; i < pokedex.length; i++){
             if(pokemon2 == allPokemon[pokedex[i][0]]) {
@@ -2457,32 +2522,32 @@ $(function() {
         updateAllPokemonHP()
 
        // Update Status Effect of Pokemon
-       function updateStatusEffects(pokemon1, pokemon2) {
-            let playerPokemonStatusEffect = document.getElementById("playerPokemonStatusEffect");
-            let enemyPokemonStatusEffect = document.getElementById("enemyPokemonStatusEffect");
-            checkStatus(pokemon1, pokemon2)
-            if ("burned" in pokemon1.status == true &&
-            "frozen" in pokemon1.status == true &&
-            "paralyzed" in pokemon1.status == true &&
-            "poisoned" in pokemon1.status == true &&
-            "sleeping" in pokemon1.status == true &&
-            "confused" in pokemon1.status == true){
-                let statusEffect = pokemon1.status
-                playerPokemonStatusEffect.innerHTML = statusEffect
-                //  statusEffect.toLowerCase().split(' ')
-                // .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-                // .join(' ');
-            }
-            if ("burned" in pokemon2.status == true &&
-            "frozen" in pokemon2.status == true &&
-            "paralyzed" in pokemon2.status == true &&
-            "poisoned" in pokemon2.status == true &&
-            "sleeping" in pokemon2.status == true &&
-            "confused" in pokemon2.status == true){
-                let statusEffect = pokemon2.status;
-                enemyPokemonStatusEffect.innerHTML = statusEffect;
-            }
-        }
+    //    function updateStatusEffects(pokemon1, pokemon2) {
+    //         let playerPokemonStatusEffect = document.getElementById("playerPokemonStatusEffect");
+    //         let enemyPokemonStatusEffect = document.getElementById("enemyPokemonStatusEffect");
+    //         checkStatus(pokemon1, pokemon2)
+    //         if ("burned" in pokemon1.status == true &&
+    //         "frozen" in pokemon1.status == true &&
+    //         "paralyzed" in pokemon1.status == true &&
+    //         "poisoned" in pokemon1.status == true &&
+    //         "sleeping" in pokemon1.status == true &&
+    //         "confused" in pokemon1.status == true){
+    //             let statusEffect = pokemon1.status
+    //             playerPokemonStatusEffect.innerHTML = statusEffect
+    //             //  statusEffect.toLowerCase().split(' ')
+    //             // .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+    //             // .join(' ');
+    //         }
+    //         if ("burned" in pokemon2.status == true &&
+    //         "frozen" in pokemon2.status == true &&
+    //         "paralyzed" in pokemon2.status == true &&
+    //         "poisoned" in pokemon2.status == true &&
+    //         "sleeping" in pokemon2.status == true &&
+    //         "confused" in pokemon2.status == true){
+    //             let statusEffect = pokemon2.status;
+    //             enemyPokemonStatusEffect.innerHTML = statusEffect;
+    //         }
+    //     }
 
 
         // ------------------------------------------------------------------------------------
@@ -2512,7 +2577,7 @@ $(function() {
                         for (let message of combatMessages2) {
                             encounter.turnHistory(message, "turnContent");
                         }
-                    } updateAllPokemonHP()
+                    } updateAllPokemonHP();
                 }, 2500);
             }
             else {
@@ -2526,7 +2591,7 @@ $(function() {
                         for (let message of combatMessages2) {
                             encounter.turnHistory(message, "turnContent");
                         }
-                    } updateAllPokemonHP()
+                    } updateAllPokemonHP();
                 }, 2500);
             }
             setTimeout(() => {
@@ -2561,7 +2626,7 @@ $(function() {
                         for (let message of combatMessages2) {
                             encounter.turnHistory(message, "turnContent");
                         }
-                    } updateAllPokemonHP()
+                    } updateAllPokemonHP();
                 }, 2500);
             }
             else {
@@ -2575,7 +2640,7 @@ $(function() {
                         for (let message of combatMessages2) {
                             encounter.turnHistory(message, "turnContent");
                         }
-                    } updateAllPokemonHP()
+                    } updateAllPokemonHP();
                 }, 2500);
             }
             setTimeout(() => {
@@ -2610,7 +2675,7 @@ $(function() {
                         for (let message of combatMessages2) {
                             encounter.turnHistory(message, "turnContent");
                         }
-                    } updateAllPokemonHP()
+                    } updateAllPokemonHP();
                 }, 2500);
             }
             else {
@@ -2624,7 +2689,7 @@ $(function() {
                         for (let message of combatMessages2) {
                             encounter.turnHistory(message, "turnContent");
                         }
-                    } updateAllPokemonHP()
+                    } updateAllPokemonHP();
                 }, 2500);
             }
             setTimeout(() => {
@@ -2659,7 +2724,7 @@ $(function() {
                         for (let message of combatMessages2) {
                             encounter.turnHistory(message, "turnContent");
                         }
-                    } updateAllPokemonHP()
+                    } updateAllPokemonHP();
                 }, 2500);
             }
             else {
@@ -2673,7 +2738,7 @@ $(function() {
                         for (let message of combatMessages2) {
                             encounter.turnHistory(message, "turnContent");
                         }
-                    } updateAllPokemonHP()
+                    } updateAllPokemonHP();
                 }, 2500);
             }
             setTimeout(() => {
