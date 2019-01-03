@@ -13,6 +13,9 @@
   <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
     crossorigin="anonymous"> -->
   <link rel="stylesheet" href="styles/main.css">
+  <link href="https://fonts.googleapis.com/css?family=Sarabun" rel="stylesheet">
+
+
 
 </head>
 
@@ -35,7 +38,7 @@
 
   <!-- Start of Container -->
   <div class="container p-0">
-    <div class="row ">
+    <div class="row" style="border: 4px solid #343a40 ;" >
 
       <!-- Start of Left Column -->
       <div class="col-lg-7 col-sm-8 m-0 p-0">
@@ -43,10 +46,10 @@
         <div class="row border border-dark p-0 m-0" id="leftTop">
           <div class="col-12 m-0 p-0">
             <div class="row m-0" id="topPadding">
-              <div class="col">Turn 1</div>
+              <div class="col"></div>
             </div>
             <div class="row m-0" id="enemyZone">
-              <div class="col-7">
+              <div class="col-7" id="enemyPokemonStatus">
                   <div class="row m-0" id="enemyPokemon1Name"></div>
                   <div class="row m-0" id="enemyPokemon1HealthBar">
                     <div class="col-6 m-0 p-0"><div class="health-value" id="e1HP"></div></div>
@@ -79,7 +82,7 @@
 <!-- ////////////////////////////////////////////////////////////////////////////// -->
 
         <!-- Start of Left Bottom -->
-        <div class="row justify-content-md-center border border-dark m-0 p-0" id="leftBottom">
+        <div class="row justify-content-md-center  m-0 p-0" id="leftBottom">
 
           <!-- <div class="row">
             <div class="col-3">
@@ -178,8 +181,8 @@
 
       <!-- Start of Sidebar -->
       <div class="sideBar col-lg-5 col-sm-4 border border-dark m-0 p-0">
-      <h3 class="turnCount">Turn Counter</h3>
-      <div class="turnContent">Turn Content</div>
+      <h3 class="turnCount"></h3>
+      <div class="turnContent"> </div>
       
       
       <!-- End of Sidebar -->
@@ -198,6 +201,7 @@
   <script src="https://unpkg.com/animejs@2.2.0/anime.min.js"></script>
   <script src="scripts/main.js"></script>
   <script src="scripts/test.js"></script>
+  <script src="http://code.responsivevoice.org/responsivevoice.js"></script>
   <!-- End of JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
     crossorigin="anonymous"></script>
