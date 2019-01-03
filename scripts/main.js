@@ -7,32 +7,62 @@ $(function() {
 
     // Retrieve move data from API
     $.get("https://pokeapi.co/api/v2/move/")
-    .done((result) => {
-        for (let i = 0; i < 164; i ++) {
-            let moveName = result.results[i].name;
-            moves[0].push(moveName);
+        .done((result) => {
+            for (let i = 0; i < 164; i++) {
+                let moveName = result.results[i].name;
+                moves[0].push(moveName);
 
-            // Retrieve object from nested URL
-            $.get(result.results[i].url).done((result) => {
-                moves[1].push(result);
-            });
-        }
-    })
-    
+                // Retrieve object from nested URL
+                $.get(result.results[i].url).done((result) => {
+                    moves[1].push(result);
+                });
+            }
+        })
+
     // Retrieve pokemon data from API
     $.get("https://pokeapi.co/api/v2/pokemon/")
-    .done((result) => {
-        for (let i = 0; i < 151; i ++) {
-            let pokeName = result.results[i].name;
-            pokedex.push([pokeName]);
+        .done((result) => {
+            for (let i = 0; i < 151; i++) {
+                let pokeName = result.results[i].name;
+                pokedex.push([pokeName]);
 
-            // Retrieve object from nested URL
-            $.get(result.results[i].url).done((result) => {
-                pokedex[i].push(result);
-            });
-        }
-    });
+                // Retrieve object from nested URL
+                $.get(result.results[i].url).done((result) => {
+                    pokedex[i].push(result);
+                });
+            }
+        });
     
+    // Only use the following two get requests for testing web-scrapped animated sprites
+    // let testName1 = "gyarados";
+    // let testName2 = "kadabra";
+    // let baseURL = "https://pokemondb.net/sprites/";
+
+    // $.get(baseURL + testName1)
+    //     .done((result) => {
+    //         let myObject = $.parseHTML(result);
+    //         let animatedSprite1 = $(myObject).find(".sprite-anim");
+    //         // if (animatedSprite1.length == 8) {
+    //         //     var testSprite1 = animatedSprite1[4].href;
+    //         // }
+    //         if (animatedSprite1.length == 4) {
+    //             var testSprite1 = animatedSprite1[2].href;
+    //             console.log(testSprite1);
+    //         }
+    //         else {
+    //             var testSprite1 = animatedSprite1[4].href;
+    //             console.log(testSprite1);
+    //         }
+    //     });
+
+    // $.get(baseURL + testName2)
+    //     .done((result) => {
+    //         let myObject = $.parseHTML(result);
+    //         let animatedSprite2 = $(myObject).find(".sprite-anim");
+    //         var testSprite2 = animatedSprite2[0].href;
+    //         console.log(testSprite2);
+    //     });
+
     // Account for async with time delay
     setTimeout(() => {
         
@@ -2311,10 +2341,12 @@ $(function() {
         
         let pokemonIndex1 = Math.floor(Math.random() * pokedex.length);
         let pokemonIndex2 = Math.floor(Math.random() * pokedex.length);
-        let pokemon1 = allPokemon[pokedex[pokemonIndex1][0]];
-        let pokemon2 = allPokemon[pokedex[pokemonIndex2][0]];
-        // let pokemon1 = allPokemon["pikachu"];
-        // let pokemon2 = allPokemon["machamp"];
+        // let pokemon1 = allPokemon[pokedex[pokemonIndex1][0]];
+        // let pokemon2 = allPokemon[pokedex[pokemonIndex2][0]];
+        let pokemon1 = allPokemon["gyarados"];
+        let pokemon2 = allPokemon["kadabra"];
+        // pokemon1.back = "images/gyarados.gif";
+        // pokemon2.front = "images/kadabra.gif";
         let encounter = new Battle(pokemon1, pokemon2);
         console.log(pokemon1);
         console.log(pokemon2);
@@ -2595,7 +2627,7 @@ $(function() {
 
         // ------------------------------------------------------------------------------------
 
-    }, 3200) // End of setTimeout
+    }, 3500) // End of setTimeout
 
 });
 
