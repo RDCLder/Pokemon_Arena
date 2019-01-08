@@ -1059,7 +1059,7 @@ $(function() {
                 }
 
                 else {
-                    return `${this.name} is not a valid status move.`;
+                    return `${this.upperNaame()} is not a valid status move.  It is a ${this.damage_class} move.`;
                 }
             }
 
@@ -1602,7 +1602,7 @@ $(function() {
                 }
 
                 else {
-                    return `${this.upperName()} is not a valid Special move!`;
+                    return `${this.upperNaame()} is not a valid special move.  It is a ${this.damage_class} move.`;
                 }
             }
 
