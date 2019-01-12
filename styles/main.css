@@ -5,7 +5,7 @@ body {
     background: rgb(244, 250, 248);
     z-index: -2;
     height: 100vh;
-    
+    /* background-image: url(https://www.imgbase.info/images/safe-wallpapers/anime/pokemon/41394_pokemon.jpg) */
 }
 
 #leftTop {
@@ -48,24 +48,29 @@ body {
 }
 
 #playerPokemonBack {
-    height: 100%;
-    width: 80%;
+    /* height: 100%; */
+    /* width: 80%; */
     position: absolute;
     z-index: 2;
-    right: 0;
+    left: 40%;
+    bottom: 15%;
+    border: solid orange;
 }
 
 #playerPokemon{
     position: relative;
     z-index: 1;
+    border: solid blue;
 }
 
 #enemyPokemonFront {
-    height: 100%;
-    width: 80%;
+    /* height: 100%; */
+    /* width: 80%; */
     position: absolute;
     z-index: 2;
-    right: 0;
+    right: 23%;
+    bottom: 15%;
+    border: solid orange;
 }
 
 #enemyPokemon{
@@ -73,6 +78,7 @@ body {
     height: 100%;
     position: relative;
     z-index: 1;
+    border: solid blue;
 }
 #pokemonGround1 {
     width: 70%;
@@ -87,7 +93,6 @@ body {
 #pokemonGround2 {
     width: 65%;
     height: 65%;
-
     background: #d1a553;
     border-radius: 70%;
     border: 1px solid black;
