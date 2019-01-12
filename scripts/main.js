@@ -32,36 +32,6 @@ $(function() {
                 });
             }
         });
-    
-    // Only use the following two get requests for testing web-scrapped animated sprites
-    // let testName1 = "gyarados";
-    // let testName2 = "kadabra";
-    // let baseURL = "https://pokemondb.net/sprites/";
-
-    // $.get(baseURL + testName1)
-    //     .done((result) => {
-    //         let myObject = $.parseHTML(result);
-    //         let animatedSprite1 = $(myObject).find(".sprite-anim");
-    //         // if (animatedSprite1.length == 8) {
-    //         //     var testSprite1 = animatedSprite1[4].href;
-    //         // }
-    //         if (animatedSprite1.length == 4) {
-    //             var testSprite1 = animatedSprite1[2].href;
-    //             console.log(testSprite1);
-    //         }
-    //         else {
-    //             var testSprite1 = animatedSprite1[4].href;
-    //             console.log(testSprite1);
-    //         }
-    //     });
-
-    // $.get(baseURL + testName2)
-    //     .done((result) => {
-    //         let myObject = $.parseHTML(result);
-    //         let animatedSprite2 = $(myObject).find(".sprite-anim");
-    //         var testSprite2 = animatedSprite2[0].href;
-    //         console.log(testSprite2);
-    //     });
 
     // Account for async with time delay
     setTimeout(() => {
@@ -1939,8 +1909,8 @@ $(function() {
                 this.enemy = pokemon2;
                 
                 // Assign moves and their properties to the move buttons
-                // this.moveArr = [allMoves["toxic"], allMoves["hypnosis"], pokemon1.moves[2], pokemon1.moves[3]];
-                this.moveArr = pokemon1.moves; // Array 
+                this.moveArr = [allMoves["toxic"], allMoves["hypnosis"], pokemon1.moves[2], pokemon1.moves[3]];
+                // this.moveArr = pokemon1.moves; // Array 
                 this.moveNameArr = [];
                 this.moveClassArr = [];
                 this.moveTypeArr = [];
