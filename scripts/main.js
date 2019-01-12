@@ -3688,6 +3688,3 @@ $('button').click(function (){
 	var log = $('.sideBar');
 	log.animate({ scrollTop: log.prop('scrollHeight')}, 1000);   
 });
-
-
-
