@@ -106,10 +106,12 @@ $(function() {
             damageCalc(user, target, critModifier = 1) {
                 
                 if ("flying" in target.status && "flying" in user.status == false) {
-                    return `${user.upperName()} missed!`;
+                    // return `${user.upperName()} missed!`;
+                    return 0;
                 }
                 else if ("dig" in target.status && this.name != "earthquake") {
-                    return `${user.upperName()} missed!`;
+                    // return `${user.upperName()} missed!`;
+                    return 0;
                 }
                 let min = Math.ceil(85);
                 let max = Math.floor(100);
@@ -1283,6 +1285,7 @@ $(function() {
                     this.name == "explosion"
                     ) {
                     let damage = this.damageCalc(user, target);
+                    user.hp = 0;
                     return `${target.upperName()} lost ${damage} HP!`;
                 }
 
@@ -1585,10 +1588,10 @@ $(function() {
 
             constructor(pokeName, pokeObject) {
                 if (pokeName == "nidoran-m") {
-                    this.name = "nidoran (male)";
+                    this.name = "nidoran";
                 }
                 else if (pokeName == "nidoran-f") {
-                    this.name = "nidoran (female)";
+                    this.name = "nidoran";
                 }
                 else {
                     this.name = pokeName;
@@ -1617,8 +1620,10 @@ $(function() {
                 this.speed = [this.startSpeed, 0, this.startSpeed];
                 this.evasion = [this.startEvasion, 0, this.startEvasion];
                 
-                this.front = pokeObject.sprites.front_default;
-                this.back = pokeObject.sprites.back_default;
+                // this.front = pokeObject.sprites.front_default;
+                // this.back = pokeObject.sprites.back_default;
+                this.front = `../images/sprites/${this.name}_front.gif`;
+                this.back = `../images/sprites/${this.name}_back.gif`;
                 this.moves = [];
                 this.type = this.startType; // Array
                 this.lastMove = "";
@@ -2261,6 +2266,12 @@ $(function() {
                     }
                 }
                 updateAllPokemonHP();
+                if (actingPokemon.alive() == false) {
+                    allMessages.push(`${actingPokemon.upperName()} has fainted!`);
+                }
+                if (otherPokemon.alive() == false) {
+                    allMessages.push(`${otherPokemon.upperName()} has fainted!`);
+                }
                 return allMessages;
                 
                 
@@ -2341,12 +2352,10 @@ $(function() {
         
         let pokemonIndex1 = Math.floor(Math.random() * pokedex.length);
         let pokemonIndex2 = Math.floor(Math.random() * pokedex.length);
-        // let pokemon1 = allPokemon[pokedex[pokemonIndex1][0]];
+        let pokemon1 = allPokemon[pokedex[pokemonIndex1][0]];
         // let pokemon2 = allPokemon[pokedex[pokemonIndex2][0]];
-        let pokemon1 = allPokemon["gyarados"];
-        let pokemon2 = allPokemon["kadabra"];
-        // pokemon1.back = "images/gyarados.gif";
-        // pokemon2.front = "images/kadabra.gif";
+        // let pokemon1 = allPokemon["gyarados"];
+        let pokemon2 = allPokemon["charizard"];
         let encounter = new Battle(pokemon1, pokemon2);
         console.log(pokemon1);
         console.log(pokemon2);
@@ -2473,12 +2482,20 @@ $(function() {
                     } updateAllPokemonHP()
                 }, 2500);
             }
-            setTimeout(() => {
-                // encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
-                $("#movePP1").text(`${encounter.movePPLeftArr[0]}/${encounter.moveArr[0].pp}`);
-                encounter.turn ++;
-                encounter.enableButtons();
-            }, 2500);
+            if (pokemon1.alive() && pokemon2.alive()) {
+                setTimeout(() => {
+                    // encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
+                    $("#movePP1").text(`${encounter.movePPLeftArr[0]}/${encounter.moveArr[0].pp}`);
+                    encounter.turn ++;
+                    encounter.enableButtons();
+                }, 2500);
+            } // else end the battle and display who wins
+            else if (pokemon1.alive()) {
+                encounter.turnHistory(`${pokemon1.upperName()} won!`, "turnContent");
+            }
+            else if (pokemon2.alive()) {
+                encounter.turnHistory(`${pokemon2.upperName()} won!`, "turnContent");
+            }
         });
 
         $("#moveButton2").click(() => {
@@ -2521,12 +2538,20 @@ $(function() {
                     } updateAllPokemonHP()
                 }, 2500);
             }
-            setTimeout(() => {
-                // encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
-                $("#movePP2").text(`${encounter.movePPLeftArr[1]}/${encounter.moveArr[1].pp}`);
-                encounter.turn ++;
-                encounter.enableButtons();
-            }, 2500);
+            if (pokemon1.alive() && pokemon2.alive()) {
+                setTimeout(() => {
+                    // encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
+                    $("#movePP1").text(`${encounter.movePPLeftArr[0]}/${encounter.moveArr[0].pp}`);
+                    encounter.turn ++;
+                    encounter.enableButtons();
+                }, 2500);
+            } // else end the battle and display who wins
+            else if (pokemon1.alive()) {
+                encounter.turnHistory(`${pokemon1.upperName()} won!`, "turnContent");
+            }
+            else if (pokemon2.alive()) {
+                encounter.turnHistory(`${pokemon2.upperName()} won!`, "turnContent");
+            }
         });
 
         $("#moveButton3").click(() => {
@@ -2569,12 +2594,20 @@ $(function() {
                     } updateAllPokemonHP()
                 }, 2500);
             }
-            setTimeout(() => {
-                // encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
-                $("#movePP3").text(`${encounter.movePPLeftArr[2]}/${encounter.moveArr[2].pp}`);
-                encounter.turn ++;
-                encounter.enableButtons();
-            }, 2500);
+            if (pokemon1.alive() && pokemon2.alive()) {
+                setTimeout(() => {
+                    // encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
+                    $("#movePP1").text(`${encounter.movePPLeftArr[0]}/${encounter.moveArr[0].pp}`);
+                    encounter.turn ++;
+                    encounter.enableButtons();
+                }, 2500);
+            } // else end the battle and display who wins
+            else if (pokemon1.alive()) {
+                encounter.turnHistory(`${pokemon1.upperName()} won!`, "turnContent");
+            }
+            else if (pokemon2.alive()) {
+                encounter.turnHistory(`${pokemon2.upperName()} won!`, "turnContent");
+            }
         });
 
         $("#moveButton4").click(() => {
@@ -2617,12 +2650,20 @@ $(function() {
                     } updateAllPokemonHP()
                 }, 2500);
             }
-            setTimeout(() => {
-                // encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
-                $("#movePP4").text(`${encounter.movePPLeftArr[3]}/${encounter.moveArr[3].pp}`);
-                encounter.turn ++;
-                encounter.enableButtons();
-            }, 2500);
+            if (pokemon1.alive() && pokemon2.alive()) {
+                setTimeout(() => {
+                    // encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
+                    $("#movePP1").text(`${encounter.movePPLeftArr[0]}/${encounter.moveArr[0].pp}`);
+                    encounter.turn ++;
+                    encounter.enableButtons();
+                }, 2500);
+            } // else end the battle and display who wins
+            else if (pokemon1.alive()) {
+                encounter.turnHistory(`${pokemon1.upperName()} won!`, "turnContent");
+            }
+            else if (pokemon2.alive()) {
+                encounter.turnHistory(`${pokemon2.upperName()} won!`, "turnContent");
+            }
         });
 
         // ------------------------------------------------------------------------------------
