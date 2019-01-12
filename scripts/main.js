@@ -2397,9 +2397,9 @@ $(function() {
         let pokemonIndex1 = Math.floor(Math.random() * pokedex.length);
         let pokemonIndex2 = Math.floor(Math.random() * pokedex.length);
         let pokemon1 = allPokemon[pokedex[pokemonIndex1][0]];
-        // let pokemon2 = allPokemon[pokedex[pokemonIndex2][0]];
-        // let pokemon1 = allPokemon["gyarados"];
-        let pokemon2 = allPokemon["charizard"];
+        let pokemon2 = allPokemon[pokedex[pokemonIndex2][0]];
+        // let pokemon1 = allPokemon["gengar"];
+        // let pokemon2 = allPokemon["charizard"];
         let encounter = new Battle(pokemon1, pokemon2);
         console.log(pokemon1);
         console.log(pokemon2);
@@ -2710,7 +2710,7 @@ $(function() {
 
         // ------------------------------------------------------------------------------------
 
-    }, 3200)
+    }, 3500) // End of setTimeout
 
 });
 

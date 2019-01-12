@@ -52,24 +52,27 @@ body {
     /* width: 80%; */
     position: absolute;
     z-index: 2;
-    left: 40%;
-    bottom: 15%;
+    bottom: 20%;
     border: solid orange;
 }
 
 #playerPokemon{
+    width: 100%;
+    height: 100%;
     position: relative;
     z-index: 1;
     border: solid blue;
+    display: flex;
+    justify-content: center;
+    align-items:flex-end ;
 }
 
 #enemyPokemonFront {
     /* height: 100%; */
     /* width: 80%; */
     position: absolute;
+    bottom: 20%;
     z-index: 2;
-    right: 23%;
-    bottom: 15%;
     border: solid orange;
 }
 
@@ -78,6 +81,9 @@ body {
     height: 100%;
     position: relative;
     z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items:flex-end ;
     border: solid blue;
 }
 #pokemonGround1 {
@@ -86,19 +92,18 @@ body {
     background: #d1a553;
     border-radius: 70%;
     border: 1px solid black;
-    position: absolute;
-    bottom: 0;
-    left: 20%;
+    /* position: absolute; */
+    display: flex;
+    justify-content:center; 
+    align-items:flex-end ;
 }
 #pokemonGround2 {
-    width: 65%;
-    height: 65%;
+    width: 70%;
+    height: 70%;
     background: #d1a553;
     border-radius: 70%;
     border: 1px solid black;
-    position: absolute;
-    bottom: 0;
-    left: 25%;
+    /* position: absolute; */
 }
 /* Pokemon Name, Health, Status */
 #playerPokemon1Name{
