@@ -54,13 +54,13 @@ body {
     z-index: 2;
     left: 40%;
     bottom: 15%;
-    border: solid orange;
+    /* border: solid orange; */
 }
 
 #playerPokemon{
     position: relative;
     z-index: 1;
-    border: solid blue;
+    /* border: solid blue; */
 }
 
 #enemyPokemonFront {
@@ -70,7 +70,7 @@ body {
     z-index: 2;
     right: 23%;
     bottom: 15%;
-    border: solid orange;
+    /* border: solid orange; */
 }
 
 #enemyPokemon{
@@ -78,7 +78,7 @@ body {
     height: 100%;
     position: relative;
     z-index: 1;
-    border: solid blue;
+    /* border: solid blue; */
 }
 #pokemonGround1 {
     width: 70%;

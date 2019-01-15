@@ -1573,7 +1573,7 @@ $(function() {
                         ${user.upperName()} gained ${drain} HP!`
                     }
                     else {
-                        return `It's not very effective.`
+                        return `It does nothing!`
                     }
                 }
 
@@ -1584,6 +1584,7 @@ $(function() {
                     let baseDamage = (22 * this.power * user.attack[0] / target.defense[0] / 50) + 2;
                     let percentage = Math.floor(baseDamage * (Math.floor(Math.random() * (max - min + 1)) + min) / 100)
                     var damage = Math.floor(50 * percentage);
+                    let threshold = Math.floor(user.speed[0] * critModifier * 100 / 512);
                     let critChance = Math.floor(Math.random() * 100);
                     if (critChance <= threshold) {
                         damage = damage * 2;
@@ -2480,9 +2481,9 @@ $(function() {
         let pokemonIndex1 = Math.floor(Math.random() * pokedex.length);
         let pokemonIndex2 = Math.floor(Math.random() * pokedex.length);
         // let pokemon1 = allPokemon[pokedex[pokemonIndex1][0]];
-        // let pokemon2 = allPokemon[pokedex[pokemonIndex2][0]];
+        let pokemon2 = allPokemon[pokedex[pokemonIndex2][0]];
         let pokemon1 = allPokemon["gengar"];
-        let pokemon2 = allPokemon["machamp"];
+        // let pokemon2 = allPokemon["machamp"];
         let encounter = new Battle(pokemon1, pokemon2);
 
         // Assign sprites and name for both player and enemy pokemon
