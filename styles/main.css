@@ -215,8 +215,8 @@ body {
     border-right: 25px solid transparent;
     border-bottom: 50px solid red;
     margin: 10px auto;
-    top: 20%;
-    right: 40%;
+    top: 0;
+    /* right: 40%; */
     z-index: 5;
 }
 
@@ -241,8 +241,8 @@ body {
     border-right: 25px solid transparent;
     border-bottom: 50px solid red;
     margin: 10px auto;
-    top: 20%;
-    right: 20%;
+    top: 0;
+    /* right: 20%; */
     z-index: 5;
 }
 
