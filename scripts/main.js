@@ -1653,8 +1653,8 @@ $(function() {
                 
                 // this.front = pokeObject.sprites.front_default;
                 // this.back = pokeObject.sprites.back_default;
-                this.front = `../images/sprites/${this.name}_front.gif`;
-                this.back = `../images/sprites/${this.name}_back.gif`;
+                this.front = `images/sprites/${this.name}_front.gif`;
+                this.back = `images/sprites/${this.name}_back.gif`;
                 this.moves = [];
                 this.type = this.startType; // Array
                 this.lastMove = "";
