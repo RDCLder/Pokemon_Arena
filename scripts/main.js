@@ -1626,15 +1626,7 @@ $(function() {
         class Pokemon {
 
             constructor(pokeName, pokeObject) {
-                if (pokeName == "nidoran-m") {
-                    this.name = "nidoran_m";
-                }
-                else if (pokeName == "nidoran-f") {
-                    this.name = "nidoran_f";
-                }
-                else {
-                    this.name = pokeName;
-                }
+                this.name = pokeName;
                 this.startHP = statCalc(pokeObject.stats[5].base_stat, 7, 60);
                 this.startAttack = statCalc(pokeObject.stats[4].base_stat, 8, 5);
                 this.startDefense = statCalc(pokeObject.stats[3].base_stat, 13, 5);
@@ -1899,7 +1891,7 @@ $(function() {
 
         var allPokemon = {};
         for (let i = 0; i < pokedex.length; i ++) {
-            let name = pokedex[i][0];
+            name = pokedex[i][0];
             let pokemon = new Pokemon(pokedex[i][0], pokedex[i][1]);
             allPokemon[name] = pokemon;
         }
@@ -2486,8 +2478,8 @@ $(function() {
         let pokemonIndex2 = Math.floor(Math.random() * pokedex.length);
         let pokemon1 = allPokemon[pokedex[pokemonIndex1][0]];
         let pokemon2 = allPokemon[pokedex[pokemonIndex2][0]];
-        // let pokemon1 = allPokemon["gengar"];
-        // let pokemon2 = allPokemon["machamp"];
+        // let pokemon1 = allPokemon["nidoran-m"];
+        // let pokemon2 = allPokemon["nidoran-f"];
         let encounter = new Battle(pokemon1, pokemon2);
 
         // Assign sprites and name for both player and enemy pokemon
