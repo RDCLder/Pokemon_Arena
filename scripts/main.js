@@ -1627,10 +1627,10 @@ $(function() {
 
             constructor(pokeName, pokeObject) {
                 if (pokeName == "nidoran-m") {
-                    this.name = "nidoran";
+                    this.name = "nidoran_m";
                 }
                 else if (pokeName == "nidoran-f") {
-                    this.name = "nidoran";
+                    this.name = "nidoran_f";
                 }
                 else {
                     this.name = pokeName;
