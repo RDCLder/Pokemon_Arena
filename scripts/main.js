@@ -1584,7 +1584,7 @@ $(function() {
                     let baseDamage = (22 * this.power * user.attack[0] / target.defense[0] / 50) + 2;
                     let percentage = Math.floor(baseDamage * (Math.floor(Math.random() * (max - min + 1)) + min) / 100)
                     var damage = Math.floor(50 * percentage);
-                    let threshold = Math.floor(user.speed[0] * critModifier * 100 / 512);
+                    let threshold = Math.floor(user.speed[0] * 1 * 100 / 512);
                     let critChance = Math.floor(Math.random() * 100);
                     if (critChance <= threshold) {
                         damage = damage * 2;
@@ -1726,6 +1726,9 @@ $(function() {
                         return `${this.upperName()} attacks itself in confusion! \n${this.upperName()} lost ${damage} HP!`;
                     }
                 }
+                // if ("skipTurn" in this.status) {
+                //     return `${this.upperName()} skips the turn!`;
+                // }
                 let hitOrMiss = Math.floor(Math.random() * 100); 
                 if (
                     hitOrMiss > move.accuracy[0] && 
@@ -1910,7 +1913,7 @@ $(function() {
                 this.enemy = pokemon2;
                 
                 // Assign moves and their properties to the move buttons
-                this.moveArr = [allMoves["toxic"], allMoves["hypnosis"], pokemon1.moves[2], pokemon1.moves[3]];
+                this.moveArr = [allMoves["hyper-beam"], pokemon1.moves[1], pokemon1.moves[2], pokemon1.moves[3]];
                 // this.moveArr = pokemon1.moves; // Array 
                 this.moveNameArr = [];
                 this.moveClassArr = [];
@@ -2154,10 +2157,10 @@ $(function() {
                 if (
                     "skipTurn" in target.status
                     ) {
-                    if (this.turn == target.status["skipTurn"][0]
+                    if (this.turn == target.status["skipTurn"][0] + 1
                     ) {
                         delete target.status["skipTurn"];
-                        allMessages.push(`\n${target.upperName()} skips the turn!`);
+                        // allMessages.push(`\n${target.upperName()} skips the turn!`);
                     }
                 }
 
@@ -2165,10 +2168,10 @@ $(function() {
                     "flinched" in target.status
                     ) {
                     if (
-                    this.turn == target.status["flinched"][0]
+                    this.turn == target.status["flinched"][0] + 1
                     ) {
                         delete target.status["flinched"];
-                        allMessages.push(`\n${target.upperName()} skips the turn!`);
+                        // allMessages.push(`\n${target.upperName()} skips the turn!`);
                     }
                 }
 
@@ -2391,6 +2394,7 @@ $(function() {
                     allMessages.push(useMessage1, outcomeMessage1);
                     if (actingPokemon == this.player) {
                         this.movePPLeftArr[moveButtonNumber] --;
+                        console.log(this.movePPLeftArr);
                     }
                 }
                 updateAllPokemonHP();
@@ -2480,9 +2484,9 @@ $(function() {
         
         let pokemonIndex1 = Math.floor(Math.random() * pokedex.length);
         let pokemonIndex2 = Math.floor(Math.random() * pokedex.length);
-        // let pokemon1 = allPokemon[pokedex[pokemonIndex1][0]];
+        let pokemon1 = allPokemon[pokedex[pokemonIndex1][0]];
         let pokemon2 = allPokemon[pokedex[pokemonIndex2][0]];
-        let pokemon1 = allPokemon["gengar"];
+        // let pokemon1 = allPokemon["gengar"];
         // let pokemon2 = allPokemon["machamp"];
         let encounter = new Battle(pokemon1, pokemon2);
 
@@ -2667,7 +2671,7 @@ $(function() {
             if (pokemon1.alive() && pokemon2.alive()) {
                 setTimeout(() => {
                     // encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
-                    $("#movePP1").text(`${encounter.movePPLeftArr[0]}/${encounter.moveArr[0].pp}`);
+                    $("#movePP2").text(`${encounter.movePPLeftArr[1]}/${encounter.moveArr[1].pp}`);
                     encounter.turn ++;
                     encounter.enableButtons();
                 }, 2500);
@@ -2723,7 +2727,7 @@ $(function() {
             if (pokemon1.alive() && pokemon2.alive()) {
                 setTimeout(() => {
                     // encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
-                    $("#movePP1").text(`${encounter.movePPLeftArr[0]}/${encounter.moveArr[0].pp}`);
+                    $("#movePP3").text(`${encounter.movePPLeftArr[2]}/${encounter.moveArr[2].pp}`);
                     encounter.turn ++;
                     encounter.enableButtons();
                 }, 2500);
@@ -2779,7 +2783,7 @@ $(function() {
             if (pokemon1.alive() && pokemon2.alive()) {
                 setTimeout(() => {
                     // encounter.turnHistory(pokemon1.hpLeft() + " " + pokemon2.hpLeft(), "turnContent");
-                    $("#movePP1").text(`${encounter.movePPLeftArr[0]}/${encounter.moveArr[0].pp}`);
+                    $("#movePP4").text(`${encounter.movePPLeftArr[3]}/${encounter.moveArr[3].pp}`);
                     encounter.turn ++;
                     encounter.enableButtons();
                 }, 2500);
