@@ -53,7 +53,7 @@ body {
     position: absolute;
     z-index: 2;
     bottom: 20%;
-    border: solid orange;
+    /* border: solid orange; */
 }
 
 #playerPokemon{
@@ -61,7 +61,7 @@ body {
     height: 100%;
     position: relative;
     z-index: 1;
-    border: solid blue;
+    /* border: solid blue; */
     display: flex;
     justify-content: center;
     align-items:flex-end ;
@@ -73,7 +73,7 @@ body {
     position: absolute;
     bottom: 20%;
     z-index: 2;
-    border: solid orange;
+    /* border: solid orange; */
 }
 
 #enemyPokemon{
@@ -84,7 +84,7 @@ body {
     display: flex;
     justify-content: center;
     align-items:flex-end ;
-    border: solid blue;
+    /* border: solid blue; */
 }
 #pokemonGround1 {
     width: 70%;
