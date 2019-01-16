@@ -2516,7 +2516,6 @@ $(function() {
         }
         // Assign names, healthbar, and status effects for player pokemon
         
-        // updateAllPokemonHP method
         // Update Hp Percentage
         function updateAllPokemonHP(){
             let playerPokemon1HealthBar = document.getElementById('playerPokemon1Health');
@@ -2582,7 +2581,6 @@ $(function() {
             }
             for (let message of checkMessage2) {
                 encounter.turnHistory(message, "turnContent");
-                
             }
             if (pokemon2.speed[0] > pokemon1.speed[0]) {
                 let combatMessages1 = encounter.moveSequence(pokemon2, pokemon1, 0);
