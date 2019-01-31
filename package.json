@@ -1,0 +1,25 @@
+{
+  "name": "pokemon_arena",
+  "version": "1.0.0",
+  "description": "[Play Now!](https://rdclder.github.io/Pokemon_Arena/)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RDCLder/Pokemon_Arena.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RDCLder/Pokemon_Arena/issues"
+  },
+  "homepage": "https://github.com/RDCLder/Pokemon_Arena#readme",
+  "dependencies": {
+    "animejs": "^3.0.1",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "pokedex-promise-v2": "^3.1.1"
+  }
+}
