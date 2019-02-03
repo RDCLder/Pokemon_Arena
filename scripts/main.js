@@ -2804,7 +2804,7 @@ $(function() {
 
 function pokemon1PhysicalAttackPokemon2(){
     let playerPokemon = document.getElementById("playerPokemonBack");
-    let enemyPokemon = document.getElementById("enemyPokemon");
+    let enemyPokemon = document.getElementById("enemyPokemonFront");
     let starHit = document.createElement("div");
     starHit.setAttribute("id","enemyGetHit");
     enemyPokemon.appendChild(starHit);
@@ -2839,7 +2839,7 @@ function pokemon1PhysicalAttackPokemon2(){
 
 function pokemon2PhysicalAttackPokemon1(){
     let enemyPokemon = document.getElementById("enemyPokemonFront");
-    let playerPokemon = document.getElementById("playerPokemon");
+    let playerPokemon = document.getElementById("playerPokemonBack");
     let starHit = document.createElement("div");
     starHit.setAttribute("id","playerGetHit")
     playerPokemon.appendChild(starHit)
@@ -2869,7 +2869,7 @@ function pokemon2PhysicalAttackPokemon1(){
         
     });
 }
-// Pokemon Status Move Animation - "still in alpha"
+// Pokemon Status Move Animation - "still in development"
 // Player Pokemon Status Attack Moves Animation
 
 function pokemon1StatusAttackPokemon2(){
@@ -3603,7 +3603,7 @@ function pokemon2Paralyze() {
     let enemyPokemon = document.getElementById("enemyPokemon");
     let paralyzeOverlay = document.createElement("img");
     paralyzeOverlay.setAttribute("id", "paralyzeOverlay");
-    paralyzeOverlay.src = "./images/lightning-3050.png";
+    paralyzeOverlay.src = "./images/animated/lightning.png";
     paralyzeOverlay.style.top = "-20%";
     paralyzeOverlay.style.left = "10%";
     enemyPokemon.appendChild(paralyzeOverlay);
