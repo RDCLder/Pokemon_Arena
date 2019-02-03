@@ -6,7 +6,7 @@ $(function() {
     let moves = [[], []];
 
     // Retrieve move data from API
-    $.get("http://pokeapi.co/api/v2/move/?limit=165")
+    $.get("https://pokeapi.co/api/v2/move/?limit=165")
         .done((result) => {
             for (let i = 0; i < 164; i++) {
                 let moveName = result.results[i].name;
@@ -22,7 +22,7 @@ $(function() {
     
 
     // Retrieve pokemon data from API
-    $.get("http://pokeapi.co/api/v2/pokemon/?limit=152")
+    $.get("https://pokeapi.co/api/v2/pokemon/?limit=152")
         .done((result) => {
             for (let i = 0; i < 151; i++) {
                 let pokeName = result.results[i].name;
