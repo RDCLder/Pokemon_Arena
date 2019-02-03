@@ -74,7 +74,7 @@ $(function() {
             upperName() {
                 return this.name[0].toUpperCase() + this.name.slice(1, this.name.length);
             }
-
+            
             // damageCalc method
             // Pure damage calc for physical and special moves with a Power value
             damageCalc(user, target, critModifier = 1) {
@@ -3559,8 +3559,8 @@ function pokemon1Poison(){
     })
 }
 
-// Paralyze Animation
 
+// Paralyze Animation
 ////// Player Pokemon Paralyze ////////
 function pokemon1Paralyze() {
     let playerPokemon = document.getElementById("playerPokemon");
