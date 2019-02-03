@@ -6,7 +6,7 @@ $(function() {
     let moves = [[], []];
 
     // Retrieve move data from API
-    $.get("https://pokeapi.salestock.net/api/v2/move/")
+    $.get("http://pokeapi.co/api/v2/move/?limit=165")
         .done((result) => {
             for (let i = 0; i < 164; i++) {
                 let moveName = result.results[i].name;
@@ -17,10 +17,12 @@ $(function() {
                     moves[1].push(result);
                 });
             }
+            console.log(result)
         })
+    
 
     // Retrieve pokemon data from API
-    $.get("https://pokeapi.salestock.net/api/v2/pokemon/")
+    $.get("http://pokeapi.co/api/v2/pokemon/?limit=152")
         .done((result) => {
             for (let i = 0; i < 151; i++) {
                 let pokeName = result.results[i].name;
@@ -31,7 +33,9 @@ $(function() {
                     pokedex[i].push(result);
                 });
             }
+            console.log(result)
         });
+       
 
     // Account for async with time delay
     setTimeout(() => {
@@ -2476,6 +2480,8 @@ $(function() {
         
         let pokemonIndex1 = Math.floor(Math.random() * pokedex.length);
         let pokemonIndex2 = Math.floor(Math.random() * pokedex.length);
+        console.log(pokedex)
+        console.log(pokemonIndex1)
         let pokemon1 = allPokemon[pokedex[pokemonIndex1][0]];
         let pokemon2 = allPokemon[pokedex[pokemonIndex2][0]];
         // let pokemon1 = allPokemon["nidoran-m"];
@@ -3560,7 +3566,7 @@ function pokemon1Paralyze() {
     let playerPokemon = document.getElementById("playerPokemon");
     let paralyzeOverlay = document.createElement("img");
     paralyzeOverlay.setAttribute("id", "paralyzeOverlay");
-    paralyzeOverlay.src = "./images/lightning-3050.png";
+    paralyzeOverlay.src = "./images/animated/lightning.png";
     paralyzeOverlay.style.top = "-20%";
     paralyzeOverlay.style.left = "10%";
     playerPokemon.appendChild(paralyzeOverlay);
