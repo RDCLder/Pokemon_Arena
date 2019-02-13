@@ -2536,27 +2536,27 @@ $(function() {
             
             // Player Pokemon Health Bar
             let playerPokemon1HealthBar = document.getElementById('playerPokemon1Health');
-            playerPokemon1HealthBar.setAttribute('aria-valuemax', pokemon1.startHP)
-            playerPokemon1HealthBar.setAttribute('aria-valuenow', pokemon1.hp)
-            let p1HPMax = playerPokemon1HealthBar.getAttribute('aria-valuemax')
-            let p1HPCurrent = playerPokemon1HealthBar.getAttribute('aria-valuenow')
+            playerPokemon1HealthBar.setAttribute('aria-valuemax', pokemon1.startHP);
+            playerPokemon1HealthBar.setAttribute('aria-valuenow', pokemon1.hp);
+            let p1HPMax = playerPokemon1HealthBar.getAttribute('aria-valuemax');
+            let p1HPCurrent = playerPokemon1HealthBar.getAttribute('aria-valuenow');
             let p1HPUpdate = (p1HPCurrent/p1HPMax) * 100 ;
             playerPokemon1HealthBar.style.width = p1HPUpdate + "%";
             let playerPokemon1HealthPercentage = document.getElementById('p1HP');
             playerPokemon1HealthPercentage.innerHTML = p1HPCurrent + "/" + p1HPMax; 
-            playerPokemon1HealthBar.style.animation = "2s linear";
+            // playerPokemon1HealthBar.style.animation = "2s linear";
 
             // Enemy Pokemon Health Bar
             let enemyPokemon1HealthBar = document.getElementById('enemyPokemon1Health');
             enemyPokemon1HealthBar.setAttribute('aria-valuemax', pokemon2.startHP);
             enemyPokemon1HealthBar.setAttribute('aria-valuenow', pokemon2.hp);
-            let p2HPMax = enemyPokemon1HealthBar.getAttribute('aria-valuemax')
-            let p2HPCurrent = enemyPokemon1HealthBar.getAttribute('aria-valuenow')
+            let p2HPMax = enemyPokemon1HealthBar.getAttribute('aria-valuemax');
+            let p2HPCurrent = enemyPokemon1HealthBar.getAttribute('aria-valuenow');
             let p2HPUpdate = (p2HPCurrent/p2HPMax) * 100 ;
             enemyPokemon1HealthBar.style.width = p2HPUpdate + "%";
             let enemyPokemon1HealthPercentage = document.getElementById('e1HP');
             enemyPokemon1HealthPercentage.innerHTML = p2HPCurrent + "/" + p2HPMax;
-            enemyPokemon1HealthBar.style.animation = "2s linear";
+            // enemyPokemon1HealthBar.style.animation = "2s linear";
 
         }   
         updateAllPokemonHP()
