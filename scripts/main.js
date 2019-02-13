@@ -2515,24 +2515,50 @@ $(function() {
         // Assign names, healthbar, and status effects for player pokemon
         
         // Update Hp Percentage
+
         function updateAllPokemonHP(){
+            // let playerPokemon1HealthBar = document.getElementById('playerPokemon1Health');
+            // playerPokemon1HealthBar.max = pokemon1.startHP
+            // playerPokemon1HealthBar.value = pokemon1.hp
+            // let playerPokemon1HealthPercentage = document.getElementById('p1HP');
+            // let playerHPBarMax = playerPokemon1HealthBar.max
+            // let p1HPvalue = playerPokemon1HealthBar.value;
+            // let p1Percent = p1HPvalue + "/" + playerHPBarMax;
+            // playerPokemon1HealthPercentage.innerHTML = p1Percent;
+            // let enemyPokemon1HealthBar = document.getElementById('enemyPokemon1Health')
+            // enemyPokemon1HealthBar.max = pokemon2.startHP
+            // enemyPokemon1HealthBar.value = pokemon2.hp
+            // let enemyPokemon1HealthPercentage = document.getElementById('e1HP');
+            // let enemyHPBarMax = enemyPokemon1HealthBar.max;
+            // let e1HPValue = enemyPokemon1HealthBar.value;
+            // let e1Percent = e1HPValue + "/" + enemyHPBarMax;
+            // enemyPokemon1HealthPercentage.innerHTML = e1Percent ;
+            
+            // Player Pokemon Health Bar
             let playerPokemon1HealthBar = document.getElementById('playerPokemon1Health');
-            playerPokemon1HealthBar.max = pokemon1.startHP
-            playerPokemon1HealthBar.value = pokemon1.hp
+            playerPokemon1HealthBar.setAttribute('aria-valuemax', pokemon1.startHP)
+            playerPokemon1HealthBar.setAttribute('aria-valuenow', pokemon1.hp)
+            let p1HPMax = playerPokemon1HealthBar.getAttribute('aria-valuemax')
+            let p1HPCurrent = playerPokemon1HealthBar.getAttribute('aria-valuenow')
+            let p1HPUpdate = (p1HPCurrent/p1HPMax) * 100 ;
+            playerPokemon1HealthBar.style.width = p1HPUpdate + "%";
             let playerPokemon1HealthPercentage = document.getElementById('p1HP');
-            let playerHPBarMax = playerPokemon1HealthBar.max
-            let p1HPvalue = playerPokemon1HealthBar.value;
-            let p1Percent = p1HPvalue + "/" + playerHPBarMax;
-            playerPokemon1HealthPercentage.innerHTML = p1Percent;
-            let enemyPokemon1HealthBar = document.getElementById('enemyPokemon1Health')
-            enemyPokemon1HealthBar.max = pokemon2.startHP
-            enemyPokemon1HealthBar.value = pokemon2.hp
+            playerPokemon1HealthPercentage.innerHTML = p1HPCurrent + "/" + p1HPMax; 
+            playerPokemon1HealthBar.style.animation = "2s linear";
+
+            // Enemy Pokemon Health Bar
+            let enemyPokemon1HealthBar = document.getElementById('enemyPokemon1Health');
+            enemyPokemon1HealthBar.setAttribute('aria-valuemax', pokemon2.startHP);
+            enemyPokemon1HealthBar.setAttribute('aria-valuenow', pokemon2.hp);
+            let p2HPMax = enemyPokemon1HealthBar.getAttribute('aria-valuemax')
+            let p2HPCurrent = enemyPokemon1HealthBar.getAttribute('aria-valuenow')
+            let p2HPUpdate = (p2HPCurrent/p2HPMax) * 100 ;
+            enemyPokemon1HealthBar.style.width = p2HPUpdate + "%";
             let enemyPokemon1HealthPercentage = document.getElementById('e1HP');
-            let enemyHPBarMax = enemyPokemon1HealthBar.max;
-            let e1HPValue = enemyPokemon1HealthBar.value;
-            let e1Percent = e1HPValue + "/" + enemyHPBarMax;
-            enemyPokemon1HealthPercentage.innerHTML = e1Percent ;
-        }
+            enemyPokemon1HealthPercentage.innerHTML = p2HPCurrent + "/" + p2HPMax;
+            enemyPokemon1HealthBar.style.animation = "2s linear";
+
+        }   
         updateAllPokemonHP()
 
        // Update Status Effect of Pokemon
@@ -2794,7 +2820,7 @@ $(function() {
 
         // ------------------------------------------------------------------------------------
 
-    }, 3500)
+    }, 4000) // End of setTimeout
 
 });
 
